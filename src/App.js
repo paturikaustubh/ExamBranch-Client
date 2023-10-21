@@ -1,11 +1,11 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   // Outlet,
-} from "react-router-dom"
-import { useIdleTimer } from "react-idle-timer"
+} from "react-router-dom";
+import { useIdleTimer } from "react-idle-timer";
 
 import {
   Dialog,
@@ -15,35 +15,35 @@ import {
   DialogActions,
   Typography,
   Button,
-} from "@mui/material"
+} from "@mui/material";
 
-import Supply from "./Supply"
-import Reval from "./Reval"
-import LoginForm from "./Components/LoginForm"
-import NavBar from "./Components/NavBar"
-import Download from "./Download"
-import Update from "./Update"
-import Cbt from "./Cbt"
-import Backup from "./Backup"
-import AddUser from "./AddUser"
-import Costs from "./Costs"
-import Details from "./Details"
-import UpCreds from "./UpCreds"
-import TEST69 from "./TEST"
-import AutoEx from "./AutocompleteEx"
-import GoUp from "./Components/GoUp"
-import NotFound from "./Components/NotFound"
-import "./Components/App.css"
-import { Redirect } from "react-router-dom/cjs/react-router-dom.min"
+import Supply from "./Supply";
+import Reval from "./Reval";
+import LoginForm from "./Components/LoginForm";
+import NavBar from "./Components/NavBar";
+import Download from "./Download";
+import Update from "./Update";
+import Cbt from "./Cbt";
+import Backup from "./Backup";
+import AddUser from "./AddUser";
+import Costs from "./Costs";
+import Details from "./Details";
+import UpCreds from "./UpCreds";
+import TEST69 from "./TEST";
+import AutoEx from "./AutocompleteEx";
+import GoUp from "./Components/GoUp";
+import NotFound from "./Components/NotFound";
+import "./Components/App.css";
+import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
-import ipFile from "C:\\Users\\GCET\\Desktop\\serverIP.txt"
+import ipFile from "./serverIP.txt";
 
 const App = () => {
-  const timeOutRef = useRef(null)
-  const [token, settoken] = useState(false)
-  const [user, setuser] = useState("")
-  const [isIdle, setIsIdle] = useState(false)
-  const [ip, setIp] = useState("")
+  const timeOutRef = useRef(null);
+  const [token, settoken] = useState(false);
+  const [user, setuser] = useState("");
+  const [isIdle, setIsIdle] = useState(false);
+  const [ip, setIp] = useState("");
 
   const adminPages = [
     {
@@ -70,7 +70,7 @@ const App = () => {
       path: "/UpCreds",
       component: <UpCreds ip={ip} />,
     },
-  ]
+  ];
 
   const defaultPages = [
     {
@@ -89,26 +89,26 @@ const App = () => {
       path: "/Manage-Database",
       component: <Details user={user} ip={ip} />,
     },
-  ]
+  ];
 
   const handleUserIdle = () => {
-    setIsIdle(true)
-  }
+    setIsIdle(true);
+  };
   const handleUserActive = () => {
-    user.length > 0 ? setIsIdle(true) : setIsIdle(false)
-  }
+    user.length > 0 ? setIsIdle(true) : setIsIdle(false);
+  };
   useIdleTimer({
     onIdle: handleUserIdle,
     onActive: handleUserActive,
     timeout: 5 * 1000 * 60, // *1000 (1K) for seconds, **60 for minutes
     ref: timeOutRef,
-  })
+  });
 
   useEffect(() => {
     fetch(ipFile)
       .then((response) => response.text())
-      .then((data) => setIp(data))
-  }, [ip])
+      .then((data) => setIp(data));
+  }, [ip]);
 
   if (!token) {
     return (
@@ -118,7 +118,7 @@ const App = () => {
         setIsIdle={setIsIdle}
         ip={ip}
       />
-    )
+    );
   }
 
   return (
@@ -201,8 +201,8 @@ const App = () => {
           <Button
             color="warning"
             onClick={() => {
-              setIsIdle(false)
-              settoken(false)
+              setIsIdle(false);
+              settoken(false);
             }}
           >
             switch user
@@ -211,8 +211,8 @@ const App = () => {
         </DialogActions>
       </Dialog>
     </>
-  )
-}
+  );
+};
 
 // function LazyLoad() {
 //   return (
@@ -222,4 +222,4 @@ const App = () => {
 //   )
 // }
 
-export default App
+export default App;

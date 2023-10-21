@@ -89,6 +89,7 @@ const Costs = ({ ip }) => {
 
   useEffect(() => {
     Axios.post(`http://${ip}:6969/getCosts`).then((resp) => {
+      console.log(resp.data);
       setSupBase(resp.data.arr[0].sbc);
       setSupAdd(resp.data.arr[0].sac);
       setSupMax(resp.data.arr[0].sfc);
@@ -251,6 +252,7 @@ const Costs = ({ ip }) => {
                 cac: tcac,
                 cmc: tcmc,
               }).then((resp) => {
+                console.log(resp, tsbc, tsac, tsmc, trev, tcbc, tcac, tcmc);
                 if (resp.data.done) {
                   setSupBase(tsbc);
                   setSupAdd(tsac);
