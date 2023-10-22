@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { Link as ReLink } from "react-router-dom"
+import React, { useState } from "react";
+import { Link as ReLink } from "react-router-dom";
 
 import {
   AppBar,
@@ -21,27 +21,27 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-} from "@mui/material"
+} from "@mui/material";
 
-import MenuIcon from "@mui/icons-material/Menu"
-import PlagiarismOutlinedIcon from "@mui/icons-material/PlagiarismOutlined"
-import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined"
-import DriveFileRenameOutlineOutlinedIcon from "@mui/icons-material/DriveFileRenameOutlineOutlined"
-import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined"
-import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined"
-import StorageOutlinedIcon from "@mui/icons-material/StorageOutlined"
-import GradeOutlinedIcon from "@mui/icons-material/GradeOutlined"
-import CurrencyRupeeOutlinedIcon from "@mui/icons-material/CurrencyRupeeOutlined"
-import BackupOutlinedIcon from "@mui/icons-material/BackupOutlined"
-import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined"
+import MenuIcon from "@mui/icons-material/Menu";
+import PlagiarismOutlinedIcon from "@mui/icons-material/PlagiarismOutlined";
+import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
+import DriveFileRenameOutlineOutlinedIcon from "@mui/icons-material/DriveFileRenameOutlineOutlined";
+import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
+import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
+import StorageOutlinedIcon from "@mui/icons-material/StorageOutlined";
+import GradeOutlinedIcon from "@mui/icons-material/GradeOutlined";
+import CurrencyRupeeOutlinedIcon from "@mui/icons-material/CurrencyRupeeOutlined";
+import BackupOutlinedIcon from "@mui/icons-material/BackupOutlined";
+import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 
 export default function NavBar({ user }) {
-  const [value, setValue] = useState(2)
-  const [openMenu, setOpenMenu] = useState(false)
-  const [newTab, setNewTab] = useState(false)
-  const [newTabIcon, setNewTabIcon] = useState()
-  const [newTabName, setNewTabName] = useState("")
-  const [openLogout, setOpenLogout] = useState(false)
+  const [value, setValue] = useState(2);
+  const [openMenu, setOpenMenu] = useState(false);
+  const [newTab, setNewTab] = useState(false);
+  const [newTabIcon, setNewTabIcon] = useState();
+  const [newTabName, setNewTabName] = useState("");
+  const [openLogout, setOpenLogout] = useState(false);
 
   const NavButt = styled(Button)(() => ({
     color: "#f5f5f5",
@@ -52,11 +52,11 @@ export default function NavBar({ user }) {
     "&:hover": {
       border: 1,
     },
-  }))
+  }));
 
   const DomLink = styled(ReLink)(() => ({
     color: "grey",
-  }))
+  }));
 
   const adminTabs = [
     {
@@ -89,7 +89,7 @@ export default function NavBar({ user }) {
       to: "/Update",
       icon: <FileUploadOutlinedIcon />,
     },
-  ]
+  ];
 
   const misc = [
     {
@@ -124,7 +124,7 @@ export default function NavBar({ user }) {
       to: "/AddUser",
       icon: <PeopleAltOutlinedIcon />,
     },
-  ]
+  ];
 
   const nonAdTabs = [
     {
@@ -151,7 +151,7 @@ export default function NavBar({ user }) {
       to: "/Manage-Database",
       icon: <StorageOutlinedIcon />,
     },
-  ]
+  ];
 
   return (
     <>
@@ -192,8 +192,8 @@ export default function NavBar({ user }) {
                       value={element.value}
                       variant="outlined"
                       onClick={() => {
-                        setValue(element.value)
-                        setNewTab(false)
+                        setValue(element.value);
+                        setNewTab(false);
                       }}
                     >
                       <>{element.name}</>
@@ -228,8 +228,8 @@ export default function NavBar({ user }) {
                         value={element.value}
                         variant="outlined"
                         onClick={() => {
-                          setValue(element.value)
-                          setNewTab(false)
+                          setValue(element.value);
+                          setNewTab(false);
                         }}
                       >
                         {element.name}
@@ -255,7 +255,7 @@ export default function NavBar({ user }) {
             ml={"auto"}
             color={"#f5f5f5"}
             onClick={() => {
-              setOpenLogout(true)
+              setOpenLogout(true);
             }}
             sx={{ cursor: "pointer" }}
           >
@@ -299,8 +299,8 @@ export default function NavBar({ user }) {
                   >
                     <ListItemButton
                       onClick={() => {
-                        setOpenMenu(false)
-                        setValue(indx)
+                        setOpenMenu(false);
+                        setValue(indx);
                       }}
                     >
                       <ListItemIcon>{element.icon}</ListItemIcon>
@@ -315,7 +315,7 @@ export default function NavBar({ user }) {
                     </ListItemButton>
                   </ListItem>
                 </DomLink>
-              )
+              );
             })}
           {user !== "admin" &&
             nonAdTabs.map((element, indx) => {
@@ -328,8 +328,8 @@ export default function NavBar({ user }) {
                   >
                     <ListItemButton
                       onClick={() => {
-                        setOpenMenu(false)
-                        setValue(indx)
+                        setOpenMenu(false);
+                        setValue(indx);
                       }}
                     >
                       <ListItemIcon>{element.icon}</ListItemIcon>
@@ -344,7 +344,7 @@ export default function NavBar({ user }) {
                     </ListItemButton>
                   </ListItem>
                 </DomLink>
-              )
+              );
             })}
         </List>
         <List sx={{ ...(user !== "admin" && { display: "none" }) }}>
@@ -358,11 +358,11 @@ export default function NavBar({ user }) {
               <ListItem key={element.value} id={element.value} disablePadding>
                 <ListItemButton
                   onClick={() => {
-                    setOpenMenu(false)
-                    setNewTabName(element.name)
-                    setNewTab(true)
-                    setNewTabIcon(element.icon)
-                    setValue(adminTabs.length)
+                    setOpenMenu(false);
+                    setNewTabName(element.name);
+                    setNewTab(true);
+                    setNewTabIcon(element.icon);
+                    setValue(adminTabs.length);
                   }}
                 >
                   <ListItemIcon>{element.icon}</ListItemIcon>
@@ -388,7 +388,7 @@ export default function NavBar({ user }) {
         sx={{ backdropFilter: "blur(1px)" }}
       >
         <DialogTitle>
-          <Typography variant="h4" color={"info.main"} fontWeight={500}>
+          <Typography variant="h4" color={"error.main"} fontWeight={500}>
             Logout
           </Typography>
         </DialogTitle>
@@ -416,5 +416,5 @@ export default function NavBar({ user }) {
         </DialogActions>
       </Dialog>
     </>
-  )
+  );
 }

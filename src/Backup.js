@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState } from "react"
-import Axios from "axios"
+import React, { useState } from "react";
+import Axios from "axios";
 
 import {
   TextField,
@@ -19,38 +19,38 @@ import {
   Divider,
   Alert,
   Snackbar,
-} from "@mui/material"
+} from "@mui/material";
 
-import HelpIcon from "@mui/icons-material/Help"
+import HelpIcon from "@mui/icons-material/Help";
 
-import BackupLoc from "./TemplateImgs/backupLoc.png"
+import BackupLoc from "./TemplateImgs/backupLoc.png";
 
 const Back = ({ ip }) => {
-  const [loc, setloc] = useState("")
-  const [opt, setopt] = useState("backup")
-  const [started, setstarted] = useState(false)
-  const [restore, setrestore] = useState(false)
-  const [updated, setupdated] = useState(false)
-  const [updatefail, setupdatefail] = useState(false)
-  const [downloading, setdownloading] = useState(false)
-  const [downerror, setdownerror] = useState(false)
-  const [openHelp, setOpenHelp] = useState(false)
+  const [loc, setloc] = useState("");
+  const [opt, setopt] = useState("backup");
+  const [started, setstarted] = useState(false);
+  const [restore, setrestore] = useState(false);
+  const [updated, setupdated] = useState(false);
+  const [updatefail, setupdatefail] = useState(false);
+  const [downloading, setdownloading] = useState(false);
+  const [downerror, setdownerror] = useState(false);
+  const [openHelp, setOpenHelp] = useState(false);
 
   const rest = () => {
-    setrestore(true)
+    setrestore(true);
     Axios.post(`http://${ip}:6969/UpBack`, {
       loc: loc,
     }).then((resp) => {
       if (resp.data.done) {
-        setupdated(true)
+        setupdated(true);
       } else if (resp.data.err) {
-        setupdatefail(true)
+        setupdatefail(true);
         console.log(
           "BACKUP ERROR!!\nCheck for duplicates OR there is data already in the database OR the format of the CSV file might be wrong."
-        )
+        );
       }
-    })
-  }
+    });
+  };
 
   return (
     <Container maxWidth="xl">
@@ -72,7 +72,7 @@ const Back = ({ ip }) => {
           <Tooltip title="Help">
             <IconButton
               onClick={() => {
-                setOpenHelp(true)
+                setOpenHelp(true);
               }}
               color="primary"
             >
@@ -100,7 +100,7 @@ const Back = ({ ip }) => {
             }}
             defaultValue={"backup"}
             onChange={(e) => {
-              setopt(e.target.value)
+              setopt(e.target.value);
             }}
           >
             {[
@@ -125,7 +125,7 @@ const Back = ({ ip }) => {
                 variant="contained"
                 style={{ marginRight: "1%" }}
                 onClick={() => {
-                  setstarted(true)
+                  setstarted(true);
                   Axios.post(`http://${ip}:6969/DownBack`, {
                     responseType: "blob",
                   })
@@ -133,18 +133,18 @@ const Back = ({ ip }) => {
                       if (resp.data.del !== false) {
                         const url = window.URL.createObjectURL(
                           new Blob([resp.data])
-                        )
-                        const link = document.createElement("a")
-                        link.href = url
-                        link.setAttribute("download", `backup.csv`)
-                        document.body.appendChild(link)
-                        link.click()
-                        setdownloading(true)
+                        );
+                        const link = document.createElement("a");
+                        link.href = url;
+                        link.setAttribute("download", `backup.csv`);
+                        document.body.appendChild(link);
+                        link.click();
+                        setdownloading(true);
                       } else {
-                        setdownerror(true)
+                        setdownerror(true);
                       }
                     })
-                    .catch()
+                    .catch();
                 }}
               >
                 Create Backup
@@ -173,7 +173,7 @@ const Back = ({ ip }) => {
                     backgroundColor: "white",
                   }}
                   onChange={(e) => {
-                    setloc(e.target.value)
+                    setloc(e.target.value);
                   }}
                 />
               </Grid>
@@ -196,7 +196,7 @@ const Back = ({ ip }) => {
         autoHideDuration={2500}
         open={started}
         onClose={() => {
-          setstarted(false)
+          setstarted(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
@@ -204,7 +204,7 @@ const Back = ({ ip }) => {
           severity="info"
           variant="standard"
           onClose={() => {
-            setstarted(false)
+            setstarted(false);
           }}
         >
           Backup started
@@ -215,7 +215,7 @@ const Back = ({ ip }) => {
         autoHideDuration={2500}
         open={restore}
         onClose={() => {
-          setrestore(false)
+          setrestore(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
@@ -223,7 +223,7 @@ const Back = ({ ip }) => {
           severity="info"
           variant="standard"
           onClose={() => {
-            setrestore(false)
+            setrestore(false);
           }}
         >
           Restore started. Check server console for progress.
@@ -234,7 +234,7 @@ const Back = ({ ip }) => {
         autoHideDuration={2500}
         open={updated}
         onClose={() => {
-          setupdated(false)
+          setupdated(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
@@ -242,7 +242,7 @@ const Back = ({ ip }) => {
           severity="success"
           variant="standard"
           onClose={() => {
-            setupdated(true)
+            setupdated(true);
           }}
         >
           Restored data
@@ -253,7 +253,7 @@ const Back = ({ ip }) => {
         autoHideDuration={2500}
         open={updatefail}
         onClose={() => {
-          setupdatefail(false)
+          setupdatefail(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
@@ -261,7 +261,7 @@ const Back = ({ ip }) => {
           severity="error"
           variant="standard"
           onClose={() => {
-            setupdatefail(false)
+            setupdatefail(false);
           }}
         >
           There was a problem while restoring
@@ -272,7 +272,7 @@ const Back = ({ ip }) => {
         autoHideDuration={2500}
         open={downloading}
         onClose={() => {
-          setdownloading(false)
+          setdownloading(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
@@ -280,7 +280,7 @@ const Back = ({ ip }) => {
           severity="success"
           variant="standard"
           onClose={() => {
-            setdownloading(false)
+            setdownloading(false);
           }}
         >
           Started downloading
@@ -291,7 +291,7 @@ const Back = ({ ip }) => {
         autoHideDuration={2500}
         open={downerror}
         onClose={() => {
-          setdownerror(false)
+          setdownerror(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
@@ -299,7 +299,7 @@ const Back = ({ ip }) => {
           severity="error"
           variant="standard"
           onClose={() => {
-            setdownerror(false)
+            setdownerror(false);
           }}
         >
           There was a problem while downloading file
@@ -310,7 +310,7 @@ const Back = ({ ip }) => {
         sx={{ backdropFilter: "blur(1px)" }}
         open={openHelp}
         onClose={() => {
-          setOpenHelp(false)
+          setOpenHelp(false);
         }}
         maxWidth
       >
@@ -399,7 +399,7 @@ const Back = ({ ip }) => {
         <DialogActions>
           <Button
             onClick={() => {
-              setOpenHelp(false)
+              setOpenHelp(false);
             }}
           >
             okay
@@ -407,7 +407,7 @@ const Back = ({ ip }) => {
         </DialogActions>
       </Dialog>
     </Container>
-  )
-}
+  );
+};
 
-export default Back
+export default Back;

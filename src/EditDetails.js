@@ -1,24 +1,24 @@
-import { React, useState } from "react"
-import { Grid, MenuItem, TextField } from "@mui/material"
+import { React, useState } from "react";
+import { Grid, MenuItem, TextField } from "@mui/material";
 
-let disable = false
+let disable = false;
 
-export let subcode = 0
-export let subname = ""
-export let grade = ""
-export let year = 0
-export let sem = 0
-export let rollno = ""
-export let refCode = ""
-export let exyear = 0
-export let exmonth = 0
-export let error = disable
+export let subCode = 0;
+export let subName = "";
+export let grade = "";
+export let year = 0;
+export let sem = 0;
+export let rollNo = "";
+export let refCode = "";
+export let exYear = 0;
+export let exMonth = 0;
+export let error = disable;
 
 function EditDetails(props) {
-  const [exyearerror, setexyearerror] = useState(false)
-  const [disablesave, setdisablesave] = useState(false)
+  const [exyearerror, setexyearerror] = useState(false);
+  const [disablesave, setdisablesave] = useState(false);
 
-  disable = disablesave
+  disable = disablesave;
 
   const {
     orCode,
@@ -30,17 +30,17 @@ function EditDetails(props) {
     orExmonth,
     rno,
     refcode,
-  } = props
+  } = props;
 
-  subcode = orCode
-  subname = orName
-  grade = orGrade
-  year = parseInt(orYear)
-  sem = parseInt(orSem)
-  exyear = parseInt(orExyear)
-  exmonth = parseInt(orExmonth)
-  refCode = refcode
-  rollno = rno
+  subCode = orCode;
+  subName = orName;
+  grade = orGrade;
+  year = parseInt(orYear);
+  sem = parseInt(orSem);
+  exYear = parseInt(orExyear);
+  exMonth = parseInt(orExmonth);
+  refCode = refcode;
+  rollNo = rno;
 
   return (
     <>
@@ -52,8 +52,8 @@ function EditDetails(props) {
             label="Subject Code"
             defaultValue={orCode}
             onChange={(e) => {
-              e.target.value = e.target.value.toUpperCase()
-              subcode = e.target.value
+              e.target.value = e.target.value.toUpperCase();
+              subCode = e.target.value;
             }}
           />
 
@@ -63,8 +63,8 @@ function EditDetails(props) {
             label="Subject Name"
             defaultValue={orName}
             onChange={(e) => {
-              e.target.value = e.target.value.toUpperCase()
-              subname = e.target.value
+              e.target.value = e.target.value.toUpperCase();
+              subName = e.target.value;
             }}
           />
 
@@ -74,8 +74,8 @@ function EditDetails(props) {
             label="Grade"
             defaultValue={orGrade}
             onChange={(e) => {
-              e.target.value = e.target.value.toUpperCase()
-              grade = e.target.value
+              e.target.value = e.target.value.toUpperCase();
+              grade = e.target.value;
             }}
           />
         </Grid>
@@ -87,7 +87,7 @@ function EditDetails(props) {
             select
             defaultValue={orYear}
             onChange={(e) => {
-              year = e.target.value
+              year = e.target.value;
             }}
             style={{ width: "40%", margin: 5 }}
           >
@@ -103,7 +103,7 @@ function EditDetails(props) {
             select
             defaultValue={orSem}
             onChange={(e) => {
-              sem = e.target.value
+              sem = e.target.value;
             }}
             style={{ width: "40%", margin: 5 }}
           >
@@ -120,13 +120,13 @@ function EditDetails(props) {
                 Number.isInteger(e.target.value / 1) &&
                 e.target.value !== ""
               ) {
-                setexyearerror(false)
-                setdisablesave(false)
-                e.target.value = e.target.value.toUpperCase()
-                exyear = e.target.value
+                setexyearerror(false);
+                setdisablesave(false);
+                e.target.value = e.target.value.toUpperCase();
+                exYear = e.target.value;
               } else {
-                setexyearerror(true)
-                setdisablesave(true)
+                setexyearerror(true);
+                setdisablesave(true);
               }
             }}
             style={{ width: "40%", margin: 5 }}
@@ -137,15 +137,15 @@ function EditDetails(props) {
             label="Month"
             defaultValue={orExmonth}
             onChange={(e) => {
-              e.target.value = e.target.value.toUpperCase()
-              exmonth = e.target.value
+              e.target.value = e.target.value.toUpperCase();
+              exMonth = e.target.value;
             }}
             style={{ width: "40%", margin: 5 }}
           />
         </Grid>
       </Grid>
     </>
-  )
+  );
 }
 
-export default EditDetails
+export default EditDetails;

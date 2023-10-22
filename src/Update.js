@@ -1,5 +1,5 @@
-import Axios from "axios"
-import React, { useState } from "react"
+import Axios from "axios";
+import React, { useState } from "react";
 
 import {
   Alert,
@@ -13,77 +13,60 @@ import {
   Snackbar,
   Typography,
   Container,
-} from "@mui/material"
+} from "@mui/material";
 
-import { TextField, MenuItem, Button, Tooltip, IconButton } from "@mui/material"
-import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined"
-import HelpIcon from "@mui/icons-material/Help"
-import UploadFormat from "./TemplateImgs/resultsUploadFormat.png"
-import UploadExample from "./TemplateImgs/resultsUploadeExample.png"
-import FolderLoc from "./TemplateImgs/folderLocation.png"
-import Console from "./TemplateImgs/consoleLog.png"
+import {
+  TextField,
+  MenuItem,
+  Button,
+  Tooltip,
+  IconButton,
+} from "@mui/material";
+import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
+import HelpIcon from "@mui/icons-material/Help";
+import UploadFormat from "./TemplateImgs/resultsUploadFormat.png";
+import UploadExample from "./TemplateImgs/resultsUploadeExample.png";
+import FolderLoc from "./TemplateImgs/folderLocation.png";
+import Console from "./TemplateImgs/consoleLog.png";
 
 const Update = ({ ip }) => {
-  const [openHelp, setOpenHelp] = useState(false)
-  const [loc, setloc] = useState("")
-  const [clicked, setclicked] = useState(false)
-  const [task, settask] = useState(false)
-  const [year, setyear] = useState(0)
-  const [sem, setsem] = useState(0)
-  const [table, settable] = useState("regular")
-  const [paidtable, setpaidtable] = useState("Supple")
-  const [exyear, setexyear] = useState(0)
-  const [exmonth, setexmonth] = useState(0)
-  const [up, setUp] = useState(false)
-  const [paidUp, setPaidUp] = useState(false)
-  const [tot, setTot] = useState(0)
-  const [erTot, setErTot] = useState(0)
-  const [type, settype] = useState("default")
-  const [err, setErr] = useState(false)
-  const [codeFileErr, setCodeFileErr] = useState(false)
-  const [codeUpErr, setCodeUpErr] = useState(false)
-  const [codeUpDone, setCodeUpDone] = useState(false)
-  const [errFiles, setErrFiles] = useState(false)
+  const [openHelp, setOpenHelp] = useState(false);
+  const [loc, setloc] = useState("");
+  const [clicked, setclicked] = useState(false);
+  const [task, settask] = useState(false);
+  const [year, setyear] = useState(0);
+  const [sem, setsem] = useState(0);
+  const [table, settable] = useState("regular");
+  const [paidtable, setpaidtable] = useState("Supple");
+  const [exYear, setexyear] = useState(0);
+  const [exMonth, setexmonth] = useState(0);
+  const [up, setUp] = useState(false);
+  const [paidUp, setPaidUp] = useState(false);
+  const [tot, setTot] = useState(0);
+  const [erTot, setErTot] = useState(0);
+  const [type, settype] = useState("results");
+  const [err, setErr] = useState(false);
+  const [codeFileErr, setCodeFileErr] = useState(false);
+  const [codeUpErr, setCodeUpErr] = useState(false);
+  const [codeUpDone, setCodeUpDone] = useState(false);
+  const [errFiles, setErrFiles] = useState(false);
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
 
   const goback = () => {
-    setclicked(false)
-    settask(false)
-  }
+    setclicked(false);
+    settask(false);
+  };
 
   const handletable = (e) => {
-    settable(e.target.value)
-  }
+    settable(e.target.value);
+  };
   const handleyears = (e) => {
-    setyear(e.target.value)
-  }
+    setyear(e.target.value);
+  };
   const handlesems = (e) => {
-    setsem(e.target.value)
-  }
+    setsem(e.target.value);
+  };
 
-  const upload = () => {
-    Axios.post(`http://${ip}:6969/Update${table}`, {
-      acyear: year,
-      sem: sem,
-      exyear: exyear,
-      exmonth: exmonth,
-      loc: loc,
-    }).then((resp) => {
-      if (resp.data["done"]) {
-        setTot(resp.data["tot"])
-        setErTot(resp.data["ertot"])
-        setUp(true)
-        goback()
-      }
-      if (resp.data.err) {
-        setErr(true)
-      }
-      if (resp.data["ertot"] > 0) {
-        setErTot(resp.data["ertot"])
-        console.log(`${table} error files:\n${resp.data.erf}`)
-        setErrFiles(true)
-      }
-    })
-  }
   return (
     <Container maxWidth="xl">
       <title>Upload</title>
@@ -98,7 +81,7 @@ const Update = ({ ip }) => {
           <Tooltip title="Help">
             <IconButton
               onClick={() => {
-                setOpenHelp(true)
+                setOpenHelp(true);
               }}
               color="primary"
             >
@@ -113,7 +96,7 @@ const Update = ({ ip }) => {
           sx={{ backdropFilter: "blur(1px)" }}
           open={openHelp}
           onClose={() => {
-            setOpenHelp(false)
+            setOpenHelp(false);
           }}
           maxWidth
         >
@@ -139,7 +122,7 @@ const Update = ({ ip }) => {
               </p>
               <Divider />
               <br />
-              {type === "default" ? (
+              {type === "results" ? (
                 <>
                   <h2 className="help">
                     <>Parameters (Results)</>
@@ -298,7 +281,7 @@ const Update = ({ ip }) => {
           <DialogActions>
             <Button
               onClick={() => {
-                setOpenHelp(false)
+                setOpenHelp(false);
               }}
             >
               okay
@@ -315,20 +298,20 @@ const Update = ({ ip }) => {
             style={{
               backgroundColor: "white",
             }}
-            defaultValue={"default"}
+            defaultValue={"results"}
             onChange={(e) => {
-              settype(e.target.value)
+              settype(e.target.value);
             }}
           >
             {[
-              <MenuItem value={"default"}>Results</MenuItem>,
+              <MenuItem value={"results"}>Results</MenuItem>,
               <MenuItem value={"paid"}>Registered Entries</MenuItem>,
               <MenuItem value={"codes"}>Code Names</MenuItem>,
             ]}
           </TextField>
         </Grid>
       </Grid>
-      {type === "default" && (
+      {type === "results" && (
         <>
           <Grid container spacing={2} mb={2}>
             <Grid item xs={12} sm={4} md={2}>
@@ -409,9 +392,9 @@ const Update = ({ ip }) => {
                 disabled={clicked}
                 onChange={(e) => {
                   if (parseInt(e.target.value) > 2000) {
-                    setexyear(parseInt(e.target.value))
+                    setexyear(parseInt(e.target.value));
                   } else {
-                    setexyear(0)
+                    setexyear(0);
                   }
                 }}
               />
@@ -430,22 +413,81 @@ const Update = ({ ip }) => {
                     parseInt(e.target.value) >= 1 &&
                     parseInt(e.target.value) <= 12
                   ) {
-                    setexmonth(parseInt(e.target.value))
+                    setexmonth(parseInt(e.target.value));
                   } else {
-                    setexmonth(0)
+                    setexmonth(0);
                   }
                 }}
               />
             </Grid>
           </Grid>
+          <Dialog
+            open={openConfirmDialog}
+            maxWidth="sm"
+            fullWidth
+            sx={{ backdropFilter: "blur(1px)" }}
+          >
+            <DialogTitle component={"div"}>
+              <Typography component={"span"} variant="h4">
+                Upload for{" "}
+              </Typography>
+              <Typography component={"span"} variant="h3" color="error.main">
+                {table.toUpperCase()}
+              </Typography>
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                This will upload {type} values of {table}.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                size="large"
+                color="error"
+                onClick={() => setOpenConfirmDialog(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                size="large"
+                color="primary"
+                onClick={() => {
+                  Axios.post(`http://${ip}:6969/Update${table}`, {
+                    acYear: year,
+                    sem: sem,
+                    exYear: exYear,
+                    exMonth: exMonth,
+                    loc: loc,
+                  }).then((resp) => {
+                    if (resp.data["done"]) {
+                      setTot(resp.data["tot"]);
+                      setErTot(resp.data["ertot"]);
+                      setUp(true);
+                      goback();
+                    }
+                    if (resp.data.err) {
+                      setErr(true);
+                    }
+                    if (resp.data["ertot"] > 0) {
+                      setErTot(resp.data["ertot"]);
+                      console.log(`${table} error files:\n${resp.data.erf}`);
+                      setErrFiles(true);
+                    }
+                  });
+                }}
+              >
+                Upload
+              </Button>
+            </DialogActions>
+          </Dialog>
         </>
       )}
 
       {year !== 0 &&
         sem !== 0 &&
-        exyear !== 0 &&
-        exmonth !== 0 &&
-        type === "default" && (
+        exYear !== 0 &&
+        exMonth !== 0 &&
+        type === "results" && (
           <Grid container spacing={2} alignItems="center">
             <Grid item xs={12} sm={4}>
               <TextField
@@ -457,7 +499,7 @@ const Update = ({ ip }) => {
                 }}
                 disabled={clicked}
                 onChange={(e) => {
-                  setloc(e.target.value)
+                  setloc(e.target.value);
                 }}
               />
             </Grid>
@@ -469,7 +511,7 @@ const Update = ({ ip }) => {
                   startIcon={<FileUploadOutlinedIcon />}
                   type="submit"
                   variant="contained"
-                  onClick={upload}
+                  onClick={() => setOpenConfirmDialog(true)}
                 >
                   Upload
                 </Button>
@@ -492,7 +534,7 @@ const Update = ({ ip }) => {
                   backgroundColor: "white",
                 }}
                 onChange={(e) => {
-                  setpaidtable(e.target.value)
+                  setpaidtable(e.target.value);
                 }}
                 disabled={clicked}
               >
@@ -515,7 +557,7 @@ const Update = ({ ip }) => {
                   backgroundColor: "white",
                 }}
                 onChange={(e) => {
-                  setloc(e.target.value)
+                  setloc(e.target.value);
                 }}
               />
             </Grid>
@@ -524,6 +566,40 @@ const Update = ({ ip }) => {
                 size="large"
                 variant="contained"
                 disabled={loc.length === 0}
+                onClick={() => setOpenConfirmDialog(true)}
+              >{`Update Paid ${paidtable}`}</Button>
+            </Grid>
+          </Grid>
+          <Dialog
+            open={openConfirmDialog}
+            maxWidth="sm"
+            fullWidth
+            sx={{ backdropFilter: "blur(1px)" }}
+          >
+            <DialogTitle component={"div"}>
+              <Typography component={"span"} variant="h4">
+                Upload for{" "}
+              </Typography>
+              <Typography component={"span"} variant="h3" color="error.main">
+                {paidtable.toUpperCase()}
+              </Typography>
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                This will upload {type} values of {paidtable}.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                size="large"
+                color="error"
+                onClick={() => setOpenConfirmDialog(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                size="large"
+                color="primary"
                 onClick={() => {
                   Axios.post(`http://${ip}:6969/UpdatePaid${paidtable}`, {
                     loc: loc,
@@ -532,23 +608,26 @@ const Update = ({ ip }) => {
                       // alert(
                       //   `Uploaded ${resp.data["tot"]} files.\nWith ${resp.data["ertot"]} error files.`
                       // )
-                      setTot(resp.data["tot"])
-                      setErTot(resp.data["ertot"])
-                      setPaidUp(true)
+                      setOpenConfirmDialog(false);
+                      setTot(resp.data["tot"]);
+                      setErTot(resp.data["ertot"]);
+                      setPaidUp(true);
                     }
                     if (resp.data["tot"] > 0) {
                       console.log(
                         `Paid ${table} error files:\n${resp.data["erf"]}`
-                      )
+                      );
                     }
                     if (resp.data.err) {
-                      setErr(true)
+                      setErr(true);
                     }
-                  })
+                  });
                 }}
-              >{`Update Paid ${paidtable}`}</Button>
-            </Grid>
-          </Grid>
+              >
+                Upload
+              </Button>
+            </DialogActions>
+          </Dialog>
         </>
       )}
 
@@ -569,7 +648,7 @@ const Update = ({ ip }) => {
                 placeholder="Folder Location"
                 sx={{ backgroundColor: "white" }}
                 onChange={(e) => {
-                  setloc(e.target.value)
+                  setloc(e.target.value);
                 }}
               />
             </Grid>
@@ -581,10 +660,10 @@ const Update = ({ ip }) => {
                   Axios.post(`http://${ip}:6969/codeNames`, {
                     loc: loc,
                   }).then((resp) => {
-                    if (resp.data.fileErr) setCodeFileErr(true)
-                    else if (resp.data.upErr) setCodeUpErr(true)
-                    else if (resp.data.done) setCodeUpDone(true)
-                  })
+                    if (resp.data.fileErr) setCodeFileErr(true);
+                    else if (resp.data.upErr) setCodeUpErr(true);
+                    else if (resp.data.done) setCodeUpDone(true);
+                  });
                 }}
               >
                 upload
@@ -599,14 +678,14 @@ const Update = ({ ip }) => {
         autoHideDuration={2500}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         onClose={() => {
-          setUp(false)
+          setUp(false);
         }}
       >
         <Alert
           variant="standard"
           severity="success"
           onClose={() => {
-            setUp(false)
+            setUp(false);
           }}
         >{`Uploaded ${tot} file(s).\nWith ${erTot} error file(s)`}</Alert>
       </Snackbar>
@@ -616,14 +695,14 @@ const Update = ({ ip }) => {
         autoHideDuration={2500}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         onClose={() => {
-          setPaidUp(false)
+          setPaidUp(false);
         }}
       >
         <Alert
           variant="standard"
           severity="success"
           onClose={() => {
-            setPaidUp(false)
+            setPaidUp(false);
           }}
         >{`Uploaded ${tot} file(s).\nWith ${erTot} error file(s)`}</Alert>
       </Snackbar>
@@ -633,14 +712,14 @@ const Update = ({ ip }) => {
         autoHideDuration={2500}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         onClose={() => {
-          setErr(false)
+          setErr(false);
         }}
       >
         <Alert
           variant="standard"
           severity="error"
           onClose={() => {
-            setErr(false)
+            setErr(false);
           }}
         >{`There was a problem while uploading`}</Alert>
       </Snackbar>
@@ -650,14 +729,14 @@ const Update = ({ ip }) => {
         autoHideDuration={2500}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         onClose={() => {
-          setCodeFileErr(false)
+          setCodeFileErr(false);
         }}
       >
         <Alert
           variant="standard"
           severity="warning"
           onClose={() => {
-            setCodeFileErr(false)
+            setCodeFileErr(false);
           }}
         >{`File not found`}</Alert>
       </Snackbar>
@@ -667,14 +746,14 @@ const Update = ({ ip }) => {
         autoHideDuration={2500}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         onClose={() => {
-          setCodeUpErr(false)
+          setCodeUpErr(false);
         }}
       >
         <Alert
           variant="standard"
           severity="error"
           onClose={() => {
-            setCodeUpErr(false)
+            setCodeUpErr(false);
           }}
         >{`There was a problem while uploading`}</Alert>
       </Snackbar>
@@ -684,14 +763,14 @@ const Update = ({ ip }) => {
         autoHideDuration={2500}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         onClose={() => {
-          setCodeUpDone(false)
+          setCodeUpDone(false);
         }}
       >
         <Alert
           variant="standard"
           severity="success"
           onClose={() => {
-            setCodeUpDone(false)
+            setCodeUpDone(false);
           }}
         >{`File uploaded`}</Alert>
       </Snackbar>
@@ -701,19 +780,19 @@ const Update = ({ ip }) => {
         autoHideDuration={2500}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         onClose={() => {
-          setErrFiles(false)
+          setErrFiles(false);
         }}
       >
         <Alert
           variant="standard"
           severity="error"
           onClose={() => {
-            setErrFiles(false)
+            setErrFiles(false);
           }}
         >{`${erTot} file(s) not uploaded. Check console for file names.`}</Alert>
       </Snackbar>
     </Container>
-  )
-}
+  );
+};
 
-export default Update
+export default Update;

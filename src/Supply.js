@@ -21,119 +21,120 @@ import {
   Container,
   Box,
   Typography,
-} from "@mui/material"
-import SearchIcon from "@mui/icons-material/Search"
-import ListAltOutlinedIcon from "@mui/icons-material/ListAltOutlined"
-import LocalPrintshopOutlinedIcon from "@mui/icons-material/LocalPrintshopOutlined"
-import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined"
-import HelpIcon from "@mui/icons-material/Help"
+} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import ListAltOutlinedIcon from "@mui/icons-material/ListAltOutlined";
+import LocalPrintshopOutlinedIcon from "@mui/icons-material/LocalPrintshopOutlined";
+import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined";
+import HelpIcon from "@mui/icons-material/Help";
 // import NavBar from "./Components/NavBar"
-import water from "./Components/clgLogo.png"
-import { useState, useEffect } from "react"
+import water from "./Components/clgLogo.png";
+import { useState, useEffect } from "react";
 // import Bait from "./Components/Bait"
-import Axios from "axios"
+import Axios from "axios";
 
-import Barcode from "react-barcode"
+import Barcode from "react-barcode";
+import dayjs from "dayjs";
 
 const Supply = ({ ip }) => {
-  const [openHelp, setOpenHelp] = useState(false)
-  const [rollno, setrollno] = useState("")
-  const [basecosts, setbasecosts] = useState("")
-  const [addcosts, setaddcosts] = useState("")
-  const [maxcosts, setmaxcosts] = useState("")
-  const [found, setFound] = useState(false)
-  const [mapper, setMapper] = useState({})
-  const [subsA, setsubsA] = useState([])
-  const [subsB, setsubsB] = useState([])
-  const [subsC, setsubsC] = useState([])
-  const [subsD, setsubsD] = useState([])
-  const [subsE, setsubsE] = useState([])
-  const [subsF, setsubsF] = useState([])
-  const [subsG, setsubsG] = useState([])
-  const [subsH, setsubsH] = useState([])
-  const [codesA, setCodesA] = useState([])
-  const [codesB, setCodesB] = useState([])
-  const [codesC, setCodesC] = useState([])
-  const [codesD, setCodesD] = useState([])
-  const [codesE, setCodesE] = useState([])
-  const [codesF, setCodesF] = useState([])
-  const [codesG, setCodesG] = useState([])
-  const [codesH, setCodesH] = useState([])
-  const [namesA, setNamesA] = useState([])
-  const [namesB, setNamesB] = useState([])
-  const [namesC, setNamesC] = useState([])
-  const [namesD, setNamesD] = useState([])
-  const [namesE, setNamesE] = useState([])
-  const [namesF, setNamesF] = useState([])
-  const [namesG, setNamesG] = useState([])
-  const [namesH, setNamesH] = useState([])
-  const [Achange, setAchange] = useState(false)
-  const [Bchange, setBchange] = useState(false)
-  const [Cchange, setCchange] = useState(false)
-  const [Dchange, setDchange] = useState(false)
-  const [Echange, setEchange] = useState(false)
-  const [Fchange, setFchange] = useState(false)
-  const [Gchange, setGchange] = useState(false)
-  const [Hchange, setHchange] = useState(false)
-  const [printSup, setPrintSup] = useState(false)
-  const [done, setDone] = useState(false)
-  const [rollchange, setrollchange] = useState(false)
-  const [printed, setPrinted] = useState(false)
-  const [gen, setGen] = useState(false)
-  const [notFound, setNotFound] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [reg, setReg] = useState(false)
-  const [regErr, setRegErr] = useState(false)
-  const [fine, setFine] = useState(0)
-  const [openPrintDialog, setOpenPrintDialog] = useState(false)
-  let subcodes = []
+  const [openHelp, setOpenHelp] = useState(false);
+  const [rollNo, setrollno] = useState("");
+  const [basecosts, setbasecosts] = useState("");
+  const [addcosts, setaddcosts] = useState("");
+  const [maxcosts, setmaxcosts] = useState("");
+  const [found, setFound] = useState(false);
+  const [mapper, setMapper] = useState({});
+  const [subsA, setsubsA] = useState([]);
+  const [subsB, setsubsB] = useState([]);
+  const [subsC, setsubsC] = useState([]);
+  const [subsD, setsubsD] = useState([]);
+  const [subsE, setsubsE] = useState([]);
+  const [subsF, setsubsF] = useState([]);
+  const [subsG, setsubsG] = useState([]);
+  const [subsH, setsubsH] = useState([]);
+  const [codesA, setCodesA] = useState([]);
+  const [codesB, setCodesB] = useState([]);
+  const [codesC, setCodesC] = useState([]);
+  const [codesD, setCodesD] = useState([]);
+  const [codesE, setCodesE] = useState([]);
+  const [codesF, setCodesF] = useState([]);
+  const [codesG, setCodesG] = useState([]);
+  const [codesH, setCodesH] = useState([]);
+  const [namesA, setNamesA] = useState([]);
+  const [namesB, setNamesB] = useState([]);
+  const [namesC, setNamesC] = useState([]);
+  const [namesD, setNamesD] = useState([]);
+  const [namesE, setNamesE] = useState([]);
+  const [namesF, setNamesF] = useState([]);
+  const [namesG, setNamesG] = useState([]);
+  const [namesH, setNamesH] = useState([]);
+  const [Achange, setAchange] = useState(false);
+  const [Bchange, setBchange] = useState(false);
+  const [Cchange, setCchange] = useState(false);
+  const [Dchange, setDchange] = useState(false);
+  const [Echange, setEchange] = useState(false);
+  const [Fchange, setFchange] = useState(false);
+  const [Gchange, setGchange] = useState(false);
+  const [Hchange, setHchange] = useState(false);
+  const [printSup, setPrintSup] = useState(false);
+  const [done, setDone] = useState(false);
+  const [rollchange, setrollchange] = useState(false);
+  const [printed, setPrinted] = useState(false);
+  const [gen, setGen] = useState(false);
+  const [notFound, setNotFound] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [reg, setReg] = useState(false);
+  const [regErr, setRegErr] = useState(false);
+  const [fine, setFine] = useState(0);
+  const [openPrintDialog, setOpenPrintDialog] = useState(false);
+  let subCodes = [];
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     Axios.post(`http://${ip}:6969/getCosts`).then((res) => {
       if (res.data.err)
-        alert("Error while fetching costs! Re-upload correct costs again.")
+        alert("Error while fetching costs! Re-upload correct costs again.");
       else {
-        setbasecosts(res.data.arr[0]["sbc"])
-        setaddcosts(res.data.arr[0]["sac"])
-        setmaxcosts(res.data.arr[0]["sfc"])
+        setbasecosts(res.data.arr[0]["sbc"]);
+        setaddcosts(res.data.arr[0]["sac"]);
+        setmaxcosts(res.data.arr[0]["sfc"]);
 
-        let today = new Date()
-        let fine1 = new Date(res.data.arr[0]["fine_1dt"])
-        let fine2 = new Date(res.data.arr[0]["fine_2dt"])
-        let fine3 = new Date(res.data.arr[0]["fine_3dt"])
+        let today = new Date();
+        let fine1 = new Date(res.data.arr[0]["fine_1Dt"]);
+        let fine2 = new Date(res.data.arr[0]["fine_2Dt"]);
+        let fine3 = new Date(res.data.arr[0]["fine_3Dt"]);
         setFine(() => {
-          if (today >= fine1 && today < fine2) return res.data.arr[0]["fine_1"]
-          if (today >= fine2 && today < fine3) return res.data.arr[0]["fine_2"]
-          if (today >= fine3) return res.data.arr[0]["fine_3"]
-          return 0
-        })
+          if (today >= fine1 && today < fine2) return res.data.arr[0]["fine_1"];
+          if (today >= fine2 && today < fine3) return res.data.arr[0]["fine_2"];
+          if (today >= fine3) return res.data.arr[0]["fine_3"];
+          return 0;
+        });
       }
-    })
-    setLoading(false)
-  }, [ip])
+    });
+    setLoading(false);
+  }, [ip]);
 
   const goBack = () => {
-    setCodesA([])
-    setCodesB([])
-    setCodesC([])
-    setCodesD([])
-    setCodesE([])
-    setCodesF([])
-    setCodesG([])
-    setCodesH([])
+    setCodesA([]);
+    setCodesB([]);
+    setCodesC([]);
+    setCodesD([]);
+    setCodesE([]);
+    setCodesF([]);
+    setCodesG([]);
+    setCodesH([]);
 
-    setsubsA([])
-    setsubsB([])
-    setsubsC([])
-    setsubsD([])
-    setsubsE([])
-    setsubsF([])
-    setsubsG([])
-    setsubsH([])
+    setsubsA([]);
+    setsubsB([]);
+    setsubsC([]);
+    setsubsD([]);
+    setsubsE([]);
+    setsubsF([]);
+    setsubsG([]);
+    setsubsH([]);
 
-    setGen(false)
-  }
+    setGen(false);
+  };
 
   const rendlastbuttons = () => {
     if (found && gen) {
@@ -143,7 +144,7 @@ const Supply = ({ ip }) => {
             <Button
               size="large"
               startIcon={<LocalPrintshopOutlinedIcon />}
-              style={{ backgroundColor: "white" }}
+              style={{ backgroundColor: "white", marginRight: "8%" }}
               variant="outlined"
               onClick={() => setOpenPrintDialog(true)}
             >
@@ -151,146 +152,147 @@ const Supply = ({ ip }) => {
             </Button>
           </div>
         </>
-      )
+      );
     }
-  }
+  };
 
   const getcost = (i) => {
-    let k = [basecosts, addcosts, maxcosts]
+    console.log(i);
+    let k = [basecosts, addcosts, maxcosts];
     // eslint-disable-next-line array-callback-return
     k = k.map((e) => {
       if (!isNaN(parseInt(e))) {
-        return parseInt(e)
+        return parseInt(e);
       }
-    })
+    });
     k = k.filter((e) => {
-      return e !== undefined
-    })
+      return e !== undefined;
+    });
     if (k.length !== 3) {
-      window.location.reload(false)
+      window.location.reload(false);
     }
     if (i == 1) {
-      let aCost = 0
+      let aCost = 0;
       if (subsA.length !== 0) {
         if (subsA.length == 1) {
-          aCost = k[0]
+          aCost = k[0];
         } else if (subsA.length > 1 && subsA.length < 4) {
-          aCost = k[0] + k[1] * (subsA.length - 1)
+          aCost = k[0] + k[1] * (subsA.length - 1);
         } else if (subsA.length >= 4) {
-          aCost = k[2]
+          aCost = k[2];
         }
-        if (fine > 0 && aCost > 0) return (aCost += fine)
-        else return aCost
+        if (fine > 0 && aCost > 0) return (aCost += fine);
+        else return aCost;
       } else {
-        return 0
+        return 0;
       }
     } else if (i == 2) {
-      let bCost = 0
+      let bCost = 0;
       if (subsB.length !== 0) {
         if (subsB.length == 1) {
-          bCost = k[0]
+          bCost = k[0];
         } else if (subsB.length > 1 && subsB.length < 4) {
-          bCost = k[0] + k[1] * (subsB.length - 1)
+          bCost = k[0] + k[1] * (subsB.length - 1);
         } else if (subsB.length >= 4) {
-          bCost = k[2]
+          bCost = k[2];
         }
-        if (fine > 0 && bCost > 0) return (bCost += fine)
-        else return bCost
+        if (fine > 0 && bCost > 0) return (bCost += fine);
+        else return bCost;
       } else {
-        return 0
+        return 0;
       }
     } else if (i == 3) {
-      let cCost = 0
+      let cCost = 0;
       if (subsC.length !== 0) {
         if (subsC.length == 1) {
-          cCost = k[0]
+          cCost = k[0];
         } else if (subsC.length > 1 && subsC.length < 4) {
-          cCost = k[0] + k[1] * (subsC.length - 1)
+          cCost = k[0] + k[1] * (subsC.length - 1);
         } else if (subsC.length >= 4) {
-          cCost = k[2]
+          cCost = k[2];
         }
-        if (fine > 0 && cCost > 0) return (cCost += fine)
-        else return cCost
+        if (fine > 0 && cCost > 0) return (cCost += fine);
+        else return cCost;
       } else {
-        return 0
+        return 0;
       }
     } else if (i == 4) {
-      let dCost = 0
+      let dCost = 0;
       if (subsD.length !== 0) {
         if (subsD.length == 1) {
-          dCost = k[0]
+          dCost = k[0];
         } else if (subsD.length > 1 && subsD.length < 4) {
-          dCost = k[0] + k[1] * (subsD.length - 1)
+          dCost = k[0] + k[1] * (subsD.length - 1);
         } else if (subsD.length >= 4) {
-          dCost = k[2]
+          dCost = k[2];
         }
-        if (fine > 0 && dCost > 0) return (dCost += fine)
-        else return dCost
+        if (fine > 0 && dCost > 0) return (dCost += fine);
+        else return dCost;
       } else {
-        return 0
+        return 0;
       }
     } else if (i == 5) {
-      let eCost = 0
+      let eCost = 0;
       if (subsE.length !== 0) {
         if (subsE.length == 1) {
-          eCost = k[0]
+          eCost = k[0];
         } else if (subsE.length > 1 && subsE.length < 4) {
-          eCost = k[0] + k[1] * (subsE.length - 1)
+          eCost = k[0] + k[1] * (subsE.length - 1);
         } else if (subsE.length >= 4) {
-          eCost = k[2]
+          eCost = k[2];
         }
-        if (fine > 0 && eCost > 0) return (eCost += fine)
-        else return eCost
+        if (fine > 0 && eCost > 0) return (eCost += fine);
+        else return eCost;
       } else {
-        return 0
+        return 0;
       }
     } else if (i == 6) {
-      let fCost = 0
+      let fCost = 0;
       if (subsF.length !== 0) {
         if (subsF.length == 1) {
-          fCost = k[0]
+          fCost = k[0];
         } else if (subsF.length > 1 && subsF.length < 4) {
-          fCost = k[0] + k[1] * (subsF.length - 1)
+          fCost = k[0] + k[1] * (subsF.length - 1);
         } else if (subsF.length >= 4) {
-          fCost = k[2]
+          fCost = k[2];
         }
-        if (fine > 0 && fCost > 0) return (fCost += fine)
-        else return fCost
+        if (fine > 0 && fCost > 0) return (fCost += fine);
+        else return fCost;
       } else {
-        return 0
+        return 0;
       }
     } else if (i == 7) {
-      let gCost = 0
+      let gCost = 0;
       if (subsG.length !== 0) {
         if (subsG.length == 1) {
-          gCost = k[0]
+          gCost = k[0];
         } else if (subsG.length > 1 && subsG.length < 4) {
-          gCost = k[0] + k[1] * (subsG.length - 1)
+          gCost = k[0] + k[1] * (subsG.length - 1);
         } else if (subsG.length >= 4) {
-          gCost = k[2]
+          gCost = k[2];
         }
-        if (fine > 0 && gCost > 0) return (gCost += fine)
-        else return gCost
+        if (fine > 0 && gCost > 0) return (gCost += fine);
+        else return gCost;
       } else {
-        return 0
+        return 0;
       }
     } else if (i == 8) {
-      let hCost = 0
+      let hCost = 0;
       if (subsH.length !== 0) {
         if (subsH.length == 1) {
-          hCost = k[0]
+          hCost = k[0];
         } else if (subsH.length > 1 && subsH.length < 4) {
-          hCost = k[0] + k[1] * (subsH.length - 1)
+          hCost = k[0] + k[1] * (subsH.length - 1);
         } else if (subsH.length >= 4) {
-          hCost = k[2]
+          hCost = k[2];
         }
-        if (fine > 0 && hCost > 0) return (hCost += fine)
-        else return hCost
+        if (fine > 0 && hCost > 0) return (hCost += fine);
+        else return hCost;
       } else {
-        return 0
+        return 0;
       }
     }
-  }
+  };
 
   const rend11 = () => {
     if (found) {
@@ -304,14 +306,14 @@ const Supply = ({ ip }) => {
                 style={{ backgroundColor: "white" }}
                 multiple
                 onChange={(_e, val) => {
-                  subcodes = []
+                  subCodes = [];
                   val.forEach((value) => {
-                    subcodes.push(
+                    subCodes.push(
                       Object.keys(mapper).find((key) => mapper[key] === value)
-                    )
-                  })
-                  setCodesA(subcodes)
-                  setsubsA(val)
+                    );
+                  });
+                  setCodesA(subCodes);
+                  setsubsA(val);
                 }}
                 disableCloseOnSelect
                 options={namesA}
@@ -329,14 +331,14 @@ const Supply = ({ ip }) => {
                 style={{ backgroundColor: "white" }}
                 multiple
                 onChange={(_e, val) => {
-                  subcodes = []
+                  subCodes = [];
                   val.forEach((value) => {
-                    subcodes.push(
+                    subCodes.push(
                       Object.keys(mapper).find((key) => mapper[key] === value)
-                    )
-                  })
-                  setCodesB(subcodes)
-                  setsubsB(val)
+                    );
+                  });
+                  setCodesB(subCodes);
+                  setsubsB(val);
                 }}
                 disableCloseOnSelect
                 options={namesB}
@@ -348,7 +350,7 @@ const Supply = ({ ip }) => {
             </Grid>
             <Grid item xs={2}>
               {(gen || printSup) && getcost(1) + getcost(2)}
-              {(getcost(1) > 0 || getcost(2) > 0) && gen
+              {(getcost(1) > 0 || getcost(2) > 0) && (gen || printSup)
                 ? ` (${fine} Fine/Sem)`
                 : ""}
             </Grid>
@@ -364,14 +366,14 @@ const Supply = ({ ip }) => {
                 }}
                 multiple
                 onChange={(_e, val) => {
-                  subcodes = []
+                  subCodes = [];
                   val.forEach((value) => {
-                    subcodes.push(
+                    subCodes.push(
                       Object.keys(mapper).find((key) => mapper[key] === value)
-                    )
-                  })
-                  setCodesC(subcodes)
-                  setsubsC(val)
+                    );
+                  });
+                  setCodesC(subCodes);
+                  setsubsC(val);
                 }}
                 disableCloseOnSelect
                 options={namesC}
@@ -390,14 +392,14 @@ const Supply = ({ ip }) => {
                 }}
                 multiple
                 onChange={(_e, val) => {
-                  subcodes = []
+                  subCodes = [];
                   val.forEach((value) => {
-                    subcodes.push(
+                    subCodes.push(
                       Object.keys(mapper).find((key) => mapper[key] === value)
-                    )
-                  })
-                  setCodesD(subcodes)
-                  setsubsD(val)
+                    );
+                  });
+                  setCodesD(subCodes);
+                  setsubsD(val);
                 }}
                 disableCloseOnSelect
                 options={namesD}
@@ -409,7 +411,7 @@ const Supply = ({ ip }) => {
             </Grid>
             <Grid item xs={2}>
               {(gen || printSup) && getcost(3) + getcost(4)}
-              {(getcost(3) > 0 || getcost(4) > 0) && gen
+              {(getcost(3) > 0 || getcost(4) > 0) && (gen || printSup)
                 ? ` (${fine} Fine/Sem)`
                 : ""}
             </Grid>
@@ -425,14 +427,14 @@ const Supply = ({ ip }) => {
                 }}
                 multiple
                 onChange={(_e, val) => {
-                  subcodes = []
+                  subCodes = [];
                   val.forEach((value) => {
-                    subcodes.push(
+                    subCodes.push(
                       Object.keys(mapper).find((key) => mapper[key] === value)
-                    )
-                  })
-                  setCodesE(subcodes)
-                  setsubsE(val)
+                    );
+                  });
+                  setCodesE(subCodes);
+                  setsubsE(val);
                 }}
                 disableCloseOnSelect
                 options={namesE}
@@ -451,14 +453,14 @@ const Supply = ({ ip }) => {
                 }}
                 multiple
                 onChange={(_e, val) => {
-                  subcodes = []
+                  subCodes = [];
                   val.forEach((value) => {
-                    subcodes.push(
+                    subCodes.push(
                       Object.keys(mapper).find((key) => mapper[key] === value)
-                    )
-                  })
-                  setCodesF(subcodes)
-                  setsubsF(val)
+                    );
+                  });
+                  setCodesF(subCodes);
+                  setsubsF(val);
                 }}
                 disableCloseOnSelect
                 options={namesF}
@@ -470,7 +472,7 @@ const Supply = ({ ip }) => {
             </Grid>
             <Grid item xs={2}>
               {(gen || printSup) && getcost(5) + getcost(6)}
-              {((getcost(5) > 0 || getcost(6) > 0) && gen) || printSup
+              {(getcost(5) > 0 || getcost(6) > 0) && (gen || printSup)
                 ? ` (${fine} Fine/Sem)`
                 : ""}
             </Grid>
@@ -486,14 +488,14 @@ const Supply = ({ ip }) => {
                 }}
                 multiple
                 onChange={(_e, val) => {
-                  subcodes = []
+                  subCodes = [];
                   val.forEach((value) => {
-                    subcodes.push(
+                    subCodes.push(
                       Object.keys(mapper).find((key) => mapper[key] === value)
-                    )
-                  })
-                  setCodesG(subcodes)
-                  setsubsG(val)
+                    );
+                  });
+                  setCodesG(subCodes);
+                  setsubsG(val);
                 }}
                 disableCloseOnSelect
                 options={namesG}
@@ -512,14 +514,14 @@ const Supply = ({ ip }) => {
                 }}
                 multiple
                 onChange={(_e, val) => {
-                  subcodes = []
+                  subCodes = [];
                   val.forEach((value) => {
-                    subcodes.push(
+                    subCodes.push(
                       Object.keys(mapper).find((key) => mapper[key] === value)
-                    )
-                  })
-                  setCodesH(subcodes)
-                  setsubsH(val)
+                    );
+                  });
+                  setCodesH(subCodes);
+                  setsubsH(val);
                 }}
                 disableCloseOnSelect
                 options={namesH}
@@ -531,7 +533,7 @@ const Supply = ({ ip }) => {
             </Grid>
             <Grid item xs={2}>
               {(gen || printSup) && getcost(7) + getcost(8)}
-              {((getcost(7) > 0 || getcost(8) > 0) && gen) || printSup
+              {(getcost(7) > 0 || getcost(8) > 0) && (gen || printSup)
                 ? `(${fine} Fine/Sem)`
                 : ""}
             </Grid>
@@ -571,7 +573,7 @@ const Supply = ({ ip }) => {
                 }}
               >
                 <Barcode
-                  value={rollno}
+                  value={rollNo}
                   width={2}
                   height={40}
                   displayValue={false}
@@ -586,7 +588,7 @@ const Supply = ({ ip }) => {
                 style={{ marginLeft: 4, marginTop: "1%" }}
                 startIcon={<ListAltOutlinedIcon />}
                 onClick={() => {
-                  setGen(true)
+                  setGen(true);
                 }}
               >
                 Generate Student Copy
@@ -595,174 +597,157 @@ const Supply = ({ ip }) => {
             </div>
           )}
         </>
-      )
+      );
     }
-  }
-
-  const check = () => {
-    return (
-      codesA.length +
-      codesB.length +
-      codesC.length +
-      codesD.length +
-      codesE.length +
-      codesF.length +
-      codesG.length +
-      codesH.length
-    )
-  }
+  };
 
   const init = (data) => {
-    for (let i = 0; i < data.subcodes.length; i++) {
-      if (Object.keys(data.subcodes[i]) == "A") {
+    for (let i = 0; i < data.subCodes.length; i++) {
+      if (Object.keys(data.subCodes[i]) == "A") {
         for (
           let j = 0;
-          j < data.subcodes[i]["A"].length &&
-          codesA.length < data.subcodes[i]["A"].length;
+          j < data.subCodes[i]["A"].length &&
+          codesA.length < data.subCodes[i]["A"].length;
           j++
         ) {
-          setCodesA(data.subcodes[i]["A"])
-          setsubsA(data.subnames[i]["A"])
-          setNamesA(data.subnames[i]["A"])
+          setCodesA(data.subCodes[i]["A"]);
+          setsubsA(data.subNames[i]["A"]);
+          setNamesA(data.subNames[i]["A"]);
         }
       }
       //1sem2
-      else if (Object.keys(data.subcodes[i]) == "B") {
+      else if (Object.keys(data.subCodes[i]) == "B") {
         for (
           let j = 0;
-          j < data.subcodes[i]["B"].length &&
-          codesB.length < data.subcodes[i]["B"].length;
+          j < data.subCodes[i]["B"].length &&
+          codesB.length < data.subCodes[i]["B"].length;
           j++
         ) {
-          setCodesB(data.subcodes[i]["B"])
-          setsubsB(data.subnames[i]["B"])
-          setNamesB(data.subnames[i]["B"])
+          setCodesB(data.subCodes[i]["B"]);
+          setsubsB(data.subNames[i]["B"]);
+          setNamesB(data.subNames[i]["B"]);
         }
       }
       //2sem1
-      else if (Object.keys(data.subcodes[i]) == "C") {
+      else if (Object.keys(data.subCodes[i]) == "C") {
         for (
           let j = 0;
-          j < data.subcodes[i]["C"].length &&
-          codesC.length < data.subcodes[i]["C"].length;
+          j < data.subCodes[i]["C"].length &&
+          codesC.length < data.subCodes[i]["C"].length;
           j++
         ) {
-          setCodesC(data.subcodes[i]["C"])
-          setsubsC(data.subnames[i]["C"])
-          setNamesC(data.subnames[i]["C"])
+          setCodesC(data.subCodes[i]["C"]);
+          setsubsC(data.subNames[i]["C"]);
+          setNamesC(data.subNames[i]["C"]);
         }
       }
       //2sem2
-      else if (Object.keys(data.subcodes[i]) == "D") {
+      else if (Object.keys(data.subCodes[i]) == "D") {
         for (
           let j = 0;
-          j < data.subcodes[i]["D"].length &&
-          codesD.length < data.subcodes[i]["D"].length;
+          j < data.subCodes[i]["D"].length &&
+          codesD.length < data.subCodes[i]["D"].length;
           j++
         ) {
-          setCodesD(data.subcodes[i].D)
-          setsubsD(data.subnames[i].D)
-          setNamesD(data.subnames[i].D)
+          setCodesD(data.subCodes[i].D);
+          setsubsD(data.subNames[i].D);
+          setNamesD(data.subNames[i].D);
         }
       }
       //3sem1
-      else if (Object.keys(data.subcodes[i]) == "E") {
+      else if (Object.keys(data.subCodes[i]) == "E") {
         for (
           let j = 0;
-          j < data.subcodes[i]["E"].length &&
-          codesE.length < data.subcodes[i]["E"].length;
+          j < data.subCodes[i]["E"].length &&
+          codesE.length < data.subCodes[i]["E"].length;
           j++
         ) {
-          setCodesE(data.subcodes[i]["E"])
-          setsubsE(data.subnames[i]["E"])
-          setNamesE(data.subnames[i]["E"])
+          setCodesE(data.subCodes[i]["E"]);
+          setsubsE(data.subNames[i]["E"]);
+          setNamesE(data.subNames[i]["E"]);
         }
       }
       //3sem2
-      else if (Object.keys(data.subcodes[i]) == "F") {
+      else if (Object.keys(data.subCodes[i]) == "F") {
         for (
           let j = 0;
-          j < data.subcodes[i]["F"].length &&
-          codesF.length < data.subcodes[i]["F"].length;
+          j < data.subCodes[i]["F"].length &&
+          codesF.length < data.subCodes[i]["F"].length;
           j++
         ) {
-          setCodesF(data.subcodes[i]["F"])
-          setsubsF(data.subnames[i]["F"])
-          setNamesF(data.subnames[i]["F"])
+          setCodesF(data.subCodes[i]["F"]);
+          setsubsF(data.subNames[i]["F"]);
+          setNamesF(data.subNames[i]["F"]);
         }
       }
       //4sem1
-      else if (Object.keys(data.subcodes[i]) == "G") {
+      else if (Object.keys(data.subCodes[i]) == "G") {
         for (
           let j = 0;
-          j < data.subcodes[i]["G"].length &&
-          codesG.length < data.subcodes[i]["G"].length;
+          j < data.subCodes[i]["G"].length &&
+          codesG.length < data.subCodes[i]["G"].length;
           j++
         ) {
-          setCodesG(data.subcodes[i]["G"])
-          setsubsG(data.subnames[i]["G"])
-          setNamesG(data.subnames[i]["G"])
+          setCodesG(data.subCodes[i]["G"]);
+          setsubsG(data.subNames[i]["G"]);
+          setNamesG(data.subNames[i]["G"]);
         }
       }
       //4sem2
-      else if (Object.keys(data.subcodes[i]) == "H") {
+      else if (Object.keys(data.subCodes[i]) == "H") {
         for (
           let j = 0;
-          j < data.subcodes[i]["H"].length &&
-          codesH.length < data.subcodes[i]["H"].length;
+          j < data.subCodes[i]["H"].length &&
+          codesH.length < data.subCodes[i]["H"].length;
           j++
         ) {
-          setCodesH(data.subcodes[i]["H"])
-          setsubsH(data.subnames[i]["H"])
-          setNamesH(data.subnames[i]["H"])
+          setCodesH(data.subCodes[i]["H"]);
+          setsubsH(data.subNames[i]["H"]);
+          setNamesH(data.subNames[i]["H"]);
         }
       }
     }
-  }
+  };
 
   const supplysearch = (e) => {
-    setLoading(true)
-    setPrinted(false)
-    e.preventDefault()
+    setLoading(true);
+    setPrinted(false);
+    e.preventDefault();
 
     Axios.post(`http://${ip}:6969/Supplysearch`, {
-      rno: rollno,
+      rno: rollNo,
       gr: "F",
     }).then((resp) => {
       if (resp.data.value > 0) {
-        init(resp.data)
-        setMapper(resp.data.mapper)
-        setLoading(false)
-        if (check() === resp.data.value) {
-          setLoading(false)
-          setFound(true)
-          setPrintSup(resp.data.printTab)
-        } else {
-          setLoading(false)
-        }
+        init(resp.data);
+        setMapper(resp.data.mapper);
+        setLoading(false);
+        setLoading(false);
+        setFound(true);
+        setPrintSup(resp.data.printTab);
       } else {
-        setLoading(false)
-        setNotFound(true)
+        setLoading(false);
+        setNotFound(true);
       }
-    })
-  }
+    });
+  };
   const handlerollno = (e) => {
-    goBack()
-    setFound(false)
-    setPrintSup(false)
-    e.target.value = e.target.value.toUpperCase()
-    setrollno(e.target.value)
-    setFound(false)
-  }
+    goBack();
+    setFound(false);
+    setPrintSup(false);
+    e.target.value = e.target.value.toUpperCase();
+    setrollno(e.target.value);
+    setFound(false);
+  };
   const handlebasecosts = (e) => {
-    setbasecosts(e.target.value)
-  }
+    setbasecosts(e.target.value);
+  };
   const handleaddcosts = (e) => {
-    setaddcosts(e.target.value)
-  }
+    setaddcosts(e.target.value);
+  };
   const handlemaxcosts = (e) => {
-    setmaxcosts(e.target.value)
-  }
+    setmaxcosts(e.target.value);
+  };
 
   return (
     <>
@@ -780,7 +765,7 @@ const Supply = ({ ip }) => {
               <IconButton
                 size="large"
                 onClick={() => {
-                  setOpenHelp(true)
+                  setOpenHelp(true);
                 }}
                 color="primary"
               >
@@ -878,7 +863,7 @@ const Supply = ({ ip }) => {
               <>Procedure</>
             </h2>
             <p>
-              Upon recieving the data, selet only those subjects that the
+              Upon recieving the data, select only those subjects that the
               student intends to write. Once done, generate student copy by
               selecting{" "}
               <code>
@@ -918,7 +903,7 @@ const Supply = ({ ip }) => {
         <DialogActions>
           <Button
             onClick={() => {
-              setOpenHelp(false)
+              setOpenHelp(false);
             }}
           >
             okay
@@ -1015,7 +1000,7 @@ const Supply = ({ ip }) => {
                     type="submit"
                     onClick={supplysearch}
                     disabled={
-                      rollno.length !== 10 ||
+                      rollNo.length !== 10 ||
                       basecosts <= 0 ||
                       addcosts <= 0 ||
                       maxcosts <= 0
@@ -1033,9 +1018,9 @@ const Supply = ({ ip }) => {
                       variant="contained"
                       startIcon={<HowToRegOutlinedIcon />}
                       onClick={() => {
-                        setLoading(true)
+                        setLoading(true);
                         Axios.post(`http://${ip}:6969/Registersupply`, {
-                          rno: rollno,
+                          rno: rollNo,
                           A: codesA,
                           B: codesB,
                           C: codesC,
@@ -1046,28 +1031,19 @@ const Supply = ({ ip }) => {
                           H: codesH,
                         }).then((resp) => {
                           if (resp.data["registered"]) {
-                            setLoading(false)
-                            setReg(true)
-                            setPrintSup(false)
-                            setFound(false)
+                            setLoading(false);
+                            setReg(true);
+                            setPrintSup(false);
+                            setFound(false);
                           } else if (resp.data.err) {
-                            setLoading(false)
-                            setRegErr(true)
+                            setLoading(false);
+                            setRegErr(true);
                           }
-                        })
+                        });
                       }}
                     >
                       Register
                     </Button>
-                    <Typography
-                      variant="h6"
-                      fontWeight={500}
-                      component="span"
-                      color="warning.main"
-                      ml={2}
-                    >
-                      Values have been fetched from Print Supplementary table
-                    </Typography>
                   </>
                 )}
               </Grid>
@@ -1099,7 +1075,7 @@ const Supply = ({ ip }) => {
               >
                 <Grid item xs={4}>
                   <h3>
-                    <>{rollno} (Supplementary)</>
+                    <>{rollNo} (Supplementary)</>
                   </h3>
                 </Grid>
                 <Grid item xs={4}>
@@ -1109,10 +1085,7 @@ const Supply = ({ ip }) => {
                 </Grid>
                 <Grid item xs={4}>
                   <h3>
-                    <>
-                      {new Date().getDate()}/{new Date().getMonth() + 1}/
-                      {new Date().getFullYear()}
-                    </>
+                    <>{dayjs().format("D MMM, YYYY (h:mm A)")}</>
                   </h3>
                 </Grid>
               </Grid>
@@ -1132,7 +1105,7 @@ const Supply = ({ ip }) => {
                   >
                     <Grid item xs={4}>
                       <h3>
-                        <>{rollno} (Supplementary)</>
+                        <>{rollNo} (Supplementary)</>
                       </h3>
                     </Grid>
                     <Grid item xs={4}>
@@ -1142,10 +1115,7 @@ const Supply = ({ ip }) => {
                     </Grid>
                     <Grid item xs={4}>
                       <h3>
-                        <>
-                          {new Date().getDate()}/{new Date().getMonth() + 1}/
-                          {new Date().getFullYear()}
-                        </>
+                        <>{dayjs().format("D MMM, YYYY (h:mm A)")}</>
                       </h3>
                     </Grid>
                   </Grid>
@@ -1174,7 +1144,7 @@ const Supply = ({ ip }) => {
                   <hr />
                   <Grid
                     container
-                    spacing={4}
+                    justifyContent={"space-around"}
                     columns={12}
                     align="center"
                     style={{
@@ -1183,7 +1153,7 @@ const Supply = ({ ip }) => {
                   >
                     <Grid item xs={4}>
                       <h3>
-                        <>{rollno} (Supplementary)</>
+                        <>{rollNo} (Supplementary)</>
                       </h3>
                     </Grid>
                     <Grid item xs={4}>
@@ -1193,15 +1163,12 @@ const Supply = ({ ip }) => {
                     </Grid>
                     <Grid item xs={4}>
                       <h3>
-                        <>
-                          {new Date().getDate()}/{new Date().getMonth() + 1}/
-                          {new Date().getFullYear()}
-                        </>
+                        <>{dayjs().format("D MMM, YYYY (h:mm A)")}</>
                       </h3>
                     </Grid>
                   </Grid>
                   {() => {
-                    setDone(true)
+                    setDone(true);
                   }}
                 </>
               )}
@@ -1229,46 +1196,46 @@ const Supply = ({ ip }) => {
         open={reg}
         autoHideDuration={2500}
         onClose={() => {
-          setReg(false)
+          setReg(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
           onClose={() => {
-            setReg(false)
+            setReg(false);
           }}
           variant="standard"
-        >{`Registered for ${rollno}`}</Alert>
+        >{`Registered for ${rollNo}`}</Alert>
       </Snackbar>
 
       <Snackbar
         open={notFound}
         autoHideDuration={2500}
         onClose={() => {
-          setNotFound(false)
+          setNotFound(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
           onClose={() => {
-            setNotFound(false)
+            setNotFound(false);
           }}
           variant="standard"
           severity="error"
-        >{`No data found for ${rollno}`}</Alert>
+        >{`No data found for ${rollNo}`}</Alert>
       </Snackbar>
 
       <Snackbar
         open={Achange}
         autoHideDuration={2500}
         onClose={() => {
-          setAchange(false)
+          setAchange(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
           onClose={() => {
-            setAchange(false)
+            setAchange(false);
           }}
           variant="standard"
           severity="error"
@@ -1279,13 +1246,13 @@ const Supply = ({ ip }) => {
         open={Bchange}
         autoHideDuration={2500}
         onClose={() => {
-          setBchange(false)
+          setBchange(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
           onClose={() => {
-            setBchange(false)
+            setBchange(false);
           }}
           variant="standard"
           severity="warning"
@@ -1295,13 +1262,13 @@ const Supply = ({ ip }) => {
         open={Cchange}
         autoHideDuration={2500}
         onClose={() => {
-          setCchange(false)
+          setCchange(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
           onClose={() => {
-            setCchange(false)
+            setCchange(false);
           }}
           variant="standard"
           severity="warning"
@@ -1312,13 +1279,13 @@ const Supply = ({ ip }) => {
         open={Dchange}
         autoHideDuration={2500}
         onClose={() => {
-          setDchange(false)
+          setDchange(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
           onClose={() => {
-            setDchange(false)
+            setDchange(false);
           }}
           variant="standard"
           severity="error"
@@ -1329,13 +1296,13 @@ const Supply = ({ ip }) => {
         open={Echange}
         autoHideDuration={2500}
         onClose={() => {
-          setEchange(false)
+          setEchange(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
           onClose={() => {
-            setEchange(false)
+            setEchange(false);
           }}
           variant="standard"
           severity="warnig"
@@ -1346,13 +1313,13 @@ const Supply = ({ ip }) => {
         open={Fchange}
         autoHideDuration={2500}
         onClose={() => {
-          setFchange(false)
+          setFchange(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
           onClose={() => {
-            setFchange(false)
+            setFchange(false);
           }}
           variant="standard"
           severity="error"
@@ -1363,13 +1330,13 @@ const Supply = ({ ip }) => {
         open={Gchange}
         autoHideDuration={2500}
         onClose={() => {
-          setGchange(false)
+          setGchange(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
           onClose={() => {
-            setGchange(false)
+            setGchange(false);
           }}
           variant="standard"
           severity="warning"
@@ -1380,13 +1347,13 @@ const Supply = ({ ip }) => {
         open={Hchange}
         autoHideDuration={2500}
         onClose={() => {
-          setHchange(false)
+          setHchange(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
           onClose={() => {
-            setHchange(false)
+            setHchange(false);
           }}
           variant="standard"
           severity="warning"
@@ -1397,13 +1364,13 @@ const Supply = ({ ip }) => {
         open={rollchange}
         autoHideDuration={2500}
         onClose={() => {
-          setrollchange(false)
+          setrollchange(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
           onClose={() => {
-            setrollchange(false)
+            setrollchange(false);
           }}
           variant="standard"
           severity="warning"
@@ -1414,13 +1381,13 @@ const Supply = ({ ip }) => {
         open={regErr}
         autoHideDuration={2500}
         onClose={() => {
-          setRegErr(false)
+          setRegErr(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
           onClose={() => {
-            setRegErr(false)
+            setRegErr(false);
           }}
           variant="standard"
           severity="warning"
@@ -1443,7 +1410,7 @@ const Supply = ({ ip }) => {
               component="span"
               fontWeight={500}
             >
-              {rollno}
+              {rollNo}
             </Typography>
           </Typography>
         </DialogTitle>
@@ -1483,9 +1450,9 @@ const Supply = ({ ip }) => {
           </Button>
           <Button
             onClick={() => {
-              setOpenPrintDialog(false)
+              setOpenPrintDialog(false);
               Axios.post(`http://${ip}:6969/printSupply`, {
-                rno: rollno,
+                rno: rollNo,
                 A: codesA,
                 B: codesB,
                 C: codesC,
@@ -1496,13 +1463,13 @@ const Supply = ({ ip }) => {
                 H: codesH,
               }).then((resp) => {
                 if (resp.data.done) {
-                  window.print()
-                  setPrinted(true)
-                  setFound(false)
-                  goBack()
-                  return false
+                  window.print();
+                  setPrinted(true);
+                  setFound(false);
+                  goBack();
+                  return false;
                 }
-              })
+              });
             }}
           >
             Print
@@ -1517,7 +1484,7 @@ const Supply = ({ ip }) => {
         <CircularProgress color="inherit" />
       </Backdrop>
     </>
-  )
-}
+  );
+};
 
-export default Supply
+export default Supply;

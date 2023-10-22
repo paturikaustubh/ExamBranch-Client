@@ -1,4 +1,4 @@
-import Axios from "axios"
+import Axios from "axios";
 
 import {
   Paper,
@@ -13,18 +13,18 @@ import {
   Typography,
   Box,
   Container,
-} from "@mui/material"
-import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined"
-import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined"
-import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined"
-import logo from "../Components/GCET-logo.png"
-import { useState } from "react"
+} from "@mui/material";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
+import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
+import logo from "../Components/GCET-logo.png";
+import { useState } from "react";
 
 const LoginForm = ({ settoken, setuser, ip }) => {
-  const [username, setusername] = useState("")
-  const [password, setpassword] = useState("")
-  const [showPass, setShowPass] = useState(false)
-  const [wrong, setwrong] = useState(false)
+  const [userName, setusername] = useState("");
+  const [password, setpassword] = useState("");
+  const [showPass, setShowPass] = useState(false);
+  const [wrong, setwrong] = useState(false);
   return (
     <Container maxWidth="md">
       <title>Login</title>
@@ -32,7 +32,7 @@ const LoginForm = ({ settoken, setuser, ip }) => {
         <Paper
           sx={{ p: 4 }}
           onSubmit={(e) => {
-            e.preventDefault()
+            e.preventDefault();
           }}
           elevation={4}
         >
@@ -64,7 +64,7 @@ const LoginForm = ({ settoken, setuser, ip }) => {
                   style={{ marginBottom: "4%", marginTop: "4%" }}
                   label="Username"
                   onChange={(e) => {
-                    setusername(e.target.value)
+                    setusername(e.target.value);
                   }}
                 />
               </div>
@@ -83,7 +83,7 @@ const LoginForm = ({ settoken, setuser, ip }) => {
                     ),
                   }}
                   onChange={(e) => {
-                    setpassword(e.target.value)
+                    setpassword(e.target.value);
                   }}
                 />
                 <FormGroup>
@@ -96,8 +96,8 @@ const LoginForm = ({ settoken, setuser, ip }) => {
                       <Checkbox
                         onClick={(e) => {
                           if (e.target.checked) {
-                            setShowPass(true)
-                          } else setShowPass(false)
+                            setShowPass(true);
+                          } else setShowPass(false);
                         }}
                       />
                     }
@@ -107,22 +107,22 @@ const LoginForm = ({ settoken, setuser, ip }) => {
 
               <Button
                 size="large"
-                disabled={username === "" || password === ""}
+                disabled={userName === "" || password === ""}
                 startIcon={<LoginOutlinedIcon />}
                 type="submit"
                 variant="contained"
                 onClick={() => {
                   Axios.post(`http://${ip}:6969/Login`, {
-                    username: username,
+                    userName: userName,
                     password: password,
                   }).then((resp) => {
                     if (resp.data["goahead"]) {
-                      setuser(resp.data["username"])
-                      settoken(true)
+                      setuser(resp.data["userName"]);
+                      settoken(true);
                     } else {
-                      setwrong(true)
+                      setwrong(true);
                     }
-                  })
+                  });
                 }}
               >
                 Login
@@ -136,7 +136,7 @@ const LoginForm = ({ settoken, setuser, ip }) => {
         open={wrong}
         autoHideDuration={2500}
         onClose={() => {
-          setwrong(false)
+          setwrong(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
@@ -144,14 +144,14 @@ const LoginForm = ({ settoken, setuser, ip }) => {
           variant="standard"
           severity="warning"
           onClose={() => {
-            setwrong(false)
+            setwrong(false);
           }}
         >
           Invalid Credentials
         </Alert>
       </Snackbar>
     </Container>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;

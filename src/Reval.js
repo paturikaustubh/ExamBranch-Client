@@ -20,116 +20,121 @@ import {
   DialogContent,
   Typography,
   Container,
-} from "@mui/material"
-import water from "./Components/clgLogo.png"
-import SearchIcon from "@mui/icons-material/Search"
-import ListAltOutlinedIcon from "@mui/icons-material/ListAltOutlined"
-import LocalPrintshopOutlinedIcon from "@mui/icons-material/LocalPrintshopOutlined"
-import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined"
-import HelpIcon from "@mui/icons-material/Help"
-import { useState, useEffect } from "react"
-import Axios from "axios"
+  MenuItem,
+} from "@mui/material";
+import water from "./Components/clgLogo.png";
+import SearchIcon from "@mui/icons-material/Search";
+import ListAltOutlinedIcon from "@mui/icons-material/ListAltOutlined";
+import LocalPrintshopOutlinedIcon from "@mui/icons-material/LocalPrintshopOutlined";
+import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined";
+import HelpIcon from "@mui/icons-material/Help";
+import { useState, useEffect } from "react";
+import Axios from "axios";
 
-import Barcode from "react-barcode"
+import Barcode from "react-barcode";
+import dayjs from "dayjs";
 
 const Reval = ({ ip }) => {
-  const [openHelp, setOpenHelp] = useState(false)
-  const [rollno, setrollno] = useState("")
-  const [costs, setcosts] = useState("")
-  const [month, setMonth] = useState(0)
-  const [year, setYear] = useState(0)
-  const [regular, setregular] = useState("")
-  const [printTab, setPrintTab] = useState(false)
-  const [reg, setreg] = useState(false)
-  const [printed, setPrinted] = useState(false)
-  const [found, setFound] = useState(false)
-  const [codesA, setCodesA] = useState([])
-  const [codesB, setCodesB] = useState([])
-  const [codesC, setCodesC] = useState([])
-  const [codesD, setCodesD] = useState([])
-  const [codesE, setCodesE] = useState([])
-  const [codesF, setCodesF] = useState([])
-  const [codesG, setCodesG] = useState([])
-  const [codesH, setCodesH] = useState([])
-  const [subsA, setsubsA] = useState([])
-  const [subsB, setsubsB] = useState([])
-  const [subsC, setsubsC] = useState([])
-  const [subsD, setsubsD] = useState([])
-  const [subsE, setsubsE] = useState([])
-  const [subsF, setsubsF] = useState([])
-  const [subsG, setsubsG] = useState([])
-  const [subsH, setsubsH] = useState([])
-  const [namesA, setNamesA] = useState([])
-  const [namesB, setNamesB] = useState([])
-  const [namesC, setNamesC] = useState([])
-  const [namesD, setNamesD] = useState([])
-  const [namesE, setNamesE] = useState([])
-  const [namesF, setNamesF] = useState([])
-  const [namesG, setNamesG] = useState([])
-  const [namesH, setNamesH] = useState([])
-  const [gen, setGen] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [mapper, setMapper] = useState({})
-  const [openPrintDialog, setOpenPrintDialog] = useState(false)
-  const [noData, setNoData] = useState(false)
+  const [openHelp, setOpenHelp] = useState(false);
+  const [rollNo, setrollno] = useState("");
+  const [costs, setcosts] = useState("");
+  const [month, setMonth] = useState(0);
+  const [year, setYear] = useState(0);
+  const [printTab, setPrintTab] = useState(false);
+  const [reg, setreg] = useState(false);
+  const [printed, setPrinted] = useState(false);
+  const [found, setFound] = useState(false);
+  const [codesA, setCodesA] = useState([]);
+  const [codesB, setCodesB] = useState([]);
+  const [codesC, setCodesC] = useState([]);
+  const [codesD, setCodesD] = useState([]);
+  const [codesE, setCodesE] = useState([]);
+  const [codesF, setCodesF] = useState([]);
+  const [codesG, setCodesG] = useState([]);
+  const [codesH, setCodesH] = useState([]);
+  const [subsA, setsubsA] = useState([]);
+  const [subsB, setsubsB] = useState([]);
+  const [subsC, setsubsC] = useState([]);
+  const [subsD, setsubsD] = useState([]);
+  const [subsE, setsubsE] = useState([]);
+  const [subsF, setsubsF] = useState([]);
+  const [subsG, setsubsG] = useState([]);
+  const [subsH, setsubsH] = useState([]);
+  const [namesA, setNamesA] = useState([]);
+  const [namesB, setNamesB] = useState([]);
+  const [namesC, setNamesC] = useState([]);
+  const [namesD, setNamesD] = useState([]);
+  const [namesE, setNamesE] = useState([]);
+  const [namesF, setNamesF] = useState([]);
+  const [namesG, setNamesG] = useState([]);
+  const [namesH, setNamesH] = useState([]);
+  const [gen, setGen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [mapper, setMapper] = useState({});
+  const [openPrintDialog, setOpenPrintDialog] = useState(false);
+  const [noData, setNoData] = useState(false);
+  const [regSem, setRegSem] = useState("0");
+  const [availableSems, setAvailableSems] = useState({ code: "", sem: "" });
 
-  const [costErr, setCostErr] = useState(false)
-  let subcodes = []
+  const [costErr, setCostErr] = useState(false);
+  let subCodes = [];
 
   useEffect(() => {
     Axios.post(`http://${ip}:6969/getCosts`).then((res) => {
-      if (res.data.err) setCostErr(true)
+      if (res.data.err) setCostErr(true);
       else {
-        setcosts(res.data.arr[0]["rev"])
+        setcosts(res.data.arr[0]["rev"]);
       }
-    })
-  }, [ip])
+    });
+  }, [ip]);
 
   const goBack = () => {
-    setCodesA([])
-    setCodesB([])
-    setCodesC([])
-    setCodesD([])
-    setCodesE([])
-    setCodesF([])
-    setCodesG([])
-    setCodesH([])
+    setCodesA([]);
+    setCodesB([]);
+    setCodesC([]);
+    setCodesD([]);
+    setCodesE([]);
+    setCodesF([]);
+    setCodesG([]);
+    setCodesH([]);
 
-    setsubsA([])
-    setsubsB([])
-    setsubsC([])
-    setsubsD([])
-    setsubsE([])
-    setsubsF([])
-    setsubsG([])
-    setsubsH([])
+    setsubsA([]);
+    setsubsB([]);
+    setsubsC([]);
+    setsubsD([]);
+    setsubsE([]);
+    setsubsF([]);
+    setsubsG([]);
+    setsubsH([]);
 
-    setGen(false)
-    setreg(false)
-  }
+    setGen(false);
+    setreg(false);
+  };
 
   const goBackp = () => {
-    setCodesA([])
-    setCodesB([])
-    setCodesC([])
-    setCodesD([])
-    setCodesE([])
-    setCodesF([])
-    setCodesG([])
-    setCodesH([])
+    setCodesA([]);
+    setCodesB([]);
+    setCodesC([]);
+    setCodesD([]);
+    setCodesE([]);
+    setCodesF([]);
+    setCodesG([]);
+    setCodesH([]);
 
-    setsubsA([])
-    setsubsB([])
-    setsubsC([])
-    setsubsD([])
-    setsubsE([])
-    setsubsF([])
-    setsubsG([])
-    setsubsH([])
+    setsubsA([]);
+    setsubsB([]);
+    setsubsC([]);
+    setsubsD([]);
+    setsubsE([]);
+    setsubsF([]);
+    setsubsG([]);
+    setsubsH([]);
 
-    setGen(false)
-    setreg(false)
-  }
+    setRegSem("0");
+
+    setGen(false);
+    setreg(false);
+  };
 
   const rendlastbuttons = () => {
     if (found) {
@@ -149,31 +154,31 @@ const Reval = ({ ip }) => {
             </Button>
           </div>
         </>
-      )
+      );
     }
-  }
+  };
 
   const getcost = (i) => {
-    let k = costs
+    let k = costs;
     // eslint-disable-next-line array-callback-return
     if (i == 1) {
-      return k * subsA.length
+      return k * subsA.length;
     } else if (i == 2) {
-      return k * subsB.length
+      return k * subsB.length;
     } else if (i == 3) {
-      return k * subsC.length
+      return k * subsC.length;
     } else if (i == 4) {
-      return k * subsD.length
+      return k * subsD.length;
     } else if (i == 5) {
-      return k * subsE.length
+      return k * subsE.length;
     } else if (i == 6) {
-      return k * subsF.length
+      return k * subsF.length;
     } else if (i == 7) {
-      return k * subsG.length
+      return k * subsG.length;
     } else if (i == 8) {
-      return k * subsH.length
+      return k * subsH.length;
     }
-  }
+  };
 
   const rend11 = () => {
     if (found) {
@@ -194,14 +199,14 @@ const Reval = ({ ip }) => {
                 size="large"
                 multiple
                 onChange={(_e, val) => {
-                  subcodes = []
+                  subCodes = [];
                   val.forEach((value) => {
-                    subcodes.push(
+                    subCodes.push(
                       Object.keys(mapper).find((key) => mapper[key] === value)
-                    )
-                  })
-                  setCodesA(subcodes)
-                  setsubsA(val)
+                    );
+                  });
+                  setCodesA(subCodes);
+                  setsubsA(val);
                 }}
                 disableCloseOnSelect
                 options={namesA}
@@ -222,14 +227,14 @@ const Reval = ({ ip }) => {
                 size="large"
                 multiple
                 onChange={(_e, val) => {
-                  subcodes = []
+                  subCodes = [];
                   val.forEach((value) => {
-                    subcodes.push(
+                    subCodes.push(
                       Object.keys(mapper).find((key) => mapper[key] === value)
-                    )
-                  })
-                  setCodesB(subcodes)
-                  setsubsB(val)
+                    );
+                  });
+                  setCodesB(subCodes);
+                  setsubsB(val);
                 }}
                 disableCloseOnSelect
                 options={namesB}
@@ -263,14 +268,14 @@ const Reval = ({ ip }) => {
                 size="large"
                 multiple
                 onChange={(_e, val) => {
-                  subcodes = []
+                  subCodes = [];
                   val.forEach((value) => {
-                    subcodes.push(
+                    subCodes.push(
                       Object.keys(mapper).find((key) => mapper[key] === value)
-                    )
-                  })
-                  setCodesC(subcodes)
-                  setsubsC(val)
+                    );
+                  });
+                  setCodesC(subCodes);
+                  setsubsC(val);
                 }}
                 disableCloseOnSelect
                 options={namesC}
@@ -292,14 +297,14 @@ const Reval = ({ ip }) => {
                 size="large"
                 multiple
                 onChange={(_e, val) => {
-                  subcodes = []
+                  subCodes = [];
                   val.forEach((value) => {
-                    subcodes.push(
+                    subCodes.push(
                       Object.keys(mapper).find((key) => mapper[key] === value)
-                    )
-                  })
-                  setCodesD(subcodes)
-                  setsubsD(val)
+                    );
+                  });
+                  setCodesD(subCodes);
+                  setsubsD(val);
                 }}
                 disableCloseOnSelect
                 options={namesD}
@@ -333,14 +338,14 @@ const Reval = ({ ip }) => {
                 size="large"
                 multiple
                 onChange={(_e, val) => {
-                  subcodes = []
+                  subCodes = [];
                   val.forEach((value) => {
-                    subcodes.push(
+                    subCodes.push(
                       Object.keys(mapper).find((key) => mapper[key] === value)
-                    )
-                  })
-                  setCodesE(subcodes)
-                  setsubsE(val)
+                    );
+                  });
+                  setCodesE(subCodes);
+                  setsubsE(val);
                 }}
                 disableCloseOnSelect
                 options={namesE}
@@ -362,14 +367,14 @@ const Reval = ({ ip }) => {
                 size="large"
                 multiple
                 onChange={(_e, val) => {
-                  subcodes = []
+                  subCodes = [];
                   val.forEach((value) => {
-                    subcodes.push(
+                    subCodes.push(
                       Object.keys(mapper).find((key) => mapper[key] === value)
-                    )
-                  })
-                  setCodesF(subcodes)
-                  setsubsF(val)
+                    );
+                  });
+                  setCodesF(subCodes);
+                  setsubsF(val);
                 }}
                 disableCloseOnSelect
                 options={namesF}
@@ -402,14 +407,14 @@ const Reval = ({ ip }) => {
                 size="large"
                 multiple
                 onChange={(_e, val) => {
-                  subcodes = []
+                  subCodes = [];
                   val.forEach((value) => {
-                    subcodes.push(
+                    subCodes.push(
                       Object.keys(mapper).find((key) => mapper[key] === value)
-                    )
-                  })
-                  setCodesG(subcodes)
-                  setsubsG(val)
+                    );
+                  });
+                  setCodesG(subCodes);
+                  setsubsG(val);
                 }}
                 disableCloseOnSelect
                 options={namesG}
@@ -431,14 +436,14 @@ const Reval = ({ ip }) => {
                 size="large"
                 multiple
                 onChange={(_e, val) => {
-                  subcodes = []
+                  subCodes = [];
                   val.forEach((value) => {
-                    subcodes.push(
+                    subCodes.push(
                       Object.keys(mapper).find((key) => mapper[key] === value)
-                    )
-                  })
-                  setCodesH(subcodes)
-                  setsubsH(val)
+                    );
+                  });
+                  setCodesH(subCodes);
+                  setsubsH(val);
                 }}
                 disableCloseOnSelect
                 options={namesH}
@@ -489,7 +494,7 @@ const Reval = ({ ip }) => {
                 }}
               >
                 <Barcode
-                  value={rollno}
+                  value={rollNo}
                   width={2}
                   height={40}
                   displayValue={false}
@@ -504,7 +509,7 @@ const Reval = ({ ip }) => {
                 style={{ marginLeft: "4%", marginTop: "2%" }}
                 startIcon={<ListAltOutlinedIcon />}
                 onClick={() => {
-                  setGen(true)
+                  setGen(true);
                 }}
               >
                 Generate Student Copy
@@ -513,181 +518,165 @@ const Reval = ({ ip }) => {
             </div>
           )}
         </>
-      )
+      );
     }
-  }
-
-  const check = () => {
-    return (
-      codesA.length +
-      codesB.length +
-      codesC.length +
-      codesD.length +
-      codesE.length +
-      codesF.length +
-      codesG.length +
-      codesH.length
-    )
-  }
+  };
 
   const init = (data) => {
-    for (let i = 0; i < data.subcodes.length; i++) {
-      if (Object.keys(data.subcodes[i]) == "A") {
+    for (let i = 0; i < data.subCodes.length; i++) {
+      if (Object.keys(data.subCodes[i]) == "A") {
         for (
           let j = 0;
-          j < data.subcodes[i]["A"].length &&
-          codesA.length < data.subcodes[i]["A"].length;
+          j < data.subCodes[i]["A"].length &&
+          codesA.length < data.subCodes[i]["A"].length;
           j++
         ) {
-          setCodesA(data.subcodes[i]["A"])
-          setsubsA(data.subnames[i]["A"])
-          setNamesA(data.subnames[i]["A"])
+          setCodesA(data.subCodes[i]["A"]);
+          setsubsA(data.subNames[i]["A"]);
+          setNamesA(data.subNames[i]["A"]);
         }
       }
       //1sem2
-      else if (Object.keys(data.subcodes[i]) == "B") {
+      else if (Object.keys(data.subCodes[i]) == "B") {
         for (
           let j = 0;
-          j < data.subcodes[i]["B"].length &&
-          codesB.length < data.subcodes[i]["B"].length;
+          j < data.subCodes[i]["B"].length &&
+          codesB.length < data.subCodes[i]["B"].length;
           j++
         ) {
-          setCodesB(data.subcodes[i]["B"])
-          setsubsB(data.subnames[i]["B"])
-          setNamesB(data.subnames[i]["B"])
+          setCodesB(data.subCodes[i]["B"]);
+          setsubsB(data.subNames[i]["B"]);
+          setNamesB(data.subNames[i]["B"]);
         }
       }
       //2sem1
-      else if (Object.keys(data.subcodes[i]) == "C") {
+      else if (Object.keys(data.subCodes[i]) == "C") {
         for (
           let j = 0;
-          j < data.subcodes[i]["C"].length &&
-          codesC.length < data.subcodes[i]["C"].length;
+          j < data.subCodes[i]["C"].length &&
+          codesC.length < data.subCodes[i]["C"].length;
           j++
         ) {
-          setCodesC(data.subcodes[i]["C"])
-          setsubsC(data.subnames[i]["C"])
-          setNamesC(data.subnames[i]["C"])
+          setCodesC(data.subCodes[i]["C"]);
+          setsubsC(data.subNames[i]["C"]);
+          setNamesC(data.subNames[i]["C"]);
         }
       }
       //2sem2
-      else if (Object.keys(data.subcodes[i]) == "D") {
+      else if (Object.keys(data.subCodes[i]) == "D") {
         for (
           let j = 0;
-          j < data.subcodes[i]["D"].length &&
-          codesD.length < data.subcodes[i]["D"].length;
+          j < data.subCodes[i]["D"].length &&
+          codesD.length < data.subCodes[i]["D"].length;
           j++
         ) {
-          setCodesD(data.subcodes[i].D)
-          setsubsD(data.subnames[i].D)
-          setNamesD(data.subnames[i].D)
+          setCodesD(data.subCodes[i].D);
+          setsubsD(data.subNames[i].D);
+          setNamesD(data.subNames[i].D);
         }
       }
       //3sem1
-      else if (Object.keys(data.subcodes[i]) == "E") {
+      else if (Object.keys(data.subCodes[i]) == "E") {
         for (
           let j = 0;
-          j < data.subcodes[i]["E"].length &&
-          codesE.length < data.subcodes[i]["E"].length;
+          j < data.subCodes[i]["E"].length &&
+          codesE.length < data.subCodes[i]["E"].length;
           j++
         ) {
-          setCodesE(data.subcodes[i]["E"])
-          setsubsE(data.subnames[i]["E"])
-          setNamesE(data.subnames[i]["E"])
+          setCodesE(data.subCodes[i]["E"]);
+          setsubsE(data.subNames[i]["E"]);
+          setNamesE(data.subNames[i]["E"]);
         }
       }
       //3sem2
-      else if (Object.keys(data.subcodes[i]) == "F") {
+      else if (Object.keys(data.subCodes[i]) == "F") {
         for (
           let j = 0;
-          j < data.subcodes[i]["F"].length &&
-          codesF.length < data.subcodes[i]["F"].length;
+          j < data.subCodes[i]["F"].length &&
+          codesF.length < data.subCodes[i]["F"].length;
           j++
         ) {
-          setCodesF(data.subcodes[i]["F"])
-          setsubsF(data.subnames[i]["F"])
-          setNamesF(data.subnames[i]["F"])
+          setCodesF(data.subCodes[i]["F"]);
+          setsubsF(data.subNames[i]["F"]);
+          setNamesF(data.subNames[i]["F"]);
         }
       }
       //4sem1
-      else if (Object.keys(data.subcodes[i]) == "G") {
+      else if (Object.keys(data.subCodes[i]) == "G") {
         for (
           let j = 0;
-          j < data.subcodes[i]["G"].length &&
-          codesG.length < data.subcodes[i]["G"].length;
+          j < data.subCodes[i]["G"].length &&
+          codesG.length < data.subCodes[i]["G"].length;
           j++
         ) {
-          setCodesG(data.subcodes[i]["G"])
-          setsubsG(data.subnames[i]["G"])
-          setNamesG(data.subnames[i]["G"])
+          setCodesG(data.subCodes[i]["G"]);
+          setsubsG(data.subNames[i]["G"]);
+          setNamesG(data.subNames[i]["G"]);
         }
       }
       //4sem2
-      else if (Object.keys(data.subcodes[i]) == "H") {
+      else if (Object.keys(data.subCodes[i]) == "H") {
         for (
           let j = 0;
-          j < data.subcodes[i]["H"].length &&
-          codesH.length < data.subcodes[i]["H"].length;
+          j < data.subCodes[i]["H"].length &&
+          codesH.length < data.subCodes[i]["H"].length;
           j++
         ) {
-          setCodesH(data.subcodes[i]["H"])
-          setsubsH(data.subnames[i]["H"])
-          setNamesH(data.subnames[i]["H"])
+          setCodesH(data.subCodes[i]["H"]);
+          setsubsH(data.subNames[i]["H"]);
+          setNamesH(data.subNames[i]["H"]);
         }
       }
     }
-  }
+  };
 
   const revalsearch = (e) => {
-    e.preventDefault()
-    setLoading(true)
-    setPrinted(false)
-    if (rollno !== "" && rollno.length === 10) {
+    e.preventDefault();
+    setLoading(true);
+    setPrinted(false);
+    if (rollNo !== "" && rollNo.length === 10) {
       Axios.post(`http://${ip}:6969/Revalsearch`, {
-        rno: rollno,
-        exmonth: month,
-        exyear: year,
+        rno: rollNo,
+        exMonth: month,
+        exYear: year,
       }).then((resp) => {
-        setregular(resp.data.reg)
-
         if (resp.data.value > 0) {
-          init(resp.data)
-          setMapper(resp.data.mapper)
-          setLoading(false)
-          if (check() === resp.data.value) {
-            setFound(true)
-            setPrintTab(resp.data.printTab)
-            setLoading(false)
-          } else {
-            setLoading(false)
-          }
+          init(resp.data);
+          setMapper(resp.data.mapper);
+          setLoading(false);
+          setAvailableSems(
+            resp.data.availableSems[resp.data.availableSems.length - 1]
+          );
+          setFound(true);
+          setPrintTab(resp.data.printTab);
+          setLoading(false);
         } else {
-          setNoData(true)
-          setLoading(false)
+          setNoData(true);
+          setLoading(false);
         }
-      })
+      });
     } else {
-      setNoData(true)
-      setLoading(false)
+      setNoData(true);
+      setLoading(false);
     }
-  }
+  };
   const handlerollno = (e) => {
-    goBackp()
-    setFound(false)
-    setPrintTab(false)
-    e.target.value = e.target.value.toUpperCase()
-    setrollno(e.target.value)
-    setFound(false)
-  }
+    goBackp();
+    setFound(false);
+    setPrintTab(false);
+    e.target.value = e.target.value.toUpperCase();
+    setrollno(e.target.value);
+    setFound(false);
+  };
   const handlecosts = (e) => {
-    setcosts(e.target.value)
-  }
+    setcosts(e.target.value);
+  };
   const handlemonth = (e) => {
-    setMonth(e.target.value)
-  }
+    setMonth(e.target.value);
+  };
   const handleyear = (e) => {
-    setYear(e.target.value)
-  }
+    setYear(e.target.value);
+  };
 
   return (
     <Container maxWidth="xl">
@@ -705,7 +694,7 @@ const Reval = ({ ip }) => {
             <Tooltip title="Help">
               <IconButton
                 onClick={() => {
-                  setOpenHelp(true)
+                  setOpenHelp(true);
                 }}
                 color="primary"
               >
@@ -846,7 +835,7 @@ const Reval = ({ ip }) => {
           <Button
             size="large"
             onClick={() => {
-              setOpenHelp(false)
+              setOpenHelp(false);
             }}
           >
             okay
@@ -919,7 +908,7 @@ const Reval = ({ ip }) => {
                 type="submit"
                 onClick={revalsearch}
                 disabled={
-                  rollno.length !== 10 ||
+                  rollNo.length !== 10 ||
                   found ||
                   year <= 0 ||
                   month <= 0 ||
@@ -931,7 +920,13 @@ const Reval = ({ ip }) => {
             )}
 
             {printTab && (
-              <>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                }}
+              >
                 <Button
                   color="success"
                   size="large"
@@ -939,9 +934,9 @@ const Reval = ({ ip }) => {
                   className="search"
                   variant="contained"
                   onClick={() => {
-                    setLoading(true)
+                    setLoading(true);
                     Axios.post(`http://${ip}:6969/Registerreval`, {
-                      rno: rollno,
+                      rno: rollNo,
                       A: codesA,
                       B: codesB,
                       C: codesC,
@@ -950,32 +945,37 @@ const Reval = ({ ip }) => {
                       F: codesF,
                       G: codesG,
                       H: codesH,
-                      k: regular,
+                      k: regSem,
                     }).then((resp) => {
                       if (resp.data["registered"]) {
-                        setLoading(false)
-                        setreg(true)
-                        setPrintTab(false)
-                        setFound(false)
-                        setPrinted(true)
+                        setLoading(false);
+                        setreg(true);
+                        setPrintTab(false);
+                        setFound(false);
+                        setPrinted(true);
                       } else if (resp.data.err) {
-                        setLoading(false)
+                        setLoading(false);
                       }
-                    })
+                    });
                   }}
                 >
                   Register
                 </Button>
-                <Typography
-                  variant="h6"
-                  fontWeight={500}
-                  component="span"
-                  color="warning.main"
-                  ml={2}
+                <TextField
+                  select
+                  label="Regular"
+                  onChange={({ target: { value } }) => {
+                    setRegSem(value);
+                  }}
+                  defaultValue={regSem}
+                  sx={{ bgcolor: "white", width: "10rem" }}
                 >
-                  Values have been fetched from Print Re-Evaluation table
-                </Typography>
-              </>
+                  <MenuItem value="0">None</MenuItem>
+                  <MenuItem value={availableSems.code}>
+                    {availableSems.sem}
+                  </MenuItem>
+                </TextField>
+              </div>
             )}
           </Grid>
         </Grid>
@@ -1003,7 +1003,7 @@ const Reval = ({ ip }) => {
             >
               <Grid item xs={4}>
                 <h3>
-                  <>{rollno} (Re-Evaluation)</>
+                  <>{rollNo} (Re-Evaluation)</>
                 </h3>
               </Grid>
               <Grid item xs={4}>
@@ -1013,10 +1013,7 @@ const Reval = ({ ip }) => {
               </Grid>
               <Grid item xs={4}>
                 <h3>
-                  <>
-                    {new Date().getDate()}/{new Date().getMonth() + 1}/
-                    {new Date().getFullYear()}
-                  </>
+                  <>{dayjs().format("D MMM, YYYY (h:mm A)")}</>
                 </h3>
               </Grid>
             </Grid>
@@ -1036,7 +1033,7 @@ const Reval = ({ ip }) => {
                 >
                   <Grid item xs={4}>
                     <h3>
-                      <>{rollno} (Re-Evaluation)</>
+                      <>{rollNo} (Re-Evaluation)</>
                     </h3>
                   </Grid>
                   <Grid item xs={4}>
@@ -1046,10 +1043,7 @@ const Reval = ({ ip }) => {
                   </Grid>
                   <Grid item xs={4}>
                     <h3>
-                      <>
-                        {new Date().getDate()}/{new Date().getMonth() + 1}/
-                        {new Date().getFullYear()}
-                      </>
+                      <>{dayjs().format("D MMM, YYYY (h:mm A)")}</>
                     </h3>
                   </Grid>
                 </Grid>
@@ -1073,7 +1067,7 @@ const Reval = ({ ip }) => {
                 <hr />
                 <Grid
                   container
-                  spacing={4}
+                  justifyContent={"space-between"}
                   columns={12}
                   align="center"
                   style={{
@@ -1082,7 +1076,7 @@ const Reval = ({ ip }) => {
                 >
                   <Grid item xs={4}>
                     <h3>
-                      <>{rollno} (Re-Evaluation)</>
+                      <>{rollNo} (Re-Evaluation)</>
                     </h3>
                   </Grid>
                   <Grid item xs={4}>
@@ -1092,10 +1086,7 @@ const Reval = ({ ip }) => {
                   </Grid>
                   <Grid item xs={4}>
                     <h3>
-                      <>
-                        {new Date().getDate()}/{new Date().getMonth() + 1}/
-                        {new Date().getFullYear()}
-                      </>
+                      <>{dayjs().format("D MMM, YYYY (h:mm A)")}</>
                     </h3>
                   </Grid>
                 </Grid>
@@ -1122,7 +1113,7 @@ const Reval = ({ ip }) => {
         open={costErr}
         autoHideDuration={2500}
         onClose={() => {
-          setCostErr(false)
+          setCostErr(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
@@ -1130,7 +1121,7 @@ const Reval = ({ ip }) => {
           variant="standard"
           severity="warning"
           onClose={() => {
-            setCostErr(false)
+            setCostErr(false);
           }}
         >
           Cost not loaded. Check the database
@@ -1141,7 +1132,7 @@ const Reval = ({ ip }) => {
         open={reg}
         autoHideDuration={2500}
         onClose={() => {
-          setreg(false)
+          setreg(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
@@ -1149,10 +1140,10 @@ const Reval = ({ ip }) => {
           variant="standard"
           severity="success"
           onClose={() => {
-            setreg(false)
+            setreg(false);
           }}
         >
-          {`Registered for ${rollno}`}
+          {`Registered for ${rollNo}`}
         </Alert>
       </Snackbar>
 
@@ -1160,7 +1151,7 @@ const Reval = ({ ip }) => {
         open={noData}
         autoHideDuration={2500}
         onClose={() => {
-          setNoData(false)
+          setNoData(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
@@ -1168,7 +1159,7 @@ const Reval = ({ ip }) => {
           variant="standard"
           severity="warning"
           onClose={() => {
-            setNoData(false)
+            setNoData(false);
           }}
         >
           {`No data found`}
@@ -1189,7 +1180,7 @@ const Reval = ({ ip }) => {
               component="span"
               fontWeight={500}
             >
-              {rollno}
+              {rollNo}
             </Typography>
           </Typography>
         </DialogTitle>
@@ -1238,7 +1229,7 @@ const Reval = ({ ip }) => {
             size="large"
             onClick={() => {
               Axios.post(`http://${ip}:6969/printReval`, {
-                rno: rollno,
+                rno: rollNo,
                 A: codesA,
                 B: codesB,
                 C: codesC,
@@ -1249,14 +1240,14 @@ const Reval = ({ ip }) => {
                 H: codesH,
               }).then((resp) => {
                 if (resp.data.done) {
-                  setOpenPrintDialog(false)
-                  window.print()
-                  setPrinted(true)
-                  setFound(false)
-                  goBackp()
-                  return false
+                  setOpenPrintDialog(false);
+                  window.print();
+                  setPrinted(true);
+                  setFound(false);
+                  goBackp();
+                  return false;
                 }
-              })
+              });
             }}
           >
             Print
@@ -1264,7 +1255,7 @@ const Reval = ({ ip }) => {
         </DialogActions>
       </Dialog>
     </Container>
-  )
-}
+  );
+};
 
-export default Reval
+export default Reval;

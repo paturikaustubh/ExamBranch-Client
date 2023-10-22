@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 import {
   TextField,
   MenuItem,
@@ -18,91 +18,112 @@ import {
   Typography,
   Grid,
   Container,
-} from "@mui/material"
-import { Alert, Snackbar } from "@mui/material"
-import Axios from "axios"
-import water from "./Components/clgLogo.png"
-import { useRef } from "react"
-import SearchIcon from "@mui/icons-material/Search"
-import ListAltOutlinedIcon from "@mui/icons-material/ListAltOutlined"
-import LocalPrintshopOutlinedIcon from "@mui/icons-material/LocalPrintshopOutlined"
-import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined"
-import HelpIcon from "@mui/icons-material/Help"
-import Barcode from "react-barcode"
+} from "@mui/material";
+import { Alert, Snackbar } from "@mui/material";
+import Axios from "axios";
+import water from "./Components/clgLogo.png";
+import { useRef } from "react";
+import SearchIcon from "@mui/icons-material/Search";
+import ListAltOutlinedIcon from "@mui/icons-material/ListAltOutlined";
+import LocalPrintshopOutlinedIcon from "@mui/icons-material/LocalPrintshopOutlined";
+import HowToRegOutlinedIcon from "@mui/icons-material/HowToRegOutlined";
+import HelpIcon from "@mui/icons-material/Help";
+import Barcode from "react-barcode";
+import dayjs from "dayjs";
 
 const Cbt = ({ ip }) => {
-  const branches = useRef([])
-  const [branch, setbranch] = useState([])
-  const [rollno, setrollno] = useState("")
-  const [basecosts, setbasecosts] = useState("")
-  const [addcosts, setaddcosts] = useState("")
-  const [maxcosts, setmaxcosts] = useState("")
-  const [subs, setsubs] = useState([])
-  const [data, setdata] = useState(0)
-  const [gen, setgen] = useState(false)
-  const [render, setrender] = useState(false)
-  const [reg, setreg] = useState(false)
-  const [changed, setchanged] = useState(false)
-  const [invalid, setinvalid] = useState(false)
-  const [regyear, setregyear] = useState(0)
-  const [mapper, setmapper] = useState({})
-  const [names, setnames] = useState([])
-  const [year, setyear] = useState(0)
-  const [sem, setsem] = useState(0)
-  const [clicked, setclick] = useState(false)
-  const [regSubs, setRegSubs] = useState([])
-  const [empty, setEmpty] = useState(false)
-  const [printData, setPrintData] = useState(false)
-  const [printErrAlert, setPrintErrAlert] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [openHelp, setOpenHelp] = useState(false)
-  const [openPrintDialog, setOpenPrintDialog] = useState(false)
+  const branches = useRef([]);
+  const [branch, setbranch] = useState([]);
+  const [rollNo, setrollno] = useState("");
+  const [basecosts, setbasecosts] = useState("");
+  const [addcosts, setaddcosts] = useState("");
+  const [maxcosts, setmaxcosts] = useState("");
+  const [subs, setsubs] = useState([]);
+  const [data, setdata] = useState(0);
+  const [gen, setgen] = useState(false);
+  const [render, setrender] = useState(false);
+  const [reg, setreg] = useState(false);
+  const [changed, setchanged] = useState(false);
+  const [invalid, setinvalid] = useState(false);
+  const [regyear, setregyear] = useState(0);
+  const [mapper, setmapper] = useState({});
+  const [names, setnames] = useState([]);
+  const [year, setyear] = useState(0);
+  const [sem, setsem] = useState(0);
+  const [clicked, setclick] = useState(false);
+  const [regSubs, setRegSubs] = useState([]);
+  const [empty, setEmpty] = useState(false);
+  const [printData, setPrintData] = useState(false);
+  const [printErrAlert, setPrintErrAlert] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [openHelp, setOpenHelp] = useState(false);
+  const [openPrintDialog, setOpenPrintDialog] = useState(false);
+  const [acYears, setAcYears] = useState([]);
+  const [sems, setSems] = useState([]);
 
-  let subcodes = []
+  let subCodes = [];
 
   useEffect(() => {
     Axios.post(`http://${ip}:6969/Branch`).then((res) => {
-      res.data.forEach((e) => {
-        setbranch((b) => [...b, <MenuItem value={e}>{e}</MenuItem>])
-      })
-    })
+      setbranch((b) =>
+        res.data.branch.map((branch) => (
+          <MenuItem value={branch} key={branch}>
+            {branch}
+          </MenuItem>
+        ))
+      );
+      setAcYears((b) =>
+        res.data.acYear.map((acYear) => (
+          <MenuItem value={acYear} key={acYear}>
+            {acYear}
+          </MenuItem>
+        ))
+      );
+      setSems((b) =>
+        res.data.sem.map((sem) => (
+          <MenuItem value={sem} key={sem}>
+            {sem}
+          </MenuItem>
+        ))
+      );
+    });
     Axios.post(`http://${ip}:6969/getCosts`).then((res) => {
-      setbasecosts(res.data.arr[0]["cbc"])
-      setaddcosts(res.data.arr[0]["cac"])
-      setmaxcosts(res.data.arr[0]["cfc"])
-    })
+      setbasecosts(res.data.arr[0]["cbc"]);
+      setaddcosts(res.data.arr[0]["cac"]);
+      setmaxcosts(res.data.arr[0]["cfc"]);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [false])
+  }, [false]);
 
   const handlebranch = (e) => {
-    setPrintData(false)
-    branches.current = e.target.value
-  }
+    setPrintData(false);
+    branches.current = e.target.value;
+  };
   const handlerollno = (e) => {
-    e.target.value = e.target.value.toUpperCase()
-    setEmpty(false)
-    setPrintData(false)
-    setrollno(e.target.value)
-    setrender(false)
-    setclick(false)
-  }
+    e.target.value = e.target.value.toUpperCase();
+    setEmpty(false);
+    setPrintData(false);
+    setrollno(e.target.value);
+    setrender(false);
+    setclick(false);
+  };
   const handlebasecosts = (e) => {
-    setbasecosts(e.target.value)
-  }
+    setbasecosts(e.target.value);
+  };
   const handleaddcosts = (e) => {
-    setaddcosts(e.target.value)
-  }
+    setaddcosts(e.target.value);
+  };
   const handlemaxcosts = (e) => {
-    setmaxcosts(e.target.value)
-  }
+    setmaxcosts(e.target.value);
+  };
   const handleyears = (e) => {
-    setPrintData(false)
-    setyear(e.target.value)
-  }
+    setPrintData(false);
+    setyear(e.target.value);
+  };
   const handlesems = (e) => {
-    setPrintData(false)
-    setsem(e.target.value)
-  }
+    setPrintData(false);
+    setsem(e.target.value);
+  };
 
   const calc = () => {
     if (subs.length > 0) {
@@ -123,14 +144,14 @@ const Cbt = ({ ip }) => {
               }}
             >
               <Barcode
-                value={rollno}
+                value={rollNo}
                 width={2}
                 height={40}
                 displayValue={false}
               />
             </div>
           </>
-        )
+        );
       } else if (subs.length >= 5) {
         return (
           <>
@@ -149,18 +170,18 @@ const Cbt = ({ ip }) => {
               }}
             >
               <Barcode
-                value={rollno}
+                value={rollNo}
                 width={2}
                 height={40}
                 displayValue={false}
               />
             </div>
           </>
-        )
+        );
       } else {
         if (!isNaN(parseInt(basecosts)) && !isNaN(parseInt(addcosts))) {
-          let b = parseInt(basecosts)
-          let ad = parseInt(addcosts)
+          let b = parseInt(basecosts);
+          let ad = parseInt(addcosts);
           return (
             <>
               <h3>
@@ -179,18 +200,18 @@ const Cbt = ({ ip }) => {
                 }}
               >
                 <Barcode
-                  value={rollno}
+                  value={rollNo}
                   width={2}
                   height={40}
                   displayValue={false}
                 />
               </div>
             </>
-          )
+          );
         }
       }
     }
-  }
+  };
   const rendsubs = () => {
     if (clicked && render) {
       return (
@@ -210,7 +231,7 @@ const Cbt = ({ ip }) => {
               <Grid container spacing={4} columns={12} align="center">
                 <Grid item xs={4}>
                   <h3>
-                    <>{rollno} (CBT)</>
+                    <>{rollNo} (CBT)</>
                   </h3>
                 </Grid>
                 <Grid item xs={4}>
@@ -220,10 +241,7 @@ const Cbt = ({ ip }) => {
                 </Grid>
                 <Grid item xs={4}>
                   <h3>
-                    <>
-                      {new Date().getDate()}/{new Date().getMonth() + 1}/
-                      {new Date().getFullYear()}
-                    </>
+                    <>{dayjs().format("D MMM, YYYY (h:mm A)")}</>
                   </h3>
                 </Grid>
               </Grid>
@@ -238,17 +256,17 @@ const Cbt = ({ ip }) => {
                   readOnly={gen || printData}
                   multiple
                   onChange={(_e, val) => {
-                    subcodes = []
+                    subCodes = [];
                     val.forEach((value) => {
-                      subcodes.push(
+                      subCodes.push(
                         Object.keys(mapper).find((key) => mapper[key] === value)
-                      )
-                    })
-                    setsubs(subcodes)
-                    setRegSubs(val)
+                      );
+                    });
+                    setsubs(subCodes);
+                    setRegSubs(val);
                     if (val.length === 0) {
-                      setEmpty(true)
-                    } else setEmpty(false)
+                      setEmpty(true);
+                    } else setEmpty(false);
                   }}
                   disableCloseOnSelect
                   options={names}
@@ -269,7 +287,7 @@ const Cbt = ({ ip }) => {
                 style={{ marginLeft: "4%", marginTop: "2%" }}
                 startIcon={<ListAltOutlinedIcon />}
                 onClick={() => {
-                  setgen(true)
+                  setgen(true);
                 }}
               >
                 Generate Student Copy
@@ -283,7 +301,7 @@ const Cbt = ({ ip }) => {
                 size="large"
                 className="print"
                 onClick={() => {
-                  setOpenPrintDialog(true)
+                  setOpenPrintDialog(true);
                 }}
                 startIcon={<LocalPrintshopOutlinedIcon />}
                 variant="outlined"
@@ -294,9 +312,9 @@ const Cbt = ({ ip }) => {
             )}
           </div>
         </>
-      )
+      );
     }
-  }
+  };
 
   const rend11 = () => {
     return (
@@ -307,7 +325,7 @@ const Cbt = ({ ip }) => {
         <Grid container spacing={4} columns={12} align="center">
           <Grid item xs={4}>
             <h3>
-              <>{rollno} (CBT)</>
+              <>{rollNo} (CBT)</>
             </h3>
           </Grid>
           <Grid item xs={4}>
@@ -317,10 +335,7 @@ const Cbt = ({ ip }) => {
           </Grid>
           <Grid item xs={4}>
             <h3>
-              <>
-                {new Date().getDate()}/{new Date().getMonth() + 1}/
-                {new Date().getFullYear()}
-              </>
+              <>{dayjs().format("D MMM, YYYY (h:mm A)")}</>
             </h3>
           </Grid>
         </Grid>
@@ -356,8 +371,8 @@ const Cbt = ({ ip }) => {
         <br />
         <br />
       </div>
-    )
-  }
+    );
+  };
 
   const rend22 = () => {
     return (
@@ -368,7 +383,7 @@ const Cbt = ({ ip }) => {
         <Grid container spacing={4} columns={12} align="center">
           <Grid item xs={4}>
             <h3>
-              <>{rollno} (CBT)</>
+              <>{rollNo} (CBT)</>
             </h3>
           </Grid>
           <Grid item xs={4}>
@@ -378,10 +393,7 @@ const Cbt = ({ ip }) => {
           </Grid>
           <Grid item xs={4}>
             <h3>
-              <>
-                {new Date().getDate()}/{new Date().getMonth() + 1}/
-                {new Date().getFullYear()}
-              </>
+              <>{dayjs().format("D MMM, YYYY (h:mm A)")}</>
             </h3>
           </Grid>
         </Grid>
@@ -409,8 +421,8 @@ const Cbt = ({ ip }) => {
           {calc()}
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <Container maxWidth="xl">
@@ -435,7 +447,7 @@ const Cbt = ({ ip }) => {
           <Tooltip title="Help">
             <IconButton
               onClick={() => {
-                setOpenHelp(true)
+                setOpenHelp(true);
               }}
               color="primary"
             >
@@ -448,7 +460,7 @@ const Cbt = ({ ip }) => {
         sx={{ backdropFilter: "blur(1px)" }}
         open={openHelp}
         onClose={() => {
-          setOpenHelp(false)
+          setOpenHelp(false);
         }}
         maxWidth
       >
@@ -548,7 +560,7 @@ const Cbt = ({ ip }) => {
               <>Procedure</>
             </h2>
             <p>
-              Upon recieving the data, selet only those subjects that the
+              Upon recieving the data, select only those subjects that the
               student intends to write. Once done, generate student copy by
               selecting{" "}
               <code>
@@ -595,7 +607,7 @@ const Cbt = ({ ip }) => {
         <DialogActions>
           <Button
             onClick={() => {
-              setOpenHelp(false)
+              setOpenHelp(false);
             }}
           >
             okay
@@ -605,53 +617,56 @@ const Cbt = ({ ip }) => {
 
       <form
         onSubmit={(e) => {
-          e.preventDefault()
-          setLoading(true)
-          if (rollno !== "" && rollno.length === 10) {
+          e.preventDefault();
+          setLoading(true);
+          if (rollNo !== "" && rollNo.length === 10) {
             Axios.post(`http://${ip}:6969/CbtSearch`, {
-              acyear: year,
+              acYear: year,
               sem: sem,
-              rno: rollno,
+              rno: rollNo,
               reg: regyear,
               branch: branches.current,
             }).then((resp) => {
               if (resp.data.out.length > 0) {
-                setdata(resp.data["out"].length)
-                setsubs(resp.data["ans"])
-                setmapper(resp.data["mapper"])
-                setnames(resp.data["names"])
-                setRegSubs(resp.data["names"])
+                setdata(resp.data["out"].length);
+                setsubs(resp.data["ans"]);
+                setmapper(resp.data["mapper"]);
+                setnames(resp.data["names"]);
+                setRegSubs(resp.data["names"]);
 
                 for (let i = 0; i < resp.data["out"].length; i++) {
                   if (
                     names.length === data &&
                     Object.keys(mapper).length === data
                   ) {
-                    setclick(true)
-                    setrender(true)
+                    setclick(true);
+                    setrender(true);
                     window.scrollTo({
                       top: 200,
                       behavior: "smooth",
-                    })
+                    });
                   } else {
-                    setrender(false)
+                    setrender(false);
                   }
                 }
-                if (resp.data.print) setPrintData(true)
-                setLoading(false)
+                if (resp.data.print) {
+                  setPrintData(true);
+                  console.log(resp.data);
+                }
+                setLoading(false);
               } else {
-                setclick(false)
-                setrender(false)
-                setinvalid(true)
-                setdata(0)
-                setgen(false)
-                setclick(false)
-                setrender(false)
-                setreg(false)
-                setsubs([])
-                setLoading(false)
+                setclick(false);
+                setrender(false);
+                setinvalid(true);
+                setdata(0);
+                setgen(false);
+                setclick(false);
+                setrender(false);
+                setreg(false);
+                setsubs([]);
+                setLoading(false);
               }
-            })
+            });
           }
         }}
       >
@@ -706,7 +721,7 @@ const Cbt = ({ ip }) => {
               className="lastbuttons"
               autoFocus
               onChange={(e) => {
-                setregyear(e.target.value)
+                setregyear(e.target.value);
               }}
               disabled={clicked}
               size="large"
@@ -749,12 +764,7 @@ const Cbt = ({ ip }) => {
               onChange={handleyears}
               disabled={clicked}
             >
-              {[
-                <MenuItem value={1}>1</MenuItem>,
-                <MenuItem value={2}>2</MenuItem>,
-                <MenuItem value={3}>3</MenuItem>,
-                <MenuItem value={4}>4</MenuItem>,
-              ]}
+              {acYears}
             </TextField>
           </Grid>
           <Grid item xs={12} md={2} sm={6}>
@@ -770,10 +780,7 @@ const Cbt = ({ ip }) => {
               onChange={handlesems}
               disabled={clicked}
             >
-              {[
-                <MenuItem value={1}>1</MenuItem>,
-                <MenuItem value={2}>2</MenuItem>,
-              ]}
+              {sems}
             </TextField>
           </Grid>
         </Grid>
@@ -803,7 +810,7 @@ const Cbt = ({ ip }) => {
                   type="submit"
                   variant="contained"
                   disabled={
-                    rollno.length !== 10 ||
+                    rollNo.length !== 10 ||
                     clicked ||
                     basecosts === 0 ||
                     maxcosts === 0 ||
@@ -827,41 +834,32 @@ const Cbt = ({ ip }) => {
                   variant="contained"
                   startIcon={<HowToRegOutlinedIcon />}
                   onClick={() => {
-                    setLoading(true)
+                    setLoading(true);
                     Axios.post(`http://${ip}:6969/CbtRegister`, {
-                      acyear: year,
+                      acYear: year,
                       sem: sem,
-                      subcode: subs,
-                      rno: rollno,
-                      subname: regSubs,
+                      subCode: subs,
+                      rno: rollNo,
+                      subName: regSubs,
                       branch: branches.current,
                     }).then((resp) => {
                       if (resp.data["succ"]) {
-                        setLoading(false)
-                        setreg(true)
-                        setdata(0)
-                        setgen(false)
-                        setclick(false)
-                        setrender(false)
-                        setsubs([])
-                        setmapper({})
-                        setnames([])
-                        setPrintData(false)
+                        setLoading(false);
+                        setreg(true);
+                        setdata(0);
+                        setgen(false);
+                        setclick(false);
+                        setrender(false);
+                        setsubs([]);
+                        setmapper({});
+                        setnames([]);
+                        setPrintData(false);
                       }
-                    })
+                    });
                   }}
                 >
                   Register
                 </Button>
-                <Typography
-                  variant="h6"
-                  fontWeight={500}
-                  component="span"
-                  color="warning.main"
-                  ml={2}
-                >
-                  Values have been fetched from Print CBT table
-                </Typography>
               </>
             )}
           </Grid>
@@ -873,7 +871,7 @@ const Cbt = ({ ip }) => {
         autoHideDuration={2500}
         open={changed}
         onClose={() => {
-          setchanged(false)
+          setchanged(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
@@ -881,7 +879,7 @@ const Cbt = ({ ip }) => {
           severity="warning"
           variant="standard"
           onClose={() => {
-            setchanged(false)
+            setchanged(false);
           }}
         >
           Subjects have been changed
@@ -891,7 +889,7 @@ const Cbt = ({ ip }) => {
         autoHideDuration={2500}
         open={reg}
         onClose={() => {
-          setreg(false)
+          setreg(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
@@ -899,15 +897,15 @@ const Cbt = ({ ip }) => {
           severity="success"
           variant="standard"
           onClose={() => {
-            setreg(false)
+            setreg(false);
           }}
-        >{`Registered for ${rollno}`}</Alert>
+        >{`Registered for ${rollNo}`}</Alert>
       </Snackbar>
       <Snackbar ////  INVALID
         autoHideDuration={2500}
         open={invalid}
         onClose={() => {
-          setinvalid(false)
+          setinvalid(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
@@ -915,7 +913,7 @@ const Cbt = ({ ip }) => {
           severity="warning"
           variant="standard"
           onClose={() => {
-            setinvalid(false)
+            setinvalid(false);
           }}
         >
           No CBT fee pending or check details
@@ -926,7 +924,7 @@ const Cbt = ({ ip }) => {
         autoHideDuration={2500}
         open={printErrAlert}
         onClose={() => {
-          setPrintErrAlert(false)
+          setPrintErrAlert(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
@@ -934,7 +932,7 @@ const Cbt = ({ ip }) => {
           severity="warning"
           variant="standard"
           onClose={() => {
-            setPrintErrAlert(false)
+            setPrintErrAlert(false);
           }}
         >
           There was a problem with print action
@@ -962,7 +960,7 @@ const Cbt = ({ ip }) => {
               component="span"
               fontWeight={500}
             >
-              {rollno}
+              {rollNo}
             </Typography>
           </Typography>
         </DialogTitle>
@@ -1003,31 +1001,31 @@ const Cbt = ({ ip }) => {
           <Button
             onClick={() => {
               Axios.post(`http://${ip}:6969/printCbt`, {
-                acyear: year,
+                acYear: year,
                 sem: sem,
-                subcode: subs,
-                rno: rollno,
-                subname: regSubs,
+                subCode: subs,
+                rno: rollNo,
+                subName: regSubs,
                 branch: branches.current,
               }).then((resp) => {
                 if (resp) {
                   if (resp.data.done) {
-                    setOpenPrintDialog(false)
-                    window.print()
-                    setdata(0)
-                    setgen(false)
-                    setclick(false)
-                    setrender(false)
-                    setreg(false)
-                    setsubs([])
-                    setmapper({})
-                    setnames([])
+                    setOpenPrintDialog(false);
+                    window.print();
+                    setdata(0);
+                    setgen(false);
+                    setclick(false);
+                    setrender(false);
+                    setreg(false);
+                    setsubs([]);
+                    setmapper({});
+                    setnames([]);
                     // return false
                   } else if (resp.data.err) {
-                    setPrintErrAlert(true)
+                    setPrintErrAlert(true);
                   }
                 }
-              })
+              });
             }}
           >
             Print
@@ -1035,7 +1033,7 @@ const Cbt = ({ ip }) => {
         </DialogActions>
       </Dialog>
     </Container>
-  )
-}
+  );
+};
 
-export default Cbt
+export default Cbt;

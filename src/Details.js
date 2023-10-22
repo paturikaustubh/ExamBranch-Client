@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react"
-import Axios from "axios"
-import "./Details.css"
+import { useState, useEffect } from "react";
+import Axios from "axios";
+import "./Details.css";
 
-import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined"
-import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined"
-import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined"
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
+import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 
-import HelpIcon from "@mui/icons-material/Help"
-import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined"
-import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined"
-import AddIcon from "@mui/icons-material/Add"
+import HelpIcon from "@mui/icons-material/Help";
+import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import AddIcon from "@mui/icons-material/Add";
 
 import {
   Paper,
@@ -37,28 +37,28 @@ import {
   Grid,
   Container,
   Typography,
-} from "@mui/material"
+} from "@mui/material";
 
 const Details = ({ user, ip }) => {
-  const [searched, setsearched] = useState(false)
-  const [rno, setrno] = useState("")
-  const [arr, setarr] = useState({})
-  const [found, setfound] = useState(false)
-  const [miss, setmiss] = useState(false)
-  const [year, setyear] = useState(0)
-  const [sem, setsem] = useState(0)
-  const [rollchange, setrollchange] = useState(false)
-  const [rollerror, setrollerror] = useState(false)
-  const [changed, setchanged] = useState(false)
-  const [download, setdownload] = useState(false)
-  const [addNew, setAddNew] = useState(false)
-  const [table, settable] = useState("studentinfo")
-  const [deleted, setDeleted] = useState(false)
-  const [deletedError, setDeletedError] = useState(false)
-  const [printSubs, setPrintSubs] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [openHelp, setOpenHelp] = useState(false)
-  const [dupe, setDupe] = useState(false)
+  const [searched, setsearched] = useState(false);
+  const [rno, setrno] = useState("");
+  const [arr, setarr] = useState({});
+  const [found, setfound] = useState(false);
+  const [miss, setmiss] = useState(false);
+  const [year, setyear] = useState(0);
+  const [sem, setsem] = useState(0);
+  const [rollchange, setrollchange] = useState(false);
+  const [rollerror, setrollerror] = useState(false);
+  const [changed, setchanged] = useState(false);
+  const [download, setdownload] = useState(false);
+  const [addNew, setAddNew] = useState(false);
+  const [table, settable] = useState("studentinfo");
+  const [deleted, setDeleted] = useState(false);
+  const [deletedError, setDeletedError] = useState(false);
+  const [printSubs, setPrintSubs] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [openHelp, setOpenHelp] = useState(false);
+  const [dupe, setDupe] = useState(false);
 
   useEffect(() => {
     Axios.post(`http://${ip}:6969/getInfo`, {
@@ -67,37 +67,37 @@ const Details = ({ user, ip }) => {
       sem: sem,
       table: table,
     }).then((resp) => {
-      setFCount(resp.data.fCount)
-    })
+      setFCount(resp.data.fCount);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [arr])
+  }, [arr]);
 
   const [editDetails, setEditDetails] = useState({
-    subcode: "",
-    subname: "",
+    subCode: "",
+    subName: "",
     grade: "",
-    acyear: 0,
+    acYear: 0,
     sem: 0,
-    exyear: 0,
-    exmonth: 0,
+    exYear: 0,
+    exMonth: 0,
     rno: "",
     table: "",
     regDate: "",
     registrant: "",
     branch: "",
     refCode: "",
-  })
-  const [delDetails, setDelDetails] = useState({})
-  const [openEdit, setOpenEdit] = useState(false)
-  const [donealert, setdonealert] = useState(false)
-  const [addAlert, setAddAlert] = useState(false)
-  const [erralert, seterralert] = useState(false)
-  const [fill, setFill] = useState(false)
-  const [openAddNew, setOpenAddNew] = useState(false)
-  const [wrongAlert, setWrongAlert] = useState(false)
-  const [dupeAlert, setDupeAlert] = useState(false)
-  const [openDelete, setOpenDelete] = useState(false)
-  const [fCount, setFCount] = useState(0)
+  });
+  const [delDetails, setDelDetails] = useState({});
+  const [openEdit, setOpenEdit] = useState(false);
+  const [donealert, setdonealert] = useState(false);
+  const [addAlert, setAddAlert] = useState(false);
+  const [erralert, seterralert] = useState(false);
+  const [fill, setFill] = useState(false);
+  const [openAddNew, setOpenAddNew] = useState(false);
+  const [wrongAlert, setWrongAlert] = useState(false);
+  const [dupeAlert, setDupeAlert] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+  const [fCount, setFCount] = useState(0);
 
   const printDetails = () => {
     if (
@@ -128,21 +128,21 @@ const Details = ({ user, ip }) => {
             />
           </Grid>
         </Grid>
-      )
+      );
     }
-  }
+  };
 
   const handleyears = (value) => {
-    setchanged(true)
-    setyear(value.target.value)
-  }
+    setchanged(true);
+    setyear(value.target.value);
+  };
   const handlesems = (value) => {
-    setchanged(true)
-    setsem(value.target.value)
-  }
+    setchanged(true);
+    setsem(value.target.value);
+  };
 
   function EditButton(props) {
-    const [variant, setVariant] = useState("outlined")
+    const [variant, setVariant] = useState("outlined");
 
     return (
       <Button
@@ -154,16 +154,16 @@ const Details = ({ user, ip }) => {
         onMouseEnter={() => setVariant("contained")}
         onMouseLeave={() => setVariant("outlined")}
         onClick={async () => {
-          setEditDetails(props.values)
-          setOpenEdit(true)
+          setEditDetails(props.values);
+          setOpenEdit(true);
         }}
       >
         edit
       </Button>
-    )
+    );
   }
   function AddDetailsButton() {
-    const [variant, setVariant] = useState("outlined")
+    const [variant, setVariant] = useState("outlined");
 
     return (
       <Button
@@ -176,16 +176,16 @@ const Details = ({ user, ip }) => {
         onMouseEnter={() => setVariant("contained")}
         onMouseLeave={() => setVariant("outlined")}
         onClick={() => {
-          setOpenAddNew(true)
+          setOpenAddNew(true);
         }}
       >
         add new record
       </Button>
-    )
+    );
   }
   function DeleteButton(props) {
-    const { subcode, subname } = props.values
-    const [variant, setVariant] = useState("outlined")
+    const { subCode, subName } = props.values;
+    const [variant, setVariant] = useState("outlined");
 
     return (
       <Button
@@ -198,17 +198,17 @@ const Details = ({ user, ip }) => {
         onMouseEnter={() => setVariant("contained")}
         onMouseLeave={() => setVariant("outlined")}
         onClick={() => {
-          setDelDetails({ subcode: subcode, subname: subname })
-          setOpenDelete(true)
+          setDelDetails({ subCode: subCode, subName: subName });
+          setOpenDelete(true);
         }}
       >
         delete
       </Button>
-    )
+    );
   }
 
   function DupeButton() {
-    const [buttVariant, setButtVariant] = useState("outlined")
+    const [buttVariant, setButtVariant] = useState("outlined");
 
     return (
       <Button
@@ -220,20 +220,20 @@ const Details = ({ user, ip }) => {
         onMouseEnter={() => setButtVariant("contained")}
         onMouseLeave={() => setButtVariant("outlined")}
         onClick={() => {
-          setLoading(true)
-          Axios.get(`http://${ip}:6969/subcode-count`).then((resp) => {
-            resp.data.done ? setLoading(false) : setLoading(true)
-          })
-          setDupe(true)
+          setLoading(true);
+          Axios.get(`http://${ip}:6969/subCode-count`).then((resp) => {
+            resp.data.done ? setLoading(false) : setLoading(true);
+          });
+          setDupe(true);
         }}
       >
         dup. subjects
       </Button>
-    )
+    );
   }
 
   function FiltrButton() {
-    const [buttVariant, setButtVariant] = useState("outlined")
+    const [buttVariant, setButtVariant] = useState("outlined");
 
     return (
       <Button
@@ -252,30 +252,30 @@ const Details = ({ user, ip }) => {
             table: table,
           }).then((resp) => {
             if (resp.data.info.length > 0) {
-              setLoading(true)
-              setarr(resp.data["info"])
-              setchanged(false)
-              setmiss(false)
-              setfound(true)
-              setsearched(true)
+              setLoading(true);
+              setarr(resp.data["info"]);
+              setchanged(false);
+              setmiss(false);
+              setfound(true);
+              setsearched(true);
               window.scrollTo({
                 top: 280,
                 behavior: "smooth",
-              })
-              setLoading(false)
+              });
+              setLoading(false);
             } else {
-              setmiss(true)
+              setmiss(true);
             }
-          })
+          });
         }}
       >
         Filter
       </Button>
-    )
+    );
   }
 
   function DownloadButton() {
-    const [buttVariant, setButtVariant] = useState("outlined")
+    const [buttVariant, setButtVariant] = useState("outlined");
 
     return (
       <Button
@@ -297,65 +297,65 @@ const Details = ({ user, ip }) => {
             },
             responseType: "blob",
           }).then((res) => {
-            const url = window.URL.createObjectURL(new Blob([res.data]))
-            const link = document.createElement("a")
-            link.href = url
-            link.setAttribute("download", `${rno}_${table}.csv`)
-            document.body.appendChild(link)
-            link.click()
-            setdownload(true)
-          })
+            const url = window.URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", `${rno}_${table}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            setdownload(true);
+          });
         }}
       >
         Download
       </Button>
-    )
+    );
   }
 
   const check = () => {
     if (table === "studentinfo") {
       if (
-        editDetails.subcode !== "" &&
-        editDetails.subname !== "" &&
+        editDetails.subCode !== "" &&
+        editDetails.subName !== "" &&
         editDetails.grade !== "" &&
         editDetails.grade.length <= 3 &&
-        editDetails.acyear !== "" &&
-        Number.isInteger(editDetails.acyear / 1) &&
+        editDetails.acYear !== "" &&
+        Number.isInteger(editDetails.acYear / 1) &&
         editDetails.sem !== "" &&
         Number.isInteger(editDetails.sem / 1) &&
-        editDetails.exyear !== "" &&
-        Number.isInteger(editDetails.exyear / 1) &&
-        editDetails.exmonth !== "" &&
-        Number.isInteger(editDetails.exmonth / 1)
+        editDetails.exYear !== "" &&
+        Number.isInteger(editDetails.exYear / 1) &&
+        editDetails.exMonth !== "" &&
+        Number.isInteger(editDetails.exMonth / 1)
       ) {
-        return true
-      } else return false
+        return true;
+      } else return false;
     } else {
       if (
-        editDetails.subcode !== "" &&
-        editDetails.subname !== "" &&
-        editDetails.acyear !== "" &&
-        Number.isInteger(editDetails.acyear / 1) &&
+        editDetails.subCode !== "" &&
+        editDetails.subName !== "" &&
+        editDetails.acYear !== "" &&
+        Number.isInteger(editDetails.acYear / 1) &&
         editDetails.sem !== "" &&
         Number.isInteger(editDetails.sem / 1)
       ) {
-        return true
-      } else return false
+        return true;
+      } else return false;
     }
-  }
+  };
 
   const handleEditDetailsChange = (e) => {
     if (
-      e.target.name === "subcode" ||
-      e.target.name === "subname" ||
+      e.target.name === "subCode" ||
+      e.target.name === "subName" ||
       e.target.name === "grade"
     )
-      e.target.value = e.target.value.toUpperCase()
+      e.target.value = e.target.value.toUpperCase();
     setEditDetails((prevVals) => ({
       ...prevVals,
       [e.target.name]: e.target.value,
-    }))
-  }
+    }));
+  };
 
   //====================||  MAIN JSX  ||====================\\
   return (
@@ -372,7 +372,7 @@ const Details = ({ user, ip }) => {
           <Tooltip title="Help">
             <IconButton
               onClick={() => {
-                setOpenHelp(true)
+                setOpenHelp(true);
               }}
               color="primary"
             >
@@ -385,7 +385,7 @@ const Details = ({ user, ip }) => {
         sx={{ backdropFilter: "blur(1px)" }}
         open={openHelp}
         onClose={() => {
-          setOpenHelp(false)
+          setOpenHelp(false);
         }}
         maxWidth
       >
@@ -468,7 +468,7 @@ const Details = ({ user, ip }) => {
         <DialogActions>
           <Button
             onClick={() => {
-              setOpenHelp(false)
+              setOpenHelp(false);
             }}
           >
             okay
@@ -489,9 +489,9 @@ const Details = ({ user, ip }) => {
                 }}
                 defaultValue="studentinfo"
                 onChange={(e) => {
-                  setAddNew(false)
-                  settable(e.target.value)
-                  setsearched(false)
+                  setAddNew(false);
+                  settable(e.target.value);
+                  setsearched(false);
                 }}
               >
                 <MenuItem value={"studentinfo"}>Student Database</MenuItem>
@@ -525,18 +525,18 @@ const Details = ({ user, ip }) => {
                   backgroundColor: "white",
                 }}
                 onInput={(e) => {
-                  e.target.value = e.target.value.toUpperCase()
-                  setrollchange(true)
-                  setsearched(false)
-                  setrno(e.target.value)
-                  setyear(0)
-                  setAddNew(false)
-                  setsem(0)
-                  setfound(false)
+                  e.target.value = e.target.value.toUpperCase();
+                  setrollchange(true);
+                  setsearched(false);
+                  setrno(e.target.value);
+                  setyear(0);
+                  setAddNew(false);
+                  setsem(0);
+                  setfound(false);
                   if (e.target.value === "" && rollchange) {
-                    setrollerror(true)
+                    setrollerror(true);
                   } else {
-                    setrollerror(false)
+                    setrollerror(false);
                   }
                 }}
                 autoFocus
@@ -558,8 +558,8 @@ const Details = ({ user, ip }) => {
                     }
                     variant={"contained"}
                     onClick={(e) => {
-                      e.preventDefault()
-                      setLoading(true)
+                      e.preventDefault();
+                      setLoading(true);
                       Axios.post(`http://${ip}:6969/getInfo`, {
                         rno: rno,
                         year: year,
@@ -567,38 +567,39 @@ const Details = ({ user, ip }) => {
                         table: table,
                       }).then((resp) => {
                         if (resp.data.info) {
-                          setarr(resp.data["info"])
-                          setmiss(false)
-                          setchanged(false)
-                          setsearched(true)
-                          setfound(true)
-                          setLoading(false)
+                          console.log(resp.data.info[0]);
+                          setarr(resp.data["info"]);
+                          setmiss(false);
+                          setchanged(false);
+                          setsearched(true);
+                          setfound(true);
+                          setLoading(false);
                           window.scrollTo({
                             top: 280,
                             behavior: "smooth",
-                          })
+                          });
                           if (resp.data.printSubs.length > 0) {
-                            setPrintSubs(resp.data.printSubs)
-                            setmiss(false)
-                            setchanged(false)
-                            setsearched(true)
-                            setfound(true)
-                            setLoading(false)
+                            setPrintSubs(resp.data.printSubs);
+                            setmiss(false);
+                            setchanged(false);
+                            setsearched(true);
+                            setfound(true);
+                            setLoading(false);
                           }
                         } else if (resp.data.miss) {
-                          setsearched(false)
-                          setmiss(true)
+                          setsearched(false);
+                          setmiss(true);
                           if (
                             table === "studentinfo" ||
                             table === "paidsupply" ||
                             table === "paidreval" ||
                             table === "paidcbt"
                           )
-                            setAddNew(true)
-                          else setAddNew(false)
-                          setLoading(false)
+                            setAddNew(true);
+                          else setAddNew(false);
+                          setLoading(false);
                         }
-                      })
+                      });
                     }}
                   >
                     Search
@@ -608,7 +609,7 @@ const Details = ({ user, ip }) => {
 
               {found &&
                 arr.length > 0 &&
-                rno === arr[0]["rollno"] &&
+                rno === arr[0]["rollNo"] &&
                 searched &&
                 table !== "printcbt" &&
                 table !== "printsupply" &&
@@ -626,16 +627,16 @@ const Details = ({ user, ip }) => {
                     color="error"
                     onClick={() => {
                       Axios.post(`http://${ip}:6969/delete${table}`, {
-                        rollno: rno,
+                        rollNo: rno,
                       }).then((resp) => {
                         if (resp.data.done) {
-                          setfound(false)
-                          setDeleted(true)
-                          setsearched(false)
+                          setfound(false);
+                          setDeleted(true);
+                          setsearched(false);
                         } else if (resp.data.err) {
-                          setDeletedError(true)
+                          setDeletedError(true);
                         }
-                      })
+                      });
                     }}
                   >
                     Delete
@@ -888,24 +889,24 @@ const Details = ({ user, ip }) => {
                           }}
                         >
                           <TableCell align="center">{indx + 1}</TableCell>
-                          <TableCell align="center">{val.subcode}</TableCell>
-                          <TableCell align="center">{val.subname}</TableCell>
+                          <TableCell align="center">{val.subCode}</TableCell>
+                          <TableCell align="center">{val.subName}</TableCell>
 
                           {table === "studentinfo" && (
                             <TableCell align="center">{val.grade}</TableCell>
                           )}
-                          <TableCell align="center">{val.acyear}</TableCell>
+                          <TableCell align="center">{val.acYear}</TableCell>
                           <TableCell align="center">{val.sem}</TableCell>
 
                           {table === "studentinfo" && (
                             <>
-                              <TableCell align="center">{val.exyear}</TableCell>
+                              <TableCell align="center">{val.exYear}</TableCell>
                               <TableCell align="center">
-                                {val.exmonth}
+                                {val.exMonth}
                               </TableCell>
 
                               <TableCell align="center">
-                                {`${val.credits} (${val.gradepoint} x ${val.ocredits})`}
+                                {`${val.credits} (${val.gradePoint} x ${val.ocredits})`}
                               </TableCell>
                             </>
                           )}
@@ -913,7 +914,7 @@ const Details = ({ user, ip }) => {
                           {table !== "studentinfo" && (
                             <>
                               <TableCell align="center">
-                                {val.regdate}
+                                {val.regDate}
                               </TableCell>
                               <TableCell align="center">{val.user}</TableCell>
                             </>
@@ -923,26 +924,26 @@ const Details = ({ user, ip }) => {
                             <div>
                               <EditButton
                                 values={{
-                                  subcode: val.subcode,
-                                  subname: val.subname,
+                                  subCode: val.subCode,
+                                  subName: val.subName,
                                   grade: val.grade,
-                                  acyear: val.acyear,
+                                  acYear: val.acYear,
                                   sem: val.sem,
-                                  exyear: val.exyear,
-                                  exmonth: val.exmonth,
+                                  exYear: val.exYear,
+                                  exMonth: val.exMonth,
                                   rno: rno,
                                   table: table,
-                                  regDate: val.regdate,
+                                  regDate: val.regDate,
                                   registrant: val.user,
                                   branch: val.branch,
-                                  refCode: val.subcode,
+                                  refCode: val.subCode,
                                 }}
                               />
                             </div>
                             <DeleteButton values={val} />
                           </TableCell>
                         </TableRow>
-                      )
+                      );
                     })}
                   </Table>
                 </Paper>
@@ -967,24 +968,24 @@ const Details = ({ user, ip }) => {
               component="span"
               fontWeight={500}
             >
-              {editDetails.refCode} - {editDetails.subname}
+              {editDetails.refCode} - {editDetails.subName}
             </Typography>
           </DialogTitle>
           <form
             onSubmit={(e) => {
-              e.preventDefault()
+              e.preventDefault();
               if (check()) {
                 Axios.post(`http://${ip}:6969/editinfo`, {
-                  subcode: editDetails.subcode,
-                  subname: editDetails.subname,
+                  subCode: editDetails.subCode,
+                  subName: editDetails.subName,
                   grade: editDetails.grade,
-                  year: editDetails.acyear,
+                  year: editDetails.acYear,
                   sem: editDetails.sem,
-                  exyear: editDetails.exyear,
-                  exmonth: editDetails.exmonth,
+                  exYear: editDetails.exYear,
+                  exMonth: editDetails.exMonth,
                   rno: rno,
                   table: table,
-                  regdate: editDetails.regDate,
+                  regDate: editDetails.regDate,
                   registrant: editDetails.registrant,
                   branch: editDetails.branch,
                   refcode: editDetails.refCode,
@@ -992,46 +993,46 @@ const Details = ({ user, ip }) => {
                   if (resp.data.done) {
                     if (table === "studentinfo") {
                       const newArray = arr.map((obj) => {
-                        if (obj.subcode === editDetails.refCode) {
+                        if (obj.subCode === editDetails.refCode) {
                           return {
                             ...obj,
-                            subcode: editDetails.subcode,
-                            subname: editDetails.subname,
+                            subCode: editDetails.subCode,
+                            subName: editDetails.subName,
                             grade: editDetails.grade,
-                            acyear: editDetails.acyear,
+                            acYear: editDetails.acYear,
                             sem: editDetails.sem,
-                            exyear: editDetails.exyear,
-                            exmonth: editDetails.exmonth,
-                          }
+                            exYear: editDetails.exYear,
+                            exMonth: editDetails.exMonth,
+                          };
                         }
-                        return obj
-                      })
+                        return obj;
+                      });
 
-                      setarr(newArray)
+                      setarr(newArray);
                     } else {
                       const newArray = arr.map((obj) => {
-                        if (obj.subcode === editDetails.refCode) {
+                        if (obj.subCode === editDetails.refCode) {
                           return {
                             ...obj,
-                            subcode: editDetails.subcode,
-                            subname: editDetails.subname,
-                            acyear: editDetails.acyear,
+                            subCode: editDetails.subCode,
+                            subName: editDetails.subName,
+                            acYear: editDetails.acYear,
                             sem: editDetails.sem,
-                          }
+                          };
                         }
-                        return obj
-                      })
+                        return obj;
+                      });
 
-                      setarr(newArray)
+                      setarr(newArray);
                     }
 
-                    setdonealert(true)
+                    setdonealert(true);
                   } else {
-                    seterralert(true)
+                    seterralert(true);
                   }
-                })
-                setOpenEdit(false)
-              } else setFill(true)
+                });
+                setOpenEdit(false);
+              } else setFill(true);
             }}
           >
             <DialogContent dividers>
@@ -1040,10 +1041,10 @@ const Details = ({ user, ip }) => {
                   <Grid item sm={4} xs={12}>
                     <TextField
                       fullWidth
-                      name="subcode"
+                      name="subCode"
                       variant="outlined"
                       label="Subject Code"
-                      defaultValue={editDetails.subcode}
+                      defaultValue={editDetails.subCode}
                       onInput={handleEditDetailsChange}
                     />
                   </Grid>
@@ -1051,10 +1052,10 @@ const Details = ({ user, ip }) => {
                   <Grid item sm={4} xs={12}>
                     <TextField
                       fullWidth
-                      name="subname"
+                      name="subName"
                       variant="outlined"
                       label="Subject Name"
-                      defaultValue={editDetails.subname}
+                      defaultValue={editDetails.subName}
                       onInput={handleEditDetailsChange}
                     />
                   </Grid>
@@ -1076,11 +1077,11 @@ const Details = ({ user, ip }) => {
                   <Grid item sm={6} xs={12}>
                     <TextField
                       fullWidth
-                      name="acyear"
+                      name="acYear"
                       select
                       variant="outlined"
                       label="Year"
-                      defaultValue={editDetails.acyear}
+                      defaultValue={editDetails.acYear}
                       onChange={handleEditDetailsChange}
                     >
                       <MenuItem value={1}>1</MenuItem>
@@ -1109,11 +1110,11 @@ const Details = ({ user, ip }) => {
                     <TextField
                       fullWidth
                       type="number"
-                      name="exyear"
+                      name="exYear"
                       disabled={table !== "studentinfo"}
                       variant="outlined"
                       label="Ex Year"
-                      defaultValue={editDetails.exyear}
+                      defaultValue={editDetails.exYear}
                       onInput={handleEditDetailsChange}
                     />
                   </Grid>
@@ -1122,11 +1123,11 @@ const Details = ({ user, ip }) => {
                     <TextField
                       fullWidth
                       type="number"
-                      name="exmonth"
+                      name="exMonth"
                       disabled={table !== "studentinfo"}
                       variant="outlined"
                       label="Ex Month"
-                      defaultValue={editDetails.exmonth}
+                      defaultValue={editDetails.exMonth}
                       onInput={handleEditDetailsChange}
                     />
                   </Grid>
@@ -1159,7 +1160,7 @@ const Details = ({ user, ip }) => {
                 component={"span"}
                 color="primary.main"
                 fontWeight={500}
-              >{` ${delDetails.subcode}-${delDetails.subname} `}</Typography>
+              >{` ${delDetails.subCode}-${delDetails.subName} `}</Typography>
               record?
             </Typography>
           </DialogTitle>
@@ -1180,18 +1181,18 @@ const Details = ({ user, ip }) => {
               onClick={async () => {
                 Axios.post(`http://${ip}:6969/deleteinfo`, {
                   rno: rno,
-                  subcode: delDetails.subcode,
+                  subCode: delDetails.subCode,
                   table: table,
                 }).then((resp) => {
                   if (resp.data.done) {
                     const newArr = arr.filter((value) => {
-                      return value.subcode !== delDetails.subcode
-                    })
-                    setarr(newArr)
-                    setOpenDelete(false)
-                    setDeleted(true)
+                      return value.subCode !== delDetails.subCode;
+                    });
+                    setarr(newArr);
+                    setOpenDelete(false);
+                    setDeleted(true);
                   }
-                })
+                });
               }}
               autoFocus
             >
@@ -1223,32 +1224,32 @@ const Details = ({ user, ip }) => {
           </DialogTitle>
           <form
             onSubmit={(e) => {
-              e.preventDefault()
+              e.preventDefault();
               if (check()) {
                 Axios.post(`http://${ip}:6969/addinfo`, {
-                  subcode: editDetails.subcode,
-                  subname: editDetails.subname,
+                  subCode: editDetails.subCode,
+                  subName: editDetails.subName,
                   grade: editDetails.grade,
-                  year: editDetails.acyear,
+                  year: editDetails.acYear,
                   sem: editDetails.sem,
-                  exyear: editDetails.exyear,
-                  exmonth: editDetails.exmonth,
-                  rollno: rno,
+                  exYear: editDetails.exYear,
+                  exMonth: editDetails.exMonth,
+                  rollNo: rno,
                   table: table,
                 }).then((resp) => {
                   if (resp.data.done) {
-                    setarr((prevVals) => [...prevVals, editDetails])
-                    setAddAlert(true)
+                    setarr((prevVals) => [...prevVals, editDetails]);
+                    setAddAlert(true);
                   } else if (resp.data.wrongvalue) {
-                    setWrongAlert(true)
+                    setWrongAlert(true);
                   } else if (resp.data.dupe) {
-                    setDupeAlert(true)
+                    setDupeAlert(true);
                   }
-                })
-                setOpenAddNew(false)
+                });
+                setOpenAddNew(false);
               } else {
-                setOpenAddNew(false)
-                setWrongAlert(true)
+                setOpenAddNew(false);
+                setWrongAlert(true);
               }
             }}
           >
@@ -1258,7 +1259,7 @@ const Details = ({ user, ip }) => {
                   <Grid item xs={12} sm={4}>
                     <TextField
                       fullWidth
-                      name="subcode"
+                      name="subCode"
                       variant="outlined"
                       label="Subject Code"
                       onInput={handleEditDetailsChange}
@@ -1268,7 +1269,7 @@ const Details = ({ user, ip }) => {
                   <Grid item xs={12} sm={4}>
                     <TextField
                       fullWidth
-                      name="subname"
+                      name="subName"
                       variant="outlined"
                       label="Subject Name"
                       onInput={handleEditDetailsChange}
@@ -1291,7 +1292,7 @@ const Details = ({ user, ip }) => {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
-                      name="acyear"
+                      name="acYear"
                       select
                       variant="outlined"
                       label="Year"
@@ -1321,7 +1322,7 @@ const Details = ({ user, ip }) => {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
-                      name="exyear"
+                      name="exYear"
                       disabled={table !== "studentinfo"}
                       variant="outlined"
                       label="Ex Year"
@@ -1332,7 +1333,7 @@ const Details = ({ user, ip }) => {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
-                      name="exmonth"
+                      name="exMonth"
                       disabled={table !== "studentinfo"}
                       variant="outlined"
                       label="Ex Month"
@@ -1360,7 +1361,7 @@ const Details = ({ user, ip }) => {
           autoHideDuration={2500}
           open={miss}
           onClose={() => {
-            setmiss(false)
+            setmiss(false);
           }}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
@@ -1368,7 +1369,7 @@ const Details = ({ user, ip }) => {
             severity="warning"
             variant="standard"
             onClose={() => {
-              setmiss(false)
+              setmiss(false);
             }}
           >{`No data found`}</Alert>
         </Snackbar>
@@ -1376,7 +1377,7 @@ const Details = ({ user, ip }) => {
           autoHideDuration={2500}
           open={download}
           onClose={() => {
-            setdownload(false)
+            setdownload(false);
           }}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
@@ -1384,7 +1385,7 @@ const Details = ({ user, ip }) => {
             severity="success"
             variant="standard"
             onClose={() => {
-              setdownload(false)
+              setdownload(false);
             }}
           >{`Downloading ${rno}'s details`}</Alert>
         </Snackbar>
@@ -1392,7 +1393,7 @@ const Details = ({ user, ip }) => {
           autoHideDuration={2500}
           open={deleted}
           onClose={() => {
-            setDeleted(false)
+            setDeleted(false);
           }}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
@@ -1400,7 +1401,7 @@ const Details = ({ user, ip }) => {
             severity="success"
             variant="standard"
             onClose={() => {
-              setDeleted(false)
+              setDeleted(false);
             }}
           >{`Deleted ${rno}'s details`}</Alert>
         </Snackbar>
@@ -1408,7 +1409,7 @@ const Details = ({ user, ip }) => {
           autoHideDuration={2500}
           open={deletedError}
           onClose={() => {
-            setDeletedError(false)
+            setDeletedError(false);
           }}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
@@ -1416,7 +1417,7 @@ const Details = ({ user, ip }) => {
             severity="success"
             variant="standard"
             onClose={() => {
-              setDeletedError(false)
+              setDeletedError(false);
             }}
           >{`There was a problem while deleting ${rno}'s print details`}</Alert>
         </Snackbar>
@@ -1437,14 +1438,14 @@ const Details = ({ user, ip }) => {
         <Snackbar
           autoHideDuration={2500}
           onClose={() => {
-            setdonealert(false)
+            setdonealert(false);
           }}
           open={donealert}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
           <Alert
             onClose={() => {
-              setdonealert(false)
+              setdonealert(false);
             }}
             severity="success"
             variant="standard"
@@ -1455,32 +1456,32 @@ const Details = ({ user, ip }) => {
         <Snackbar
           autoHideDuration={2500}
           onClose={() => {
-            seterralert(false)
+            seterralert(false);
           }}
           open={erralert}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
           <Alert
             onClose={() => {
-              seterralert(false)
+              seterralert(false);
             }}
             severity="error"
             variant="standard"
           >
-            {`Error while updating ${rno}-${editDetails.subcode} details`}
+            {`Error while updating ${rno}-${editDetails.subCode} details`}
           </Alert>
         </Snackbar>
         <Snackbar
           autoHideDuration={2500}
           onClose={() => {
-            setFill(false)
+            setFill(false);
           }}
           open={fill}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
           <Alert
             onClose={() => {
-              setFill(false)
+              setFill(false);
             }}
             severity="warning"
             variant="standard"
@@ -1491,14 +1492,14 @@ const Details = ({ user, ip }) => {
         <Snackbar
           autoHideDuration={2500}
           onClose={() => {
-            setAddAlert(false)
+            setAddAlert(false);
           }}
           open={addAlert}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
           <Alert
             onClose={() => {
-              setAddAlert(false)
+              setAddAlert(false);
             }}
             severity="success"
             variant="standard"
@@ -1509,14 +1510,14 @@ const Details = ({ user, ip }) => {
         <Snackbar
           autoHideDuration={2500}
           onClose={() => {
-            setDupeAlert(false)
+            setDupeAlert(false);
           }}
           open={dupeAlert}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
           <Alert
             onClose={() => {
-              setDupeAlert(false)
+              setDupeAlert(false);
             }}
             severity="warning"
             variant="standard"
@@ -1527,14 +1528,14 @@ const Details = ({ user, ip }) => {
         <Snackbar
           autoHideDuration={2500}
           onClose={() => {
-            setWrongAlert(false)
+            setWrongAlert(false);
           }}
           open={wrongAlert}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
           <Alert
             onClose={() => {
-              setWrongAlert(false)
+              setWrongAlert(false);
             }}
             severity="error"
             variant="standard"
@@ -1550,7 +1551,7 @@ const Details = ({ user, ip }) => {
         <CircularProgress color="inherit" />
       </Backdrop>
     </>
-  )
-}
+  );
+};
 
-export default Details
+export default Details;

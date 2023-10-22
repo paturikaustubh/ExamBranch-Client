@@ -100,9 +100,9 @@ const Costs = ({ ip }) => {
       setFine_1(resp.data.arr[0].fine_1);
       setFine_2(resp.data.arr[0].fine_2);
       setFine_3(resp.data.arr[0].fine_3);
-      setFine_1Dt(dayjs(resp.data.arr[0].fine_1dt));
-      setFine_2Dt(dayjs(resp.data.arr[0].fine_2dt));
-      setFine_3Dt(dayjs(resp.data.arr[0].fine_3dt));
+      setFine_1Dt(dayjs(resp.data.arr[0].fine_1Dt));
+      setFine_2Dt(dayjs(resp.data.arr[0].fine_2Dt));
+      setFine_3Dt(dayjs(resp.data.arr[0].fine_3Dt));
       setNoFine(dayjs(resp.data.arr[0].no_fine));
     });
   }, [ip]);
@@ -541,9 +541,9 @@ const Costs = ({ ip }) => {
                 fine_2: tf2,
                 fine_3: tf3,
                 nofinedt: tnofine,
-                fine_1dt: tf1dt,
-                fine_2dt: tf2dt,
-                fine_3dt: tf3dt,
+                fine_1Dt: tf1dt,
+                fine_2Dt: tf2dt,
+                fine_3Dt: tf3dt,
               }).then((resp) => {
                 if (resp.data.done) {
                   setLoading(false);

@@ -20,13 +20,13 @@ import Axios from "axios";
 export default function AlertDialog(props) {
   let { title, dialogName, butt1, butt2, rno, table, user, style, ip } = props;
 
-  let subcode = "";
-  let subname = "";
+  let subCode = "";
+  let subName = "";
   let grade = "";
   let year = "";
   let sem = "";
-  let exyear = "";
-  let exmonth = "";
+  let exYear = "";
+  let exMonth = "";
 
   const [open, setOpen] = useState(false);
   const [donealert, setdonealert] = useState(false);
@@ -44,24 +44,24 @@ export default function AlertDialog(props) {
   const check = () => {
     if (table === "studentinfo") {
       if (
-        subcode !== "" &&
-        subname !== "" &&
+        subCode !== "" &&
+        subName !== "" &&
         grade !== "" &&
         year !== "" &&
         Number.isInteger(year / 1) &&
         sem !== "" &&
         Number.isInteger(sem / 1) &&
-        exyear !== "" &&
-        Number.isInteger(exyear / 1) &&
-        exmonth !== "" &&
-        Number.isInteger(exmonth / 1)
+        exYear !== "" &&
+        Number.isInteger(exYear / 1) &&
+        exMonth !== "" &&
+        Number.isInteger(exMonth / 1)
       ) {
         return true;
       } else return false;
     } else {
       if (
-        subcode !== "" &&
-        subname !== "" &&
+        subCode !== "" &&
+        subName !== "" &&
         year !== "" &&
         Number.isInteger(year / 1) &&
         sem !== "" &&
@@ -102,7 +102,7 @@ export default function AlertDialog(props) {
                   label="Subject Code"
                   onInput={(e) => {
                     e.target.value = e.target.value.toUpperCase();
-                    subcode = e.target.value;
+                    subCode = e.target.value;
                   }}
                 />
 
@@ -112,7 +112,7 @@ export default function AlertDialog(props) {
                   label="Subject Name"
                   onInput={(e) => {
                     e.target.value = e.target.value.toUpperCase();
-                    subname = e.target.value;
+                    subName = e.target.value;
                   }}
                 />
 
@@ -163,7 +163,7 @@ export default function AlertDialog(props) {
                   label="Ex Year"
                   onInput={(e) => {
                     e.target.value = e.target.value.toUpperCase();
-                    exyear = e.target.value;
+                    exYear = e.target.value;
                   }}
                   style={{ width: "40%", margin: 8 }}
                 />
@@ -174,7 +174,7 @@ export default function AlertDialog(props) {
                   label="Ex Month"
                   onInput={(e) => {
                     e.target.value = e.target.value.toUpperCase();
-                    exmonth = e.target.value.toString();
+                    exMonth = e.target.value.toString();
                   }}
                   style={{ width: "40%", margin: 8 }}
                 />
@@ -188,14 +188,14 @@ export default function AlertDialog(props) {
             onClick={() => {
               if (check()) {
                 Axios.post(`http://${ip}:6969/addinfo`, {
-                  subcode: subcode,
-                  subname: subname,
+                  subCode: subCode,
+                  subName: subName,
                   grade: grade,
                   year: year,
                   sem: sem,
-                  exyear: exyear,
-                  exmonth: exmonth,
-                  rollno: rno,
+                  exYear: exYear,
+                  exMonth: exMonth,
+                  rollNo: rno,
                   table: table,
                 }).then((resp) => {
                   if (resp.data.done) {

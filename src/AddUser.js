@@ -1,6 +1,6 @@
-import React from "react"
-import { useState } from "react"
-import Axios from "axios"
+import React from "react";
+import { useState } from "react";
+import Axios from "axios";
 import {
   Alert,
   Checkbox,
@@ -22,22 +22,22 @@ import {
   Divider,
   DialogActions,
   IconButton,
-} from "@mui/material"
+} from "@mui/material";
 
-import HelpIcon from "@mui/icons-material/Help"
+import HelpIcon from "@mui/icons-material/Help";
 
 const AddUser = ({ ip }) => {
-  const [username, setusername] = useState("")
-  const [password, setpassword] = useState("")
-  const [cpassword, setcpassword] = useState("")
-  const [delname, setdelname] = useState("")
-  const [added, setadded] = useState(false)
-  const [existed, setexisted] = useState(false)
-  const [wrongpass, setwrongpass] = useState(false)
-  const [deleted, setdeleted] = useState(false)
-  const [action, setAction] = useState("add")
-  const [showPass, setShowPass] = useState(false)
-  const [openHelp, setOpenHelp] = useState(false)
+  const [userName, setusername] = useState("");
+  const [password, setpassword] = useState("");
+  const [cpassword, setcpassword] = useState("");
+  const [delname, setdelname] = useState("");
+  const [added, setadded] = useState(false);
+  const [existed, setexisted] = useState(false);
+  const [wrongpass, setwrongpass] = useState(false);
+  const [deleted, setdeleted] = useState(false);
+  const [action, setAction] = useState("add");
+  const [showPass, setShowPass] = useState(false);
+  const [openHelp, setOpenHelp] = useState(false);
 
   return (
     <Container maxWidth="xl">
@@ -54,7 +54,7 @@ const AddUser = ({ ip }) => {
             <IconButton
               size="large"
               onClick={() => {
-                setOpenHelp(true)
+                setOpenHelp(true);
               }}
               color="primary"
             >
@@ -74,7 +74,7 @@ const AddUser = ({ ip }) => {
               backgroundColor: "white",
             }}
             onChange={(e) => {
-              setAction(e.target.value)
+              setAction(e.target.value);
             }}
             value={action}
           >
@@ -107,14 +107,14 @@ const AddUser = ({ ip }) => {
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    error={username.length > 15}
+                    error={userName.length > 15}
                     size="large"
                     placeholder="Username"
                     style={{ backgroundColor: "white" }}
                     autoFocus
-                    value={username}
+                    value={userName}
                     onChange={(e) => {
-                      setusername(e.target.value)
+                      setusername(e.target.value);
                     }}
                   />
                 </Grid>
@@ -127,7 +127,7 @@ const AddUser = ({ ip }) => {
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    disabled={username === "" || username.length > 15}
+                    disabled={userName === "" || userName.length > 15}
                     type={showPass ? "text" : "password"}
                     error={password !== cpassword && cpassword.length > 0}
                     value={password}
@@ -142,7 +142,7 @@ const AddUser = ({ ip }) => {
                     placeholder="Password"
                     style={{ backgroundColor: "white" }}
                     onChange={(e) => {
-                      setpassword(e.target.value)
+                      setpassword(e.target.value);
                     }}
                   />
                 </Grid>
@@ -152,7 +152,7 @@ const AddUser = ({ ip }) => {
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    disabled={username === "" || username.length > 15}
+                    disabled={userName === "" || userName.length > 15}
                     type={showPass ? "text" : "password"}
                     error={password !== cpassword && cpassword.length > 0}
                     value={cpassword}
@@ -167,7 +167,7 @@ const AddUser = ({ ip }) => {
                     placeholder="Confirm Password"
                     style={{ backgroundColor: "white" }}
                     onChange={(e) => {
-                      setcpassword(e.target.value)
+                      setcpassword(e.target.value);
                     }}
                   />
                 </Grid>
@@ -179,8 +179,8 @@ const AddUser = ({ ip }) => {
                         <Checkbox
                           onClick={(e) => {
                             if (e.target.checked) {
-                              setShowPass(true)
-                            } else setShowPass(false)
+                              setShowPass(true);
+                            } else setShowPass(false);
                           }}
                         />
                       }
@@ -191,7 +191,7 @@ const AddUser = ({ ip }) => {
                   <Button
                     size="large"
                     disabled={
-                      username === "" ||
+                      userName === "" ||
                       password !== cpassword ||
                       password === ""
                     }
@@ -200,20 +200,20 @@ const AddUser = ({ ip }) => {
                     onClick={() => {
                       if (password === cpassword) {
                         Axios.post(`http://${ip}:6969/AddUser`, {
-                          username: username,
+                          userName: userName,
                           password: password,
                         }).then((resp) => {
                           if (resp.data["Valid"]) {
-                            setadded(true)
-                            setusername("")
-                            setpassword("")
-                            setcpassword("")
+                            setadded(true);
+                            setusername("");
+                            setpassword("");
+                            setcpassword("");
                           } else {
-                            setexisted(true)
+                            setexisted(true);
                           }
-                        })
+                        });
                       } else {
-                        setwrongpass(true)
+                        setwrongpass(true);
                       }
                     }}
                   >
@@ -246,7 +246,7 @@ const AddUser = ({ ip }) => {
                     placeholder="Username"
                     style={{ backgroundColor: "white" }}
                     onChange={(e) => {
-                      setdelname(e.target.value)
+                      setdelname(e.target.value);
                     }}
                   />
                 </Grid>
@@ -258,13 +258,13 @@ const AddUser = ({ ip }) => {
                     disabled={delname === "" || delname === "admin"}
                     onClick={() => {
                       Axios.post(`http://${ip}:6969/DelUser`, {
-                        username: delname,
+                        userName: delname,
                       }).then((resp) => {
                         if (resp.data["done"]) {
-                          setdeleted(true)
-                          setdelname("")
+                          setdeleted(true);
+                          setdelname("");
                         }
-                      })
+                      });
                     }}
                   >
                     Delete User
@@ -328,13 +328,13 @@ const AddUser = ({ ip }) => {
             </h2>
             <p>
               If you want to add a user, select <code>Add User</code> from the{" "}
-              <code>Action</code> menu. Then, enter their username and password.
+              <code>Action</code> menu. Then, enter their userName and password.
               You must confirm your password by re-entering it for a second
               time, and then click <code>Add User</code> button.
             </p>
             <p>
               If you want to delete a user, select <code>Delete User</code> from
-              the <code>Action</code> menu. Then enter the username and click{" "}
+              the <code>Action</code> menu. Then enter the userName and click{" "}
               <code>Delete</code> button.
             </p>
             <Divider />
@@ -352,7 +352,7 @@ const AddUser = ({ ip }) => {
         <DialogActions>
           <Button
             onClick={() => {
-              setOpenHelp(false)
+              setOpenHelp(false);
             }}
           >
             okay
@@ -363,7 +363,7 @@ const AddUser = ({ ip }) => {
       <Snackbar
         open={added}
         onClose={() => {
-          setadded(false)
+          setadded(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         autoHideDuration={2500}
@@ -372,7 +372,7 @@ const AddUser = ({ ip }) => {
           severity="success"
           variant="standard"
           onClose={() => {
-            setadded(false)
+            setadded(false);
           }}
         >
           {`User added successfully`}
@@ -382,7 +382,7 @@ const AddUser = ({ ip }) => {
       <Snackbar
         open={existed}
         onClose={() => {
-          setexisted(false)
+          setexisted(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         autoHideDuration={2500}
@@ -391,17 +391,17 @@ const AddUser = ({ ip }) => {
           severity="warning"
           variant="standard"
           onClose={() => {
-            setexisted(false)
+            setexisted(false);
           }}
         >
-          {`${username} already exists`}
+          {`${userName} already exists`}
         </Alert>
       </Snackbar>
 
       <Snackbar
         open={wrongpass}
         onClose={() => {
-          setwrongpass(false)
+          setwrongpass(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         autoHideDuration={2500}
@@ -410,7 +410,7 @@ const AddUser = ({ ip }) => {
           severity="error"
           variant="standard"
           onClose={() => {
-            setwrongpass(false)
+            setwrongpass(false);
           }}
         >
           Incorrect credentials
@@ -420,7 +420,7 @@ const AddUser = ({ ip }) => {
       <Snackbar
         open={deleted}
         onClose={() => {
-          setdeleted(false)
+          setdeleted(false);
         }}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         autoHideDuration={2500}
@@ -429,14 +429,14 @@ const AddUser = ({ ip }) => {
           severity="success"
           variant="standard"
           onClose={() => {
-            setdeleted(false)
+            setdeleted(false);
           }}
         >
           {`Deleted user`}
         </Alert>
       </Snackbar>
     </Container>
-  )
-}
+  );
+};
 
-export default AddUser
+export default AddUser;

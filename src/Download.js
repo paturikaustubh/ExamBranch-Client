@@ -1,7 +1,7 @@
 // import NavBar from "./Components/NavBar"
-import { useState, useRef } from "react"
+import { useState, useRef } from "react";
 // import Bait from "./Components/Bait"
-import Truncate from "./Dialogs/Truncate"
+import Truncate from "./Dialogs/Truncate";
 import {
   MenuItem,
   TextField,
@@ -23,41 +23,42 @@ import {
   Grow,
   ClickAwayListener,
   MenuList,
-} from "@mui/material"
-import { Alert, Snackbar } from "@mui/material"
-import Axios from "axios"
-import HelpIcon from "@mui/icons-material/Help"
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp"
+} from "@mui/material";
+import { Alert, Snackbar } from "@mui/material";
+import Axios from "axios";
+import HelpIcon from "@mui/icons-material/Help";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import dayjs from "dayjs";
 
 const Download = ({ ip }) => {
-  const [year, setyear] = useState(0)
-  const [sem, setsem] = useState(0)
-  const [down, setDown] = useState(false)
-  const [downErr, setDownErr] = useState(false)
-  const [table, settable] = useState("Supply")
-  const [openHelp, setOpenHelp] = useState(false)
-  const [selectedIndex, setSelectedIndex] = useState(0)
-  const [open, setOpen] = useState(false)
-  const [notFoundAlert, setNotFoundAlert] = useState(false)
-  const anchor = useRef(null)
+  const [year, setyear] = useState(0);
+  const [sem, setsem] = useState(0);
+  const [down, setDown] = useState(false);
+  const [downErr, setDownErr] = useState(false);
+  const [table, settable] = useState("Supply");
+  const [openHelp, setOpenHelp] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [open, setOpen] = useState(false);
+  const [notFoundAlert, setNotFoundAlert] = useState(false);
+  const anchor = useRef(null);
 
-  let downOpts = ["Registered", "Un-Registered", "Report"]
+  let downOpts = ["Registered", "Un-Registered", "Report"];
 
   const handleyears = (e) => {
-    setyear(e.target.value)
-  }
+    setyear(e.target.value);
+  };
   const handlesems = (e) => {
-    setsem(e.target.value)
-  }
+    setsem(e.target.value);
+  };
 
   const handleClose = (event) => {
     if (anchor.current && anchor.current.contains(event.target)) {
-      return
+      return;
     }
 
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
   const handleDownloads = () => {
     if (selectedIndex === 0) {
@@ -69,18 +70,23 @@ const Download = ({ ip }) => {
       })
         .then((res) => {
           if (res.data.type === "text/csv") {
-            const url = window.URL.createObjectURL(new Blob([res.data]))
-            const link = document.createElement("a")
-            link.href = url
-            link.setAttribute("download", `${table} ${year}-${sem}.csv`)
-            document.body.appendChild(link)
-            link.click()
-            setDown(true)
-          } else setNotFoundAlert(true)
+            const url = window.URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute(
+              "download",
+              `${
+                year !== 0 ? `${year}-${sem}` : "Complete"
+              } ${table} Registered ${dayjs().format("D_MMM_YY (h_mm_A)")}.csv`
+            );
+            document.body.appendChild(link);
+            link.click();
+            setDown(true);
+          } else setNotFoundAlert(true);
         })
         .catch(() => {
-          setDownErr(true)
-        })
+          setDownErr(true);
+        });
     } else if (selectedIndex === 1) {
       Axios({
         method: "post",
@@ -92,21 +98,25 @@ const Download = ({ ip }) => {
       })
         .then((res) => {
           if (res.data.type === "text/csv") {
-            const url = window.URL.createObjectURL(new Blob([res.data]))
-            const link = document.createElement("a")
-            link.href = url
+            const url = window.URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement("a");
+            link.href = url;
             link.setAttribute(
               "download",
-              `${year} - ${sem} Un-Registered ${table}.csv`
-            )
-            document.body.appendChild(link)
-            link.click()
-            setDown(true)
-          } else setNotFoundAlert(true)
+              `${
+                year !== 0 ? `${year}-${sem}` : "Complete"
+              } ${table} Un-Registered ${dayjs().format(
+                "D_MMM_YY (h_mm_A)"
+              )}.csv`
+            );
+            document.body.appendChild(link);
+            link.click();
+            setDown(true);
+          } else setNotFoundAlert(true);
         })
         .catch(() => {
-          downErr(true)
-        })
+          downErr(true);
+        });
     } else if (selectedIndex === 2) {
       Axios({
         method: "post",
@@ -118,27 +128,30 @@ const Download = ({ ip }) => {
       })
         .then((res) => {
           if (res.data.type === "text/csv") {
-            const url = window.URL.createObjectURL(new Blob([res.data]))
-            const link = document.createElement("a")
-            link.href = url
-            link.setAttribute("download", `${table} Report.csv`)
-            document.body.appendChild(link)
-            link.click()
+            const url = window.URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute(
+              "download",
+              `${table} Report ${dayjs().format("D_MMM_YY (h_mm_A)")}.csv`
+            );
+            document.body.appendChild(link);
+            link.click();
             // alert("Downloading File")
-            setDown(true)
-          } else setNotFoundAlert(true)
+            setDown(true);
+          } else setNotFoundAlert(true);
         })
         .catch(() => {
           // alert("There was an error while downloading")
-          setDownErr(true)
-        })
+          setDownErr(true);
+        });
     }
-  }
+  };
 
   const handleMenuItemClick = (_, index) => {
-    setSelectedIndex(index)
-    setOpen(false)
-  }
+    setSelectedIndex(index);
+    setOpen(false);
+  };
 
   return (
     <Container maxWidth="xl">
@@ -154,7 +167,7 @@ const Download = ({ ip }) => {
           <Tooltip title="Help">
             <IconButton
               onClick={() => {
-                setOpenHelp(true)
+                setOpenHelp(true);
               }}
               color="primary"
             >
@@ -168,7 +181,7 @@ const Download = ({ ip }) => {
         sx={{ backdropFilter: "blur(1px)" }}
         open={openHelp}
         onClose={() => {
-          setOpenHelp(false)
+          setOpenHelp(false);
         }}
         maxWidth
       >
@@ -254,7 +267,7 @@ const Download = ({ ip }) => {
           <Button
             size="large"
             onClick={() => {
-              setOpenHelp(false)
+              setOpenHelp(false);
             }}
           >
             okay
@@ -274,7 +287,7 @@ const Download = ({ ip }) => {
               backgroundColor: "white",
             }}
             onChange={(e) => {
-              settable(e.target.value)
+              settable(e.target.value);
             }}
           >
             <MenuItem value={"Supply"}>Supplementary</MenuItem>,
@@ -328,7 +341,11 @@ const Download = ({ ip }) => {
           </TextField>
         </Grid>
       </Grid>
-      <ButtonGroup variant="contained" size="large">
+      <ButtonGroup
+        variant="contained"
+        size="large"
+        disabled={(year === 0 && sem !== 0) || (year !== 0 && sem === 0)}
+      >
         <Button fullWidth onClick={handleDownloads}>
           {downOpts[selectedIndex]}
         </Button>
@@ -391,14 +408,14 @@ const Download = ({ ip }) => {
         autoHideDuration={2500}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         onClose={() => {
-          setDown(false)
+          setDown(false);
         }}
       >
         <Alert
           severity="success"
           variant="standard"
           onClose={() => {
-            setDown(false)
+            setDown(false);
           }}
         >{`Downloading file`}</Alert>
       </Snackbar>
@@ -408,14 +425,14 @@ const Download = ({ ip }) => {
         autoHideDuration={2500}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         onClose={() => {
-          setDownErr(false)
+          setDownErr(false);
         }}
       >
         <Alert
           severity="error"
           variant="standard"
           onClose={() => {
-            setDownErr(false)
+            setDownErr(false);
           }}
         >
           There was an error while downloading
@@ -427,21 +444,21 @@ const Download = ({ ip }) => {
         autoHideDuration={2500}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         onClose={() => {
-          setNotFoundAlert(false)
+          setNotFoundAlert(false);
         }}
       >
         <Alert
           severity="warning"
           variant="standard"
           onClose={() => {
-            setNotFoundAlert(false)
+            setNotFoundAlert(false);
           }}
         >
           No data found
         </Alert>
       </Snackbar>
     </Container>
-  )
-}
+  );
+};
 
-export default Download
+export default Download;

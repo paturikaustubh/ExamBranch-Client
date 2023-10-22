@@ -1,5 +1,5 @@
-import { React, useState } from "react"
-import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined"
+import { React, useState } from "react";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 
 import {
   Button,
@@ -10,9 +10,9 @@ import {
   DialogTitle,
   Alert,
   Snackbar,
-} from "@mui/material"
+} from "@mui/material";
 
-import Axios from "axios"
+import Axios from "axios";
 
 export default function AlertDialog(props) {
   const {
@@ -22,29 +22,29 @@ export default function AlertDialog(props) {
     butt1,
     butt2,
     alertMess,
-    rollno,
-    subcode,
+    rollNo,
+    subCode,
     table,
     user,
     ip,
-  } = props
-  const [open, setOpen] = useState(false)
-  const [buttvariant, setbuttvariant] = useState("outlined")
-  const [openalert, setopenalert] = useState(false)
+  } = props;
+  const [open, setOpen] = useState(false);
+  const [buttvariant, setbuttvariant] = useState("outlined");
+  const [openalert, setopenalert] = useState(false);
 
   const handleClickOpen = () => {
-    setbuttvariant("contained")
-    setOpen(true)
-  }
+    setbuttvariant("contained");
+    setOpen(true);
+  };
 
   const handleClose = () => {
-    setbuttvariant("outlined")
-    setOpen(false)
-  }
+    setbuttvariant("outlined");
+    setOpen(false);
+  };
 
   const handleopenalert = () => {
-    setopenalert(false)
-  }
+    setopenalert(false);
+  };
   return (
     <div>
       <Button
@@ -73,14 +73,14 @@ export default function AlertDialog(props) {
           <Button
             color="warning"
             onClick={() => {
-              setbuttvariant("outlined")
+              setbuttvariant("outlined");
               Axios.post(`http://${ip}:6969/deleteinfo`, {
-                rno: rollno,
-                subcode: subcode,
+                rno: rollNo,
+                subCode: subCode,
                 table: table,
-              })
-              setOpen(false)
-              setopenalert(true)
+              });
+              setOpen(false);
+              setopenalert(true);
             }}
             autoFocus
           >
@@ -100,5 +100,5 @@ export default function AlertDialog(props) {
         </Alert>
       </Snackbar>
     </div>
-  )
+  );
 }
