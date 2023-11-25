@@ -21,6 +21,10 @@ import {
   Container,
   Box,
   Typography,
+  FormControl,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ListAltOutlinedIcon from "@mui/icons-material/ListAltOutlined";
@@ -36,7 +40,7 @@ import Axios from "axios";
 import Barcode from "react-barcode";
 import dayjs from "dayjs";
 
-const Supply = ({ ip }) => {
+const Supply = ({ ip, userName }) => {
   const [openHelp, setOpenHelp] = useState(false);
   const [rollNo, setrollno] = useState("");
   const [basecosts, setbasecosts] = useState("");
@@ -87,6 +91,7 @@ const Supply = ({ ip }) => {
   const [regErr, setRegErr] = useState(false);
   const [fine, setFine] = useState(0);
   const [openPrintDialog, setOpenPrintDialog] = useState(false);
+  const [enableFine, setEnableFine] = useState(true);
   let subCodes = [];
 
   useEffect(() => {
@@ -157,7 +162,6 @@ const Supply = ({ ip }) => {
   };
 
   const getcost = (i) => {
-    console.log(i);
     let k = [basecosts, addcosts, maxcosts];
     // eslint-disable-next-line array-callback-return
     k = k.map((e) => {
@@ -181,8 +185,8 @@ const Supply = ({ ip }) => {
         } else if (subsA.length >= 4) {
           aCost = k[2];
         }
-        if (fine > 0 && aCost > 0) return (aCost += fine);
-        else return aCost;
+        if (enableFine && fine > 0 && aCost > 0) aCost += fine;
+        return aCost;
       } else {
         return 0;
       }
@@ -196,8 +200,8 @@ const Supply = ({ ip }) => {
         } else if (subsB.length >= 4) {
           bCost = k[2];
         }
-        if (fine > 0 && bCost > 0) return (bCost += fine);
-        else return bCost;
+        if (enableFine && fine > 0 && bCost > 0) bCost += fine;
+        return bCost;
       } else {
         return 0;
       }
@@ -211,8 +215,8 @@ const Supply = ({ ip }) => {
         } else if (subsC.length >= 4) {
           cCost = k[2];
         }
-        if (fine > 0 && cCost > 0) return (cCost += fine);
-        else return cCost;
+        if (enableFine && fine > 0 && cCost > 0) cCost += fine;
+        return cCost;
       } else {
         return 0;
       }
@@ -226,8 +230,8 @@ const Supply = ({ ip }) => {
         } else if (subsD.length >= 4) {
           dCost = k[2];
         }
-        if (fine > 0 && dCost > 0) return (dCost += fine);
-        else return dCost;
+        if (enableFine && fine > 0 && dCost > 0) dCost += fine;
+        return dCost;
       } else {
         return 0;
       }
@@ -241,8 +245,8 @@ const Supply = ({ ip }) => {
         } else if (subsE.length >= 4) {
           eCost = k[2];
         }
-        if (fine > 0 && eCost > 0) return (eCost += fine);
-        else return eCost;
+        if (enableFine && fine > 0 && eCost > 0) eCost += fine;
+        return eCost;
       } else {
         return 0;
       }
@@ -256,8 +260,8 @@ const Supply = ({ ip }) => {
         } else if (subsF.length >= 4) {
           fCost = k[2];
         }
-        if (fine > 0 && fCost > 0) return (fCost += fine);
-        else return fCost;
+        if (enableFine && fine > 0 && fCost > 0) fCost += fine;
+        return fCost;
       } else {
         return 0;
       }
@@ -271,8 +275,8 @@ const Supply = ({ ip }) => {
         } else if (subsG.length >= 4) {
           gCost = k[2];
         }
-        if (fine > 0 && gCost > 0) return (gCost += fine);
-        else return gCost;
+        if (enableFine && fine > 0 && gCost > 0) gCost += fine;
+        return gCost;
       } else {
         return 0;
       }
@@ -286,8 +290,8 @@ const Supply = ({ ip }) => {
         } else if (subsH.length >= 4) {
           hCost = k[2];
         }
-        if (fine > 0 && hCost > 0) return (hCost += fine);
-        else return hCost;
+        if (enableFine && fine > 0 && hCost > 0) hCost += fine;
+        return hCost;
       } else {
         return 0;
       }
@@ -351,7 +355,9 @@ const Supply = ({ ip }) => {
             <Grid item xs={2}>
               {(gen || printSup) && getcost(1) + getcost(2)}
               {(getcost(1) > 0 || getcost(2) > 0) && (gen || printSup)
-                ? ` (${fine} Fine/Sem)`
+                ? enableFine
+                  ? ` (${fine} Fine/Sem)`
+                  : ""
                 : ""}
             </Grid>
           </Grid>
@@ -412,7 +418,9 @@ const Supply = ({ ip }) => {
             <Grid item xs={2}>
               {(gen || printSup) && getcost(3) + getcost(4)}
               {(getcost(3) > 0 || getcost(4) > 0) && (gen || printSup)
-                ? ` (${fine} Fine/Sem)`
+                ? enableFine
+                  ? ` (${fine} Fine/Sem)`
+                  : ""
                 : ""}
             </Grid>
           </Grid>
@@ -473,7 +481,9 @@ const Supply = ({ ip }) => {
             <Grid item xs={2}>
               {(gen || printSup) && getcost(5) + getcost(6)}
               {(getcost(5) > 0 || getcost(6) > 0) && (gen || printSup)
-                ? ` (${fine} Fine/Sem)`
+                ? enableFine
+                  ? ` (${fine} Fine/Sem)`
+                  : ""
                 : ""}
             </Grid>
           </Grid>
@@ -534,7 +544,9 @@ const Supply = ({ ip }) => {
             <Grid item xs={2}>
               {(gen || printSup) && getcost(7) + getcost(8)}
               {(getcost(7) > 0 || getcost(8) > 0) && (gen || printSup)
-                ? `(${fine} Fine/Sem)`
+                ? enableFine
+                  ? ` (${fine} Fine/Sem)`
+                  : ""
                 : ""}
             </Grid>
           </Grid>
@@ -957,7 +969,7 @@ const Supply = ({ ip }) => {
                   }}
                 />
               </Grid>
-              <Grid item md={2} sm={4} xs={12}>
+              <Grid item md={2} sm={4} xs={6}>
                 {fine !== 0 && (
                   <TextField
                     disabled
@@ -971,6 +983,19 @@ const Supply = ({ ip }) => {
                     }}
                   />
                 )}
+              </Grid>
+              <Grid item md={2} sm={4} xs={6}>
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={enableFine}
+                        onChange={() => setEnableFine((prevVal) => !prevVal)}
+                      />
+                    }
+                    label="Enable fine"
+                  />
+                </FormGroup>
               </Grid>
             </Grid>
 
@@ -1029,6 +1054,7 @@ const Supply = ({ ip }) => {
                           F: codesF,
                           G: codesG,
                           H: codesH,
+                          userName: userName,
                         }).then((resp) => {
                           if (resp.data["registered"]) {
                             setLoading(false);
@@ -1461,6 +1487,7 @@ const Supply = ({ ip }) => {
                 F: codesF,
                 G: codesG,
                 H: codesH,
+                userName: userName,
               }).then((resp) => {
                 if (resp.data.done) {
                   window.print();

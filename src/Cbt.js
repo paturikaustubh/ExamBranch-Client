@@ -31,7 +31,7 @@ import HelpIcon from "@mui/icons-material/Help";
 import Barcode from "react-barcode";
 import dayjs from "dayjs";
 
-const Cbt = ({ ip }) => {
+const Cbt = ({ ip, userName }) => {
   const branches = useRef([]);
   const [branch, setbranch] = useState([]);
   const [rollNo, setrollno] = useState("");
@@ -842,6 +842,7 @@ const Cbt = ({ ip }) => {
                       rno: rollNo,
                       subName: regSubs,
                       branch: branches.current,
+                      userName: userName,
                     }).then((resp) => {
                       if (resp.data["succ"]) {
                         setLoading(false);
@@ -1007,6 +1008,7 @@ const Cbt = ({ ip }) => {
                 rno: rollNo,
                 subName: regSubs,
                 branch: branches.current,
+                userName: userName,
               }).then((resp) => {
                 if (resp) {
                   if (resp.data.done) {

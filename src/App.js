@@ -48,46 +48,46 @@ const App = () => {
   const adminPages = [
     {
       path: "/Update",
-      component: <Update ip={ip} />,
+      component: <Update user={user} ip={ip} />,
     },
     {
       path: "/Download",
-      component: <Download ip={ip} />,
+      component: <Download user={user} ip={ip} />,
     },
     {
       path: "/Costs",
-      component: <Costs ip={ip} />,
+      component: <Costs user={user} ip={ip} />,
     },
     {
       path: "/Backup",
-      component: <Backup ip={ip} />,
+      component: <Backup user={user} ip={ip} />,
     },
     {
       path: "/AddUser",
-      component: <AddUser ip={ip} />,
+      component: <AddUser user={user} ip={ip} />,
     },
     {
       path: "/UpCreds",
-      component: <UpCreds ip={ip} />,
+      component: <UpCreds user={user} ip={ip} />,
     },
   ];
 
   const defaultPages = [
     {
       path: "/Supply",
-      component: <Supply ip={ip} />,
+      component: <Supply user={user} ip={ip} />,
     },
     {
       path: "/Reval",
-      component: <Reval ip={ip} />,
+      component: <Reval user={user} ip={ip} />,
     },
     {
       path: "/Cbt",
-      component: <Cbt ip={ip} />,
+      component: <Cbt user={user} ip={ip} />,
     },
     {
       path: "/Manage-Database",
-      component: <Details user={user} ip={ip} />,
+      component: <Details  user={user} ip={ip} />,
     },
   ];
 

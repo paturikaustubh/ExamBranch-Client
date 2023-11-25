@@ -34,7 +34,7 @@ import Axios from "axios";
 import Barcode from "react-barcode";
 import dayjs from "dayjs";
 
-const Reval = ({ ip }) => {
+const Reval = ({ ip, user: userName }) => {
   const [openHelp, setOpenHelp] = useState(false);
   const [rollNo, setrollno] = useState("");
   const [costs, setcosts] = useState("");
@@ -946,6 +946,7 @@ const Reval = ({ ip }) => {
                       G: codesG,
                       H: codesH,
                       k: regSem,
+                      userName: userName,
                     }).then((resp) => {
                       if (resp.data["registered"]) {
                         setLoading(false);
@@ -1238,6 +1239,7 @@ const Reval = ({ ip }) => {
                 F: codesF,
                 G: codesG,
                 H: codesH,
+                userName: userName,
               }).then((resp) => {
                 if (resp.data.done) {
                   setOpenPrintDialog(false);
