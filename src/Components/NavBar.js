@@ -105,12 +105,12 @@ export default function NavBar({ user }) {
       icon: <CurrencyRupeeOutlinedIcon />,
     },
 
-    {
-      value: 2,
-      name: "Manage Credits",
-      to: "/UpCreds",
-      icon: <GradeOutlinedIcon />,
-    },
+    // {
+    //   value: 2,
+    //   name: "Manage Credits",
+    //   to: "/UpCreds",
+    //   icon: <GradeOutlinedIcon />,
+    // },
     {
       value: 3,
       name: "Manage Database",

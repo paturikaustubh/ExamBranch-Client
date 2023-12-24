@@ -40,7 +40,7 @@ import Axios from "axios";
 import Barcode from "react-barcode";
 import dayjs from "dayjs";
 
-const Supply = ({ ip, userName }) => {
+const Supply = ({ ip, user: userName }) => {
   const [openHelp, setOpenHelp] = useState(false);
   const [rollNo, setrollno] = useState("");
   const [basecosts, setbasecosts] = useState("");

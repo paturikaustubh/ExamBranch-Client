@@ -31,7 +31,7 @@ import HelpIcon from "@mui/icons-material/Help";
 import Barcode from "react-barcode";
 import dayjs from "dayjs";
 
-const Cbt = ({ ip, userName }) => {
+const Cbt = ({ ip, user: userName }) => {
   const branches = useRef([]);
   const [branch, setbranch] = useState([]);
   const [rollNo, setrollno] = useState("");

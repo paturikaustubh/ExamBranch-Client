@@ -87,7 +87,7 @@ const App = () => {
     },
     {
       path: "/Manage-Database",
-      component: <Details  user={user} ip={ip} />,
+      component: <Details user={user} ip={ip} />,
     },
   ];
 
